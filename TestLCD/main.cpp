@@ -290,124 +290,124 @@ using namespace std;
 //    }
 //};
 #pragma mark - 4
-class Solution {
-public:
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-
-        int numsCount1 = (int)nums1.size();
-        int numsCount2 = (int)nums2.size();
-        int allCount = numsCount1 + numsCount2;
-        int midIndex1, midIndex2;
-        midIndex1 = midIndex2 = allCount / 2;
-        if (allCount % 2 == 0) {
-            midIndex1 = midIndex2 - 1;
-        }
-
-        int index = -1;
-        double midNum = 0;
-        int currentNum = 0;
-        int i = 0, j = 0;
-        while (i < numsCount1 && j < numsCount2) {
-            index = i + j;
-            if (nums1[i] < nums2[j]) {
-                currentNum = nums1[i];
-                i++;
-            }
-            else{
-                currentNum = nums2[j];
-                j++;
-            }
-
-            if (index == midIndex1) {
-                midNum = currentNum;
-            }
-
-            if (index == midIndex2) {
-                midNum += currentNum;
-                midNum /= 2.0;
-                return midNum;
-            }
-        }
-
-        if (i < numsCount1) {
-            if (index == midIndex1) {
-                midNum += nums1[i];
-            }
-            else {
-                midNum = (nums1[midIndex1 - j] + nums1[midIndex2 - j]);
-            }
-            return midNum / 2.0;
-        }
-
-        if (j < numsCount2) {
-            if (index == midIndex1) {
-                midNum += nums2[j];
-            }
-            else {
-                midNum = (nums2[midIndex1 - i] + nums2[midIndex2 - i]);
-            }
-            return midNum / 2.0;
-        }
-
-        return 0;
-    }
-
-    double findMedianSortedArrays2(vector<int>& nums1, vector<int>& nums2) {
-        nums1.insert(nums1.end(), nums2.begin(), nums2.end());
-        sort(nums1.begin(), nums1.end());
-        int count = (int)nums1.size();
-        if (count % 2 == 0) {
-            return (nums1[count / 2] + nums1[count / 2 - 1]) / 2.0;
-        }
-        else {
-            return nums1[count / 2];
-        }
-    }
-
-    double findMedianSortedArrays3(vector<int>& nums1, vector<int>& nums2) {
-        int start1 = 0, start2 = 0;
-        int end1 = (int)nums1.size(), end2 = (int)nums2.size();
-        int mid1 = 0, mid2 = 0;
-
-        int allCount = (int)(nums1.size() + nums2.size());
-        int targetIndex1, targetIndex2;
-
-        /*
-         nums1总数为m,nums2总数为n,
-         如果nums1[a/2] < nums2[n/2],则（m + n）/ 2 + 1个数一定比[s1,mid1]的数大，所以m/2位置的数最大为（m + n）/ 2 - 1
-         要寻找的是(m + n) / 2 和 （m + n）/ 2 - 1
-         除非n=0,否则 m/2 - 1 != (m + n) / 2 - 1
-         所以m/2之前的数一定不是要找的数，但不排除m/2
-
-         同理n/2之后的数据也一定不是要找的数，但不排除n/2
-         */
-        while (true) {
-            mid1 = (start1 + end1) / 2;
-            mid2 = (start2 + end2) / 2;
-
-            if (nums1[mid1] < nums2[mid2]) {
-                start1 = mid1;
-                end2 = mid2;
-            }
-
-            if (nums1[mid1] > nums2[mid2]) {
-                start2 = mid2;
-                end1 = mid1;
-            }
-
-            if (start1 == end1 && start2 == end2) {
-                tark
-            }
-        }
-    }
-
-    void test(){
-        vector<int> nums1 = {};
-        vector<int> nums2 = {1};
-        double testNum = findMedianSortedArrays3(nums1, nums2);
-        cout<<testNum<<endl;
-    }
-};
+//class Solution {
+//public:
+//    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+//
+//        int numsCount1 = (int)nums1.size();
+//        int numsCount2 = (int)nums2.size();
+//        int allCount = numsCount1 + numsCount2;
+//        int midIndex1, midIndex2;
+//        midIndex1 = midIndex2 = allCount / 2;
+//        if (allCount % 2 == 0) {
+//            midIndex1 = midIndex2 - 1;
+//        }
+//
+//        int index = -1;
+//        double midNum = 0;
+//        int currentNum = 0;
+//        int i = 0, j = 0;
+//        while (i < numsCount1 && j < numsCount2) {
+//            index = i + j;
+//            if (nums1[i] < nums2[j]) {
+//                currentNum = nums1[i];
+//                i++;
+//            }
+//            else{
+//                currentNum = nums2[j];
+//                j++;
+//            }
+//
+//            if (index == midIndex1) {
+//                midNum = currentNum;
+//            }
+//
+//            if (index == midIndex2) {
+//                midNum += currentNum;
+//                midNum /= 2.0;
+//                return midNum;
+//            }
+//        }
+//
+//        if (i < numsCount1) {
+//            if (index == midIndex1) {
+//                midNum += nums1[i];
+//            }
+//            else {
+//                midNum = (nums1[midIndex1 - j] + nums1[midIndex2 - j]);
+//            }
+//            return midNum / 2.0;
+//        }
+//
+//        if (j < numsCount2) {
+//            if (index == midIndex1) {
+//                midNum += nums2[j];
+//            }
+//            else {
+//                midNum = (nums2[midIndex1 - i] + nums2[midIndex2 - i]);
+//            }
+//            return midNum / 2.0;
+//        }
+//
+//        return 0;
+//    }
+//
+//    double findMedianSortedArrays2(vector<int>& nums1, vector<int>& nums2) {
+//        nums1.insert(nums1.end(), nums2.begin(), nums2.end());
+//        sort(nums1.begin(), nums1.end());
+//        int count = (int)nums1.size();
+//        if (count % 2 == 0) {
+//            return (nums1[count / 2] + nums1[count / 2 - 1]) / 2.0;
+//        }
+//        else {
+//            return nums1[count / 2];
+//        }
+//    }
+//
+//    double findMedianSortedArrays3(vector<int>& nums1, vector<int>& nums2) {
+//        int start1 = 0, start2 = 0;
+//        int end1 = (int)nums1.size(), end2 = (int)nums2.size();
+//        int mid1 = 0, mid2 = 0;
+//
+//        int allCount = (int)(nums1.size() + nums2.size());
+//        int targetIndex1, targetIndex2;
+//
+//        /*
+//         nums1总数为m,nums2总数为n,
+//         如果nums1[a/2] < nums2[n/2],则（m + n）/ 2 + 1个数一定比[s1,mid1]的数大，所以m/2位置的数最大为（m + n）/ 2 - 1
+//         要寻找的是(m + n) / 2 和 （m + n）/ 2 - 1
+//         除非n=0,否则 m/2 - 1 != (m + n) / 2 - 1
+//         所以m/2之前的数一定不是要找的数，但不排除m/2
+//
+//         同理n/2之后的数据也一定不是要找的数，但不排除n/2
+//         */
+//        while (true) {
+//            mid1 = (start1 + end1) / 2;
+//            mid2 = (start2 + end2) / 2;
+//
+//            if (nums1[mid1] < nums2[mid2]) {
+//                start1 = mid1;
+//                end2 = mid2;
+//            }
+//
+//            if (nums1[mid1] > nums2[mid2]) {
+//                start2 = mid2;
+//                end1 = mid1;
+//            }
+//
+//            if (start1 == end1 && start2 == end2) {
+//                tark
+//            }
+//        }
+//    }
+//
+//    void test(){
+//        vector<int> nums1 = {};
+//        vector<int> nums2 = {1};
+//        double testNum = findMedianSortedArrays3(nums1, nums2);
+//        cout<<testNum<<endl;
+//    }
+//};
 #pragma mark - 5
 //class Solution {
 //public:
@@ -491,6 +491,28 @@ public:
 //        }
 //
 //        return result;
+//    }
+//
+//    string longestPalindrome3(string s) {
+//        vector<int> temp = vector<int>(s.size(), 0);
+//        for (int i = 0; i < s.size(); i++) {
+//            for (int j = i + 1; j < s.size(); j++) {
+//                if (s[i] == s[j]) {
+//                    temp.push_back(j);
+//                    break;
+//                }
+//            }
+//        }
+//
+//        for (int i = 0; i < temp.size(); i++) {
+//            int length = (temp[i] - i + 1);
+//            if (length % 2 == 0) {//偶数个
+//                <#statements#>
+//            }
+//
+//        }
+//
+//        return "";
 //    }
 //
 //    void test() {
@@ -1264,11 +1286,11 @@ public:
 int main(int argc, const char * argv[]) {
     // insert code here...
 
-    Solution solution;
-    solution.test();
+//    Solution solution;
+//    solution.test();
 
-//    Sort sort;
-//    sort.test();
+    Sort sort;
+    sort.test();
 
     return 0;
 }

@@ -13,7 +13,6 @@
 
 class Sort {
 public:
-    void selectionSort(std::vector<int>& arr);
     void test();
 };
 
