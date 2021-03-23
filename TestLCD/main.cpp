@@ -14,6 +14,7 @@
 #include <map>
 
 #include "Sort.hpp"
+#include "LeaZCY.hpp"
 
 using namespace std;
 
@@ -1283,14 +1284,115 @@ using namespace std;
 //    }
 //};
 
+#pragma mark - 215
+//class Solution {
+//public:
+//    int findKthLargest(vector<int>& nums, int k) {
+//        sort(nums.begin(), nums.end());
+//        return nums[(int)nums.size() - k];
+//    }
+//
+//    int findKthLargest2(vector<int>& nums, int k) {
+//        return quickSortSearch(nums, 0, (int)nums.size() - 1, (int)nums.size() - k);
+//    }
+//
+//    void swap(vector<int>& arr, int i , int j) {
+//        int temp = arr[i];
+//        arr[i] = arr[j];
+//        arr[j] = temp;
+//    }
+//
+//    int quickSortSearch(vector<int>& nums, int l, int r, int numIndex) {
+//        if (l >= r) {
+//            return nums[numIndex];
+//        }
+//
+//        int s = l, e = r;
+//        int key = r;
+//
+//        while (s < e) {
+//            while (nums[e] > nums[key] && s < e) {
+//                e--;
+//            }
+//
+//            while (nums[s] <= nums[key] && s < e) {
+//                s++;
+//            }
+//            swap(nums, s, e);
+//        }
+//
+//        swap(nums, s, key);
+//
+//        if (e == numIndex) {
+//            return nums[numIndex];
+//        }
+//
+//        if (e < numIndex) {
+//            return quickSortSearch(nums, e, r, numIndex);
+//        }
+//        else {
+//            return quickSortSearch(nums, l, e - 1, numIndex);
+//        }
+//
+//    }
+//
+//
+//    void test() {
+//        vector<int> arr = {-1,2,0};
+//        int kValue = findKthLargest2(arr, 2);
+//        cout<<kValue<<endl;
+//    }
+//};
+
+#pragma mark - 75
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        //使用计数排序
+        vector<int> arrCount(2);
+
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i] < 2) {
+                arrCount[nums[i]]++;
+            }
+        }
+
+        int k = 0;
+
+        for (int i = 0; i < arrCount.size(); i++) {
+            for (int j = 0; j < arrCount[i]; j++) {
+                nums[k++] = i;
+            }
+        }
+
+        while (k < nums.size()) {
+            nums[k++] = 2;
+        }
+
+    }
+
+    void test() {
+        vector<int> nums = {2,0,2,1,1,0};
+        sortColors(nums);
+        vector<int>::iterator it = nums.begin();
+        while (it != nums.end()) {
+            cout<<*it<<"";
+            it++;
+        }
+    }
+};
+
 int main(int argc, const char * argv[]) {
     // insert code here...
 
 //    Solution solution;
 //    solution.test();
 
-    Sort sort;
-    sort.test();
+//    Sort sort;
+//    sort.test();
+
+    LeaZcy lea;
+    lea.test();
 
     return 0;
 }

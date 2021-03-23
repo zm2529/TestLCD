@@ -265,7 +265,7 @@ void quickSort(vector<int>& arr, int left, int right) {
     }
     
     int s = left, e = right;
-    cout<<"---"<<arr[right]<<endl;
+//    cout<<"---"<<arr[right]<<endl;
     while (s < e) {
         while (arr[s] < arr[right] && s < e) s++;
         while (arr[e] >= arr[right] && s < e) e--;
@@ -288,7 +288,7 @@ void quickSort2(vector<int>& arr) {
         cacheWillSortIndex.pop_back();
         
         int s = left, e = right, key = right;
-        cout<<"---"<<arr[right]<<endl;
+//        cout<<"---"<<arr[right]<<endl;
         
         while (s < e) {
             while (arr[s] < arr[key] && s < e) s++;
@@ -311,10 +311,266 @@ void quickSort2(vector<int>& arr) {
     }
 }
 
+void quickSortWithDoubleAxis(vector<int>& arr, int left, int right) {
+    if (left >= right) {
+        return;
+    }
+
+    int axisLeft = left, axisRight = right;
+    if (arr[left] > arr[right]) {
+        swap(arr, left, right);
+    }
+
+    int smallPartition = left, midPartition = left, bigPartition = right;
+
+    int s = left + 1, e = right - 1;
+//    cout<<"---"<<arr[left]<<"---"<<arr[right]<<endl;
+
+    while (s <= e) {
+        while (arr[s] <= arr[axisLeft] && s <= e) {
+            swap(arr, s, smallPartition + 1);
+            smallPartition++;
+            midPartition++;
+            s++;
+        }
+
+        while (arr[e] >= arr[axisRight] && s <= e) {
+            bigPartition = e;
+            e--;
+        }
+
+        if (midPartition + 1 == bigPartition) {
+            break;
+        }
+
+
+        //s已经大于axisLeft,如果s大于axisRight,放到midPartition
+        if (arr[s] < arr[axisRight]) {
+            midPartition++;
+        }
+        else {//s 放到bigPartition
+            swap(arr, s, bigPartition - 1);
+            bigPartition--;
+            e = s;
+        }
+
+        if (midPartition + 1 == bigPartition) {
+            break;
+        }
+
+        //e已经小于axisRight，如果e大于axisLeft，放到midPartition
+        if (arr[e] > arr[axisLeft]) {
+            swap(arr, e, midPartition + 1);
+            midPartition++;
+        }
+        else{//e放到smallPartition
+            if (e != midPartition + 1) {
+                swap(arr, smallPartition + 1, midPartition + 1);
+            }
+            swap(arr, e, smallPartition + 1);
+            smallPartition++;
+            midPartition++;
+        }
+
+        if (midPartition + 1 == bigPartition) {
+            break;
+        }
+
+        s = midPartition + 1;
+        e = bigPartition - 1;
+    }
+    swap(arr, smallPartition, axisLeft);
+    swap(arr, bigPartition, axisRight);
+
+    quickSortWithDoubleAxis(arr, left, smallPartition);
+    quickSortWithDoubleAxis(arr, smallPartition + 1, midPartition);
+    quickSortWithDoubleAxis(arr, bigPartition, right);
+//    quickSort(arr, left, s - 1);
+//    quickSort(arr, s + 1, right);
+}
+
+#pragma mark - count
+void countSort(vector<int>& arr) {
+    int maxNum = arr[0], minNum = arr[0];
+    for (int i = 0; i < arr.size(); i++) {
+        if (arr[i] > maxNum) {
+            maxNum = arr[i];
+        }
+
+        if (arr[i] < minNum) {
+            minNum = arr[i];
+        }
+    }
+
+    vector<int> arrCount(maxNum - minNum + 1);
+
+    for (int i = 0; i < arr.size(); i++) {
+        arrCount[arr[i] - minNum]++;
+    }
+
+    int k = 0;
+    for (int i = 0; i < arrCount.size(); i++) {
+        for (int j = 0; j < arrCount[i]; j++) {
+            arr[k++] = i + minNum;
+        }
+    }
+}
+
+void countSortForStabilize(vector<int>& arr) {
+    int maxNum = arr[0], minNum = arr[0];
+    for (int i = 0; i < arr.size(); i++) {
+        if (arr[i] > maxNum) {
+            maxNum = arr[i];
+        }
+
+        if (arr[i] < minNum) {
+            minNum = arr[i];
+        }
+    }
+
+    vector<int> arrCount(maxNum - minNum + 1);
+
+    for (int i = 0; i < arr.size(); i++) {
+        arrCount[arr[i] - minNum]++;
+    }
+
+    for (int i = 1; i < arrCount.size(); i++) {
+        arrCount[i] = arrCount[i] + arrCount[i - 1];
+    }
+
+    vector<int> temp(arr.size());
+    for (int i = (int)arr.size() - 1; i >= 0; i--) {
+        int ptr = arrCount[arr[i] - minNum] - 1;
+        temp[ptr] = arr[i];
+
+        arrCount[arr[i] - minNum] = ptr;
+    }
+
+    for (int i = 0; i < temp.size(); i++) {
+        arr[i] = temp[i];
+    }
+}
+
+int getCardinalNumber(int num, int key) {
+    return (num % key) / (key / 10);
+}
+
+void cardinalNumberSort(vector<int>& arr) {
+    int maxNum = arr[0], minNum = arr[0];
+    for (int i = 0; i < arr.size(); i++) {
+        if (arr[i] > maxNum) {
+            maxNum = abs(arr[i]);
+        }
+
+        if (arr[i] < minNum) {
+            minNum = arr[i];
+        }
+    }
+
+    if (minNum < 0) {
+        for (int i = 0; i < arr.size(); i++) {
+            arr[i] -= minNum;
+        }
+
+        maxNum -= minNum;
+    }
+
+    int digitCapacity = 0;
+    while (maxNum > 0) {
+        maxNum = maxNum / 10;
+        digitCapacity++;
+    }
+
+    int key = 1;
+    while (digitCapacity > 0) {
+        key *= 10;
+
+        vector<int> arrCount(10);
+        for (int i = 0; i < arr.size(); i++) {
+            arrCount[getCardinalNumber(arr[i], key)]++;
+        }
+
+        for (int i = 1; i < arrCount.size(); i++) {
+            arrCount[i] = arrCount[i] + arrCount[i - 1];
+        }
+
+        vector<int> temp(arr.size());
+        for (int i = (int)arr.size() - 1; i >= 0; i--) {
+            int index = getCardinalNumber(arr[i], key);
+            int ptr = arrCount[index] - 1;
+            temp[ptr] = arr[i];
+            arrCount[index] = ptr;
+        }
+
+        for (int i = 0; i < temp.size(); i++) {
+            arr[i] = temp[i];
+        }
+        digitCapacity--;
+    }
+
+
+    if (minNum < 0) {
+        for (int i = 0; i < arr.size(); i++) {
+            arr[i] += minNum;
+        }
+    }
+}
+
+void check() {
+
+    bool isSuccess = true;
+    for (int i = 0; i < 100; i++) {
+        vector<int> arr;
+        srand((int)time(NULL));
+        for (int i = 0; i < 10000; i++) {
+            int temp = rand() % 100 - 50;
+            arr.push_back(temp);
+        }
+        vector<int> tempArr(arr);
+
+        //    selectionSort(arr);
+        //    bubblingSort(arr);
+        //    bubblingSort2(arr, (int)arr.size());
+        //    insertSort(arr);
+        //    insertSort2(arr);
+        //    shellSort(arr);
+        //        shellSort2(arr);
+        //    mergeSort2(arr, 0, arr.size() / 2, arr.size() - 1);
+        //    mergeSort(arr, 0, (int)arr.size() - 1);
+        //    quickSort(arr, 0, (int)arr.size() - 1);
+        //    quickSort2(arr);
+//        quickSortWithDoubleAxis(arr, 0, (int)arr.size() - 1);
+//        countSort(arr);
+        countSortForStabilize(arr);
+
+        for (int i = 0; i + 1 < arr.size(); i++) {
+            if (arr[i] > arr[i + 1]) {
+                isSuccess = false;
+            }
+        }
+
+        if (isSuccess == false) {
+            cout<<"false"<<endl;
+
+            for (int i = 0; i < tempArr.size(); i++) {
+                cout<<tempArr[i]<<",";
+            }
+
+            return;
+        }
+    }
+
+    cout<<"right"<<endl;
+}
+
 #pragma mark - test
 void Sort::test() {
+
+    check();
+    return;
     //    vector<int> arr = {1, 9, 3, -1, 8, 8, 2, -100, 3, 8, 100, 200, 8};
-    vector<int> arr = {7,3,2,6,8,1,9,5,4,6,10,6};
+//    vector<int> arr = {2,7,3,2,6,8,1,9,5,4,6,10,6};
+    vector<int> arr = {-7,-2,-28,-45,32,-41,29,29,24,18};
     //    selectionSort(arr);
     //    bubblingSort(arr);
     //    bubblingSort2(arr, (int)arr.size());
@@ -325,7 +581,11 @@ void Sort::test() {
     //    mergeSort2(arr, 0, arr.size() / 2, arr.size() - 1);
     //    mergeSort(arr, 0, (int)arr.size() - 1);
 //    quickSort(arr, 0, (int)arr.size() - 1);
-    quickSort2(arr);
+//    quickSort2(arr);
+//    quickSortWithDoubleAxis(arr, 0, (int)arr.size() - 1);
+//    countSort(arr);
+//    countSortForStabilize(arr);
+    cardinalNumberSort(arr);
     //    int i = 0;
     //    cout<<i<<" "<<arr[i++]<<" "<<i<<endl;
     vector<int>::iterator it = arr.begin();
