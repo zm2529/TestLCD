@@ -163,9 +163,48 @@ struct TNode {
     TNode(int value):value(value),left(nullptr),right(nullptr){}
 };
 
-//TNode *createBST(vector<int>& arrValue) {
-//
-//}
+TNode *createBST(vector<int>& arrValue) {
+    TNode *head = new TNode(arrValue[0]);
+    TNode *p = head;
+    for (int i = 1; i < arrValue.size(); i++) {
+        while (p == nullptr) {
+            if (arrValue[i] > p->value) {
+                p = p->right;
+            }
+            else {
+                p = p->left;
+            }
+        }
+        p = new TNode(arrValue[i]);
+    }
+
+    return head;
+}
+
+
+TNode *createPostorderTraversalSubMethod(TNode *head, vector<int>& arrPos) {
+    if (head->left == nullptr && head->right == nullptr) {
+        return head;
+    }
+    TNode *left = createPostorderTraversalSubMethod(head->left, arrPos);
+    TNode *right = createPostorderTraversalSubMethod(head->right, arrPos);
+
+    arrPos.push_back(left->value);
+    arrPos.push_back(right->value);
+    arrPos.push_back(head->value);
+
+    return head;
+}
+
+vector<int> createPostorderTraversal(TNode *head) {
+
+    vector<int> arr;
+
+    createPostorderTraversalSubMethod(head, arr);
+
+    return arr;
+
+}
 
 TNode * recoveBSTSubMethod(vector<int>& arrPos, int left, int right) {
 
@@ -209,17 +248,17 @@ void LeaZcy::test() {
 
     srand((int)time(NULL));
 
-    //随机0，1
-    {
-        vector<int> arr(2);
-        for (int i = 0; i < 100000; i++) {
-            arr[randomFair()]++;
-        }
-
-        for (int i = 0; i < arr.size(); i++) {
-            cout<<i<<":"<<arr[i]<<endl;
-        }
-    }
+//    //随机0，1
+//    {
+//        vector<int> arr(2);
+//        for (int i = 0; i < 100000; i++) {
+//            arr[randomFair()]++;
+//        }
+//
+//        for (int i = 0; i < arr.size(); i++) {
+//            cout<<i<<":"<<arr[i]<<endl;
+//        }
+//    }
 
 //    //随机abcd
 //    {
@@ -233,4 +272,9 @@ void LeaZcy::test() {
 //            cout<<i + c<<":"<<arr[i]<<endl;
 //        }
 //    }
+
+    //生成bst
+    {
+        vector<int> arr = {4,2,9,2,8,5,4,7,1,0};
+    }
 }
