@@ -6,19 +6,11 @@
 //
 
 #include "Sort.hpp"
+#include "Tools.hpp"
 #include <iostream>
 
 using namespace std;
 
-#pragma mark - test
-void printVector(vector<int>& arr) {
-    vector<int>::iterator it = arr.begin();
-    while (it != arr.end()) {
-        cout<<*it<<" ";
-        it++;
-    }
-    cout<<endl;
-}
 
 void swap(vector<int>& arr, int index1, int index2) {
     int temp = arr[index1];
@@ -305,9 +297,10 @@ void quickSort2(vector<int>& arr) {
         }
         
         cout<<"+++";
-        printVector(arr);
+        Tool tool;
+        tool.printVector(arr);
         cout<<"***";
-        printVector(cacheWillSortIndex);
+        tool.printVector(cacheWillSortIndex);
     }
 }
 

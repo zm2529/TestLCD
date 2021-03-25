@@ -163,19 +163,56 @@ struct TNode {
     TNode(int value):value(value),left(nullptr),right(nullptr){}
 };
 
+
+//TNode *traverseBST(TNode *head) {
+//    if (head->left == nullptr && head->right == nullptr) {
+//        return head;
+//    }
+//
+//    return traverseBST(<#TNode *head#>);
+//}
+
+void printBST(TNode *head) {
+
+    if (head == nullptr) {
+        return;
+    }
+    cout<<"h:"<<head->value<<" ";
+    if (head->left != nullptr) {
+        cout<<"l:"<<head->left->value<<" ";
+    }
+    if (head->right != nullptr) {
+        cout<<"r:"<<head->right->value<<endl;
+    }
+    printBST(head->left);
+    printBST(head->right);
+}
+
+
 TNode *createBST(vector<int>& arrValue) {
     TNode *head = new TNode(arrValue[0]);
     TNode *p = head;
     for (int i = 1; i < arrValue.size(); i++) {
-        while (p == nullptr) {
+        while (true) {
             if (arrValue[i] > p->value) {
-                p = p->right;
+                if (p->right == nullptr) {
+                    p->right = new TNode(arrValue[i]);
+                    break;
+                }
+                else {
+                    p = p->right;
+                }
             }
             else {
-                p = p->left;
+                if (p->left == nullptr) {
+                    p->left = new TNode(arrValue[i]);
+                    break;
+                }
+                else{
+                    p = p->left;
+                }
             }
         }
-        p = new TNode(arrValue[i]);
     }
 
     return head;
@@ -275,6 +312,12 @@ void LeaZcy::test() {
 
     //生成bst
     {
-        vector<int> arr = {4,2,9,2,8,5,4,7,1,0};
+        vector<int> arr = {4,2,9,3,8,5,6,7,1,0};
+        TNode *bstHead = createBST(arr);
+        printBST(bstHead);
+        vector<int> arrBSTPos = createPostorderTraversal(bstHead);
+        for (int i = 0; i < arrBSTPos.size(); i++) {
+            cout<<arrBSTPos[i]<<" ";
+        }
     }
 }

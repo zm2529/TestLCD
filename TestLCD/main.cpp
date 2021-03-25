@@ -13,10 +13,14 @@
 #include <deque>
 #include <map>
 
+#include "Tools.hpp"
 #include "Sort.hpp"
 #include "LeaZCY.hpp"
+#include "LeaSTT.hpp"
 
 using namespace std;
+
+Tool tool;
 
 #define string(x) #x
 
@@ -1345,54 +1349,606 @@ using namespace std;
 //};
 
 #pragma mark - 75
+//class Solution {
+//public:
+//    void sortColors(vector<int>& nums) {
+//        //使用计数排序
+//        vector<int> arrCount(2);
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (nums[i] < 2) {
+//                arrCount[nums[i]]++;
+//            }
+//        }
+//
+//        int k = 0;
+//
+//        for (int i = 0; i < arrCount.size(); i++) {
+//            for (int j = 0; j < arrCount[i]; j++) {
+//                nums[k++] = i;
+//            }
+//        }
+//
+//        while (k < nums.size()) {
+//            nums[k++] = 2;
+//        }
+//
+//    }
+//
+//    void test() {
+//        vector<int> nums = {2,0,2,1,1,0};
+//        sortColors(nums);
+//        vector<int>::iterator it = nums.begin();
+//        while (it != nums.end()) {
+//            cout<<*it<<"";
+//            it++;
+//        }
+//    }
+//};
+#pragma mark - 347
+//class Solution {
+//public:
+//    vector<int> topKFrequent(vector<int>& nums, int k) {
+//
+//        //计数排序一层
+//        int maxNum = nums[0], minNum = nums[0];
+//        for (int i = 0; i < nums.size(); i++) {
+//            maxNum = max(maxNum, nums[i]);
+//            minNum = min(minNum, nums[i]);
+//        }
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            nums[i] = nums[i] - minNum;
+//        }
+//
+//
+//        int maxCount = 0;
+//        vector<int> tempCount(maxNum - minNum + 1);
+//        for (int i = 0; i < nums.size(); i++) {
+//            tempCount[nums[i]]++;
+//
+//            maxCount = max(maxCount, tempCount[nums[i]]);
+//        }
+//
+//        //计数排序 排 第一次的结果
+//        vector<vector<int>> arrResultCount;
+//        arrResultCount.resize(maxCount + 1);
+//
+//        for (int i = 0; i < tempCount.size(); i++) {
+//            arrResultCount[tempCount[i]].push_back(i);
+//        }
+//
+//        vector<int> result;
+//        for (int i = (int)arrResultCount.size() - 1; i >= 0 && result.size() < k; i--) {
+//            for (int j = 0; j < arrResultCount[i].size(); j++) {
+//                result.push_back(arrResultCount[i][j] + minNum);
+//            }
+//        }
+//
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {1,1,1,2,2,3};
+//        vector<int> result = topKFrequent(nums, 2);
+//        vector<int>::iterator it = result.begin();
+//        while (it != result.end()) {
+//            cout<<*it<<endl;
+//            it++;
+//        }
+//    }
+//};
+
+#pragma mark - 451
+//class Solution {
+//public:
+//    string frequencySort(string s) {
+//        vector<int> arrStringCount(256);
+//
+//        int maxCount = 0;
+//        for (int i = 0; i < s.size(); i++) {
+//            arrStringCount[s[i]]++;
+//            maxCount = max(maxCount, arrStringCount[s[i]]);
+//        }
+//
+//        vector<vector<int>> arrCountCount(maxCount + 1, vector<int>());
+//        for (int i = 0; i < arrStringCount.size(); i++) {
+//            if (arrStringCount[i] > 0) {
+//                arrCountCount[arrStringCount[i]].push_back(i);
+//            }
+//        }
+//
+//        string result = "";
+//        for (int i = (int)arrCountCount.size() - 1; i >= 0; i--) {
+//            for (int j = 0; j < arrCountCount[i].size(); j++) {
+//                for (int k = i - 1; k >= 0; k--) {
+//                    result += arrCountCount[i][j];
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//    void test() {
+//        string result = frequencySort("Aatree");
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 64
+//class Solution {
+//public:
+//    int minPathSum(vector<vector<int>>& grid) {
+//        //状态转移方程f(i, j) = f(i - 1, j) + f(i, j - 1)
+//
+//        vector<vector<int>> allPath(grid);
+//        for (int j = 1; j < grid[0].size(); j++) {
+//            allPath[0][j] = allPath[0][j - 1] + grid[0][j];
+//        }
+//
+//        for (int i = 1; i < grid.size(); i++) {
+//            allPath[i][0] = allPath[i - 1][0] + grid[i][0];
+//        }
+//
+//
+//        for (int i = 1; i < grid.size(); i++) {
+//            for (int j = 1; j < grid[i].size(); j++) {
+//
+//                int path1 = allPath[i - 1][j] + grid[i][j];
+//                int path2 = allPath[i][j - 1] + grid[i][j];
+//
+//                allPath[i][j] = min(path1, path2);
+//            }
+//        }
+//
+//        return allPath[grid.size() - 1][grid[grid.size() - 1].size() - 1];
+//    }
+//
+//    void test() {
+////        vector<vector<int>> arr = {{1,3,1},{1,5,1},{4,2,1}};
+//        vector<vector<int>> arr = {{1,2,3},{4,5,6}};
+//        int result = minPathSum(arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 152
+//class Solution {
+//public:
+//    int maxProduct(vector<int>& nums) {
+//        /*转移方程
+//         f(n) = max(正数f(n - 1) * nums[i], nums[n]) nums[n] > 0
+//         f(n) = max(负数f(n - 1) * nums[i], nums[n]) nums[n] <= 0
+//
+//         改进版只用两个变量记录（正数f(n - 1)） 和 （负数f(n - 1)）
+//         */
+//        if (nums.size() == 0) {
+//            return 0;
+//        }
+//
+//        int maxNum = nums[0] > 0 ? nums[0] : 0;
+//        int minNum = nums[0] < 0 ? nums[0] : 0;
+//
+//
+//        int resultMaxNum = nums[0];
+//        for (int i = 1; i < nums.size(); i++) {
+//
+//            if (nums[i] > 0) {
+//                maxNum = max(maxNum * nums[i], nums[i]);
+//                minNum = min(minNum * nums[i], nums[i]);
+//            }
+//            else {
+//                int temp = maxNum;
+//                maxNum = max(minNum * nums[i], nums[i]);
+//                minNum = min(temp * nums[i], nums[i]);
+//            }
+//
+//            resultMaxNum = max(maxNum, resultMaxNum);
+//        }
+//
+//        return resultMaxNum;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {-2, -3, -4,0,0};
+//        int result = maxProduct(nums);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 70
+//class Solution {
+//public:
+//    int climbStairs(int n) {
+//        //转移方程 f(n) = f(n - 1) + f(n - 2)
+//        if (n <= 2) {
+//            return n;
+//        }
+//
+//        int last1 = 2, last2 = 1;
+//        int result = 0;
+//        for (int i = 3; i <= n; i++) {
+//            result = last1 + last2;
+//            last2 = last1;
+//            last1 = result;
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        int result = climbStairs(2);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 198
+//class Solution {
+//public:
+//    int rob(vector<int>& nums) {
+//        //转换方程f(n) = max(f(n - 2) + nums[2], f(n - 1));
+//
+//        //优化 只用两个变量记录f(n - 2) 和 f(n - 1)
+//
+//        if (nums.size() < 1) {
+//            return 0;
+//        }
+//
+//        if (nums.size() == 1) {
+//            return nums[0];
+//        }
+//
+//        if (nums.size() == 2) {
+//            return max(nums[0], nums[1]);
+//        }
+//
+//        int last2 = nums[0];
+//        int last1 = max(nums[0], nums[1]);
+//        int result = nums[0];
+//        for (int i = 2; i < nums.size(); i++) {
+//            result = max(last2 + nums[i], last1);
+//            last2 = last1;
+//            last1 = result;
+//        }
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {2,1,1,2};
+//        int result = rob(arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 413
+//class Solution {
+//public:
+//    int numberOfArithmeticSlices(vector<int>& nums) {
+//        /*等差数列nums[n] - nums[n - 1] = nums[n - 1] - nums[n - 2]
+//         nums[n] + nums[n - 2] = 2*nums[n - 1]
+//
+//         转换方程f(n) = f(n - 1) + length - 2
+//         */
+//        if (nums.size() < 3) {
+//            return 0;
+//        }
+//
+//        int result = 0;
+//        int length = 2;
+//        int last = 0;
+//        for (int i = 2; i < nums.size(); i++) {
+//            if (nums[i] + nums[i - 2] == 2 * nums[i - 1]) {
+//                length++;
+//
+//                result += (last + length - 2);
+//            }
+//            else {
+//                length = 2;
+//                last = 0;
+//            }
+//        }
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,2,3,8,9,10};
+//        int result = numberOfArithmeticSlices(arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 542 01
+//class Solution {
+//public:
+//    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+//        /*转移方程
+//         f(i, j) = min(f(i - 1, j), f(i, j - 1), f(i + j + 1), f(i + 1, j)) matrix[i][j] != 0
+//         f(i, j) = 0 matrix[i][j] = 0;
+//         */
+//        int lengthI = (int)matrix.size() - 1;
+//        int lengthJ = (int)matrix[0].size() - 1;
+//
+//        vector<vector<int>> result(lengthI + 1, vector<int>(lengthJ + 1, INT_MAX - 1));
+//
+//        //向左下
+//        for (int i = 0; i <= lengthI; i++) {
+//            for (int j = 0; j <= lengthJ; j++) {
+//                if (matrix[i][j] == 0) {
+//                    result[i][j] = 0;
+//                }
+//                else {
+//                    int lastI = i - 1 > 0 ? i - 1 : 0;
+//                    int lastJ = j - 1 > 0 ? j - 1 : 0;
+//
+//                    int temp = INT_MAX - 1;
+//                    if (i == 0 && j == 0) {
+//
+//                    }
+//                    else if (i == 0) {
+//                        temp = result[i][lastJ] + matrix[i][j];
+//                    }
+//                    else if (j == 0) {
+//                        temp = result[lastI][j] + matrix[i][j];
+//                    }
+//                    else {
+//                        temp = min(result[lastI][j], result[i][lastJ]) + matrix[i][j];
+//                    }
+//
+//                    result[i][j] = min(temp, result[i][j]);
+//                }
+//            }
+//        }
+//
+////        tool.printMatrix(result);
+//
+//        //向右上
+//        for (int i = (int)matrix.size() - 1; i >= 0 ; i--) {
+//            for (int j = (int)matrix[i].size() - 1; j >= 0 ; j--) {
+//                if (matrix[i][j] == 0) {
+//                    result[i][j] = 0;
+//                }
+//                else {
+//                    int lastI = i + 1 > lengthI ? lengthI : i + 1;
+//                    int lastJ = j + 1 > lengthJ ? lengthJ : j + 1;
+//
+//                    int temp = INT_MAX - 1;
+//                    if (i == lengthI && j == lengthJ) {
+//
+//                    }
+//                    else if (i == lengthI) {
+//                        temp = result[i][lastJ] + matrix[i][j];
+//                    }
+//                    else if (j == lengthJ) {
+//                        temp = result[lastI][j] + matrix[i][j];
+//                    }
+//                    else {
+//                        temp = min(result[lastI][j], result[i][lastJ]) + matrix[i][j];
+//                    }
+//
+//                    result[i][j] = min(temp, result[i][j]);
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<vector<int>> matrix = {{1,1,0,0,1,0,0,1,1,0},{1,0,0,1,0,1,1,1,1,1},{1,1,1,0,0,1,1,1,1,0},{0,1,1,1,0,1,1,1,1,1},{0,0,1,1,1,1,1,1,1,0},{1,1,1,1,1,1,0,1,1,1},{0,1,1,1,1,1,1,0,0,1},{1,1,1,1,1,0,0,1,1,1},{0,1,0,1,1,0,1,1,1,1},{1,1,1,0,1,0,1,1,1,1}};
+//
+//        tool.printMatrix(matrix);
+//
+//        vector<vector<int>> ans = {{2,1,0,0,1,0,0,1,1,0},{1,0,0,1,0,1,1,2,2,1},{1,1,1,0,0,1,2,2,1,0},{0,1,2,1,0,1,2,3,2,1},{0,0,1,2,1,2,1,2,1,0},{1,1,2,3,2,1,0,1,1,1},{0,1,2,3,2,1,1,0,0,1},{1,2,1,2,1,0,0,1,1,2},{0,1,0,1,1,0,1,2,2,3},{1,2,1,0,1,0,1,2,3,4}};
+//
+//        tool.printMatrix(ans);
+//
+//        vector<vector<int>> result = updateMatrix(matrix);
+//
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 221
+//class Solution {
+//public:
+//    int maximalSquare(vector<vector<char>>& matrix) {
+//        /*f(i,j)为i,j方向内最大正方形边长
+//
+//         如果f(i,j)为1, f(i,j)的最大正方形为边长为：(min(f(i-1,j),f(i - 1,j)) + 1, f(i-1, j-1)) + 1
+//         如果f(i,j)为0, f(i,j) = 0
+//
+//         */
+//        int maxLength = 0;
+//        int lengthI = (int)matrix.size() - 1;
+//        int lengthJ = (int)matrix[0].size() - 1;
+//        vector<vector<int>> result(lengthI + 1, vector<int>(lengthJ + 1, 0));
+//
+//        for (int i = 0; i <= lengthI; i++) {
+//            for (int j = 0; j <= lengthJ; j++) {
+//                if (matrix[i][j] == '0') {
+//                    result[i][j] = 0;
+//                }
+//                else {
+//                    if (i > 0 && j > 0) {
+//                        result[i][j] = min(result[i - 1][j], result[i][j - 1]);
+//                        result[i][j] = min(result[i][j], result[i - 1][j - 1]) + 1;
+//                    }
+//                    else {
+//                        result[i][j] = 1;
+//                    }
+//
+//                    maxLength = max(result[i][j], maxLength);
+//                }
+//            }
+//        }
+//
+//        return maxLength * maxLength;
+//    }
+//
+//    void test() {
+//        vector<vector<char>> matrix = {{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}};
+//        int result = maximalSquare(matrix);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 279
+//class Solution {
+//public:
+//    int numSquares(int n) {
+//        //转移方程：f(n) = min(f(n - i^2), f(n - (i + 1)^2).....f(1^2)) + 1
+//        vector<int> result(n + 1, 9999);
+//        result[0] = 0;
+//        for (int i = 1; i <= n; i++) {
+//
+//            for (int j = 1; j * j <= i; j++) {
+//                result[i] = min(result[i], result[i - j * j] + 1);
+//            }
+//        }
+//
+//        return result[n];
+//    }
+//
+//    void test() {
+//        int result = numSquares(13);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 91
+//class Solution {
+//public:
+//    int numDecodings(string s) {
+//        /*转换方程：f(n) = f(n - 1) + {if 0 <= lastc+c <= 26 + 1 //当前字和上一个字可以形成编码，可以多(last - 1）Count组合
+//         */
+//        if (s.size() == 0) {
+//            return 0;
+//        }
+//
+//        if ('0' >= s[0]) {
+//            return 0;
+//        }
+//
+//        int result = 1;
+//        int lastCount1 = 1;
+//        int lastCount2 = 1;
+//
+//        for (int i = 1; i < s.size(); i++) {
+//            if (s[i] == '0') {
+//                if (s[i - 1] >= '3' || s[i - 1] <= '0'){//当前是0时，不能和后面组合，如果前面大于3，或者0则不能组合
+//                    return 0;
+//                }
+//                else if (s[i - 1] == 1 || s[i - 1] == 2) {
+//                    result = lastCount1;
+//                }
+//                else {
+//                    result = lastCount2;
+//                }
+//            }
+//            else {
+//                if (s[i - 1] == '1' || (s[i - 1] == '2' && s[i] < '7')) {//10-19 或 20- 26
+//                    result = lastCount1 + lastCount2;
+//                }
+//            }
+//
+//            lastCount2 = lastCount1;
+//            lastCount1 = result;
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        int result = numDecodings("10011");
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 139
+//class Solution {
+//public:
+//    bool wordBreak(string s, vector<string>& wordDict) {
+///*转换方程 f(n) = f(n - k) | f(n);
+// f(n - k)在wordDict中
+// */
+//        if (s.size() == 0) {
+//            return false;
+//        }
+//        vector<bool> result(s.size(), false);
+//        for (int i = 0; i <= s.size(); i++) {
+//            for (int j = 0; j < wordDict.size(); j++) {
+//                string word = wordDict[j];
+//                if (i + 1 >= word.size()) {
+//                    if (s.substr(i + 1 - word.size(), word.size()) == word) {
+//                        if (i < word.size()) {
+//                            result[i] = true;
+//                        }
+//                        else {
+//                            result[i] = result[i] || result[i - word.size()];
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return result[s.size() - 1];
+//    }
+//
+//    void test() {
+//        vector<string> wordDict = {"app", "pl", "ple", "a", "le"};
+//        bool result = wordBreak("applee", wordDict);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 300
 class Solution {
 public:
-    void sortColors(vector<int>& nums) {
-        //使用计数排序
-        vector<int> arrCount(2);
+    int lengthOfLIS(vector<int>& nums) {
+//转换方程 f(n) = f(n - 1) 如果 nums[n - 1] < nums[n] +1;
+        if (nums.size() == 0) {
+            return 0;
+        }
 
-        for (int i = 0; i < nums.size(); i++) {
-            if (nums[i] < 2) {
-                arrCount[nums[i]]++;
+        vector<int> result(nums.size());
+        int maxLength = 0;
+        for (int i = 0; i < nums.size() - maxLength; i++) {
+            for (int j = i + 1; j < nums.size(); j++) {
+                if (nums[i] < nums[j]) {
+                    result[i] = max(result[i], result[j] + 1);
+                }
             }
+            maxLength = max(result[i], maxLength);
         }
 
-        int k = 0;
-
-        for (int i = 0; i < arrCount.size(); i++) {
-            for (int j = 0; j < arrCount[i]; j++) {
-                nums[k++] = i;
-            }
-        }
-
-        while (k < nums.size()) {
-            nums[k++] = 2;
-        }
-
+        return  maxLength;
     }
 
     void test() {
-        vector<int> nums = {2,0,2,1,1,0};
-        sortColors(nums);
-        vector<int>::iterator it = nums.begin();
-        while (it != nums.end()) {
-            cout<<*it<<"";
-            it++;
-        }
+        vector<int> nums = {4,10,4,3,8,9};
+        int maxLength = lengthOfLIS(nums);
+        cout<<maxLength<<endl;
     }
 };
 
 int main(int argc, const char * argv[]) {
     // insert code here...
 
-//    Solution solution;
-//    solution.test();
+//    int i = -8;
+//    i = i >> 5;
+//    cout<<i<<endl;
+
+    Solution solution;
+    solution.test();
 
 //    Sort sort;
 //    sort.test();
 
-    LeaZcy lea;
-    lea.test();
+//    LeaZcy zcy;
+//    zcy.test();
+
+//    LeaStt stt;
+//    stt.test();
 
     return 0;
 }

@@ -10,6 +10,8 @@
 		98CA98132600806B00734915 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA98122600806B00734915 /* main.cpp */; };
 		98CA9821260430D500734915 /* Sort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA981F260430D500734915 /* Sort.cpp */; };
 		98CA984826095FF100734915 /* LeaZCY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA984626095FF100734915 /* LeaZCY.cpp */; };
+		98CA984D260B120100734915 /* LeaSTT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA984B260B120100734915 /* LeaSTT.cpp */; };
+		98CA9854260C23B900734915 /* Tools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA9852260C23B900734915 /* Tools.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,10 @@
 		98CA9820260430D500734915 /* Sort.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Sort.hpp; sourceTree = "<group>"; };
 		98CA984626095FF100734915 /* LeaZCY.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LeaZCY.cpp; sourceTree = "<group>"; };
 		98CA984726095FF100734915 /* LeaZCY.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LeaZCY.hpp; sourceTree = "<group>"; };
+		98CA984B260B120100734915 /* LeaSTT.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LeaSTT.cpp; sourceTree = "<group>"; };
+		98CA984C260B120100734915 /* LeaSTT.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LeaSTT.hpp; sourceTree = "<group>"; };
+		98CA9852260C23B900734915 /* Tools.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tools.cpp; sourceTree = "<group>"; };
+		98CA9853260C23B900734915 /* Tools.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tools.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,10 @@
 				98CA981F260430D500734915 /* Sort.cpp */,
 				98CA984726095FF100734915 /* LeaZCY.hpp */,
 				98CA984626095FF100734915 /* LeaZCY.cpp */,
+				98CA984C260B120100734915 /* LeaSTT.hpp */,
+				98CA984B260B120100734915 /* LeaSTT.cpp */,
+				98CA9853260C23B900734915 /* Tools.hpp */,
+				98CA9852260C23B900734915 /* Tools.cpp */,
 			);
 			path = TestLCD;
 			sourceTree = "<group>";
@@ -128,6 +138,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98CA984D260B120100734915 /* LeaSTT.cpp in Sources */,
+				98CA9854260C23B900734915 /* Tools.cpp in Sources */,
 				98CA984826095FF100734915 /* LeaZCY.cpp in Sources */,
 				98CA98132600806B00734915 /* main.cpp in Sources */,
 				98CA9821260430D500734915 /* Sort.cpp in Sources */,
