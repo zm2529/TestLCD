@@ -1902,32 +1902,449 @@ Tool tool;
 //};
 
 #pragma mark - 300
+//class Solution {
+//public:
+//    int lengthOfLIS(vector<int>& nums) {
+///*转换方程  如果 nums[n - 1] < nums[n] f(n) = max{f(n - 1), f(n - 2)...f(0)} + 1
+// f(n) = f(n - 1) + 1如果 nums[n - 1] < nums[n]
+// */
+//        if (nums.size() <= 0) {
+//            return (int)nums.size();
+//        }
+//
+//        vector<int> result(nums.size(), 1);
+//        int maxLength = 0;
+//        result[0] = 1;
+//        for (int i = 0; i < nums.size(); i++) {
+//            for (int j = 0; j < i; j++) {
+//                if (nums[j] < nums[i]) {
+//                    result[i] = max(result[i], result[j] + 1);
+//                }
+//            }
+//            maxLength = max(result[i], maxLength);
+//        }
+//
+//        return  maxLength;
+//    }
+//
+////    int lengthOfLIS2(vector<int>& nums) {
+////        int max_length = 0, n = nums.size();
+////        if (n <= 1) return n;
+////        vector<int> dp(n, 1);
+////        for (int i = 0; i < n; ++i) {
+////           for (int j = 0; j < i; ++j) {
+////               if (nums[i] > nums[j]) {
+////                  dp[i] = max(dp[i], dp[j] + 1);
+////               }
+////    }
+////           max_length = max(max_length, dp[i]);
+////        }
+////        return max_length;
+////    }
+//
+//    void test() {
+//        vector<int> nums = {10,9,2,5,3,7,101,18};
+//        int maxLength = lengthOfLIS(nums);
+//        cout<<maxLength<<endl;
+//    }
+//};
+
+#pragma mark - 35
+//class Solution {
+//public:
+//
+//    int searchInsert(vector<int>& nums, int target) {
+//        //遍历,O(n)
+//        int lessThanTargetIndex = 0;
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (nums[i] == target) {
+//                return i;
+//            }
+//            if (nums[i] < target) {
+//                lessThanTargetIndex = i + 1;
+//            }
+//        }
+//
+//        return lessThanTargetIndex;
+//    }
+//
+//    int searchInsert2(vector<int>& nums, int target) {
+//        //二分 O(logn)
+//
+//        int l = 0, r = (int)nums.size() - 1;
+//        int lessThanTargetIndex = 0;
+//        while ( l <= r) {
+//            int mid = l + ((r - l) >> 1);
+//            if (nums[mid] == target) {
+//                return mid;
+//            }
+//
+//            if (nums[mid] > target) {
+//                r = mid - 1;
+//            }
+//
+//            if (nums[mid] < target) {
+//                lessThanTargetIndex = mid + 1;
+//                l = mid + 1;
+//            }
+//        }
+//
+//        return lessThanTargetIndex;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {1};
+//        int result = searchInsert2(nums, 0);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 27
+//class Solution {
+//public:
+//    int removeElement(vector<int>& nums, int val) {
+//        //遍历 O(n)
+//        int removeCount = 0;
+//        int arrLength = (int)nums.size();
+//        for (int i = 0; i < arrLength - removeCount; i++) {
+//            if (nums[i] == val) {
+//                removeCount++;
+//                nums[i] = nums[arrLength - removeCount];
+//                i--;
+//            }
+//
+//        }
+//
+//        return arrLength - removeCount;
+//    }
+//
+//    int removeElement2(vector<int>& nums, int val) {
+//        //双指针 O(n)
+//        int i = 0;
+//        for (int j = 0; j < nums.size(); j++) {
+//            if (nums[j] != val) {
+//                nums[i] = nums[j];
+//                i++;
+//            }
+//            else {
+//
+//            }
+//        }
+//
+//        return i;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {1,2,2,2,2};
+//        int result = removeElement2(nums, 3);
+//        cout<<result<<endl;
+//        tool.printVector(nums);
+//    }
+//};
+
+#pragma mark - 15
+//class Solution {
+//public:
+//    vector<vector<int>> threeSum(vector<int>& nums) {
+//        //map O(n2)
+//        sort(nums.begin(), nums.end());
+//        map<int, int> listMap;
+//        vector<vector<int>> result;
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (i > 0 && nums[i] == nums[i - 1]) {//重复数字跳过
+//                continue;
+//            }
+//            listMap.clear();
+//            for (int k = i; k < nums.size(); k++) {
+//                listMap[nums[k]]++;
+//            }
+//            for (int j = i + 1; j < nums.size(); j++) {
+//                if (j > i + 1 && nums[j] == nums[j - 1]) {//重复数字跳过
+//                    listMap[nums[j]]--;//更新余量
+//                    continue;
+//                }
+//                int target = - (nums[i] + nums[j]);
+//                if (listMap[nums[i]] > 0) {//是否还有余量
+//                    listMap[nums[i]]--;//使用一次减一个数量
+//                }
+//                else {
+//                    break;//i没有余量直接跳出
+//                }
+//
+//                if (listMap[nums[j]] > 0) {
+//                    listMap[nums[j]]--;
+//                }
+//                else {
+//                    listMap[nums[i]]++;
+//                    continue;
+//                }
+//                if (listMap.count(target) > 0 && listMap[target] > 0) {
+//                    vector<int> temp = {nums[i], nums[j], target};
+//                    result.push_back(temp);
+//                    listMap[target]--;
+//                    listMap[nums[i]]++;
+//                }
+//                else {
+//                    //没有匹配成功 恢复使用的量
+//                    listMap[nums[i]]++;
+//                    listMap[nums[j]]++;
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    vector<vector<int>> threeSum2(vector<int>& nums) {
+//        //双指针 O(n2)
+//        if (nums.size() < 3) {
+//            return {};
+//        }
+//
+//        sort(nums.begin(), nums.end());
+//        vector<vector<int>> result;
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (i > 0 && nums[i] == nums[i - 1]) {//和上次匹配过的值重复跳过
+//                continue;
+//            }
+//            int l = i + 1;
+//            int r = (int)nums.size() - 1;
+//            while (l < r) {
+//                if (nums[l] == nums[l - 1] && l > i + 1) {//和上次匹配过的值重复跳过
+//                    l++;
+//                    continue;
+//                }
+//                if (r < nums.size() - 1 && nums[r] == nums[r + 1]) {//和上次匹配过的值重复跳过
+//                    r--;
+//                    continue;
+//                }
+//                int sum = nums[i] + nums[l] + nums[r];
+//                if (sum < 0) {
+//                    l++;
+//                }
+//                else if (sum > 0) {
+//                    r--;
+//                }
+//                else {
+//                    vector<int> temp = {nums[i], nums[l], nums[r]};
+//                    result.push_back(temp);
+//                    l++;
+//                    r--;
+//                }
+//            }
+//        }
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {0, 0, 0};
+//        vector<vector<int>> result = threeSum(nums);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 18
+//class Solution {
+//public:
+//    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+//        //双指针 O(n2)
+//        //三数之和外套一层循环
+//        if (nums.size() < 4) {
+//            return {};
+//        }
+//
+//        //优化 前4个最小数和>target 则跳出循环,后最大4个数和<target,跳出循环
+//        sort(nums.begin(), nums.end());
+//        vector<vector<int>> result;
+//        for (int k = 0; k < nums.size(); k++) {
+//
+//            if (k < nums.size() - 4 && (nums[k] + nums[k + 1] + nums[k + 2] + nums[k + 3]) > target) return result;//前4个最小数和>target, k之后不会有结果，直接返回
+//
+//            if (k > 0 && nums[k] == nums[k - 1]) {//和上次匹配过的值重复跳过
+//                continue;
+//            }
+//            for (int i = k + 1; i < nums.size(); i++) {
+//                if (i > k + 1 && nums[i] == nums[i - 1]) {//和上次匹配过的值重复跳过
+//                    continue;
+//                }
+//                int l = i + 1;
+//                int r = (int)nums.size() - 1;
+//
+//                if (r > 3 && (nums[r] + nums[r - 1] + nums[r - 2] + nums[r - 3]) < target) break;//后最大4个数和<target 此次循环不会有结果
+//
+//                while (l < r) {
+//                    if (nums[l] == nums[l - 1] && l > i + 1) {//和上次匹配过的值重复跳过
+//                        l++;
+//                        continue;
+//                    }
+//                    if (r < nums.size() - 1 && nums[r] == nums[r + 1]) {//和上次匹配过的值重复跳过
+//                        r--;
+//                        continue;
+//                    }
+//                    int sum = nums[i] + nums[l] + nums[r];
+//                    if (sum < target - nums[k]) {
+//                        l++;
+//                    }
+//                    else if (sum > target - nums[k]) {
+//                        r--;
+//                    }
+//                    else {
+//                        vector<int> temp = {nums[i], nums[l], nums[r], nums[k]};
+//                        result.push_back(temp);
+//                        l++;
+//                        r--;
+//                    }
+//                }
+//            }
+//        }
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {0,0,0,0};
+//        vector<vector<int>> result = fourSum(nums, 0);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 206
+//class Solution {
+//public:
+//    ListNode* reverseList(ListNode* head) {
+//
+//        if (head == nullptr) {
+//            return nullptr;
+//        }
+//        //原地循环
+//        ListNode *ptr = head;
+//        head = head->next;
+//        ListNode *newHead = nullptr;
+//        while (ptr != nullptr) {
+//            ptr->next = newHead;
+//            newHead = ptr;
+//            ptr = head;
+//            if (head != nullptr) {
+//                head = head->next;
+//            }
+//        }
+//        return newHead;
+//    }
+//
+//    ListNode* reverseList2(ListNode* head) {
+//
+//        if (head == nullptr) {
+//            return nullptr;
+//        }
+//
+//        return reverse(head, nullptr);
+//    }
+//
+//    ListNode *reverse(ListNode *head, ListNode* ptr) {
+//
+//        if (head == nullptr) {
+//            return ptr;
+//        }
+//        ListNode *temp = head->next;
+//        head->next = ptr;
+//        ptr = head;
+//
+//
+//        return reverse(temp, ptr);
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,2,3,4,5};
+//        vector<int>::iterator it = arr.begin();
+//        ListNode *head = nullptr;
+//        ListNode *temp = nullptr;
+//        while (it != arr.end()) {
+//            if (head == nullptr) {
+//                head = new ListNode(*it);
+//                temp = head;
+//            }
+//            else {
+//                ListNode *node = new ListNode(*it);
+//                temp->next = node;
+//                temp = node;
+//            }
+//            it++;
+//        }
+//        tool.printList(head);
+//        ListNode *result = reverseList2(head);
+//        tool.printList(result);
+//
+//    }
+//};
+
+#pragma mark - 143
 class Solution {
 public:
-    int lengthOfLIS(vector<int>& nums) {
-//转换方程 f(n) = f(n - 1) 如果 nums[n - 1] < nums[n] +1;
-        if (nums.size() == 0) {
-            return 0;
+    ListNode *detectCycle(ListNode *head) {
+
+        //floyd判环
+        if (head == nullptr) {
+            return nullptr;
         }
 
-        vector<int> result(nums.size());
-        int maxLength = 0;
-        for (int i = 0; i < nums.size() - maxLength; i++) {
-            for (int j = i + 1; j < nums.size(); j++) {
-                if (nums[i] < nums[j]) {
-                    result[i] = max(result[i], result[j] + 1);
+        ListNode *slow = head, *fast = head;
+        int time = 0;
+        while (true) {
+            if (fast == slow) {
+                time++;
+
+                if (time == 3) return fast;
+
+                if (time == 2) {
+                    fast = head;
+                    continue;
                 }
             }
-            maxLength = max(result[i], maxLength);
-        }
 
-        return  maxLength;
+            if (fast->next == nullptr || fast->next->next == nullptr) {
+                return nullptr;
+            }
+
+            if (time == 1) {
+                fast = fast->next->next;
+                slow = slow->next;
+            }
+
+            if (time == 2) {
+                fast = fast->next;
+                slow = slow->next;
+            }
+        }
     }
 
     void test() {
-        vector<int> nums = {4,10,4,3,8,9};
-        int maxLength = lengthOfLIS(nums);
-        cout<<maxLength<<endl;
+        vector<int> arr = {1};
+        int pos = 0;
+
+        //create list
+        ListNode *cyclePtr = nullptr;
+        ListNode *head = nullptr;
+        ListNode *current = nullptr;
+        for (int i = 0; i < arr.size(); i++) {
+            if (head == nullptr) {
+                head = new ListNode(arr[i]);
+                current = head;
+            }
+            else {
+                ListNode *node = new ListNode(arr[i]);
+                current->next = node;
+                current = node;
+            }
+
+            if (i == pos) {
+                cyclePtr = current;
+            }
+        }
+
+        current->next = cyclePtr;
+
+//        tool.printList(head);
+        ListNode *result = detectCycle(head);
+        int i = 0;
     }
 };
 

@@ -15,6 +15,14 @@
 
 using namespace std;
 
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
 class Tool {
 public:
     void printVector(vector<int>& vec)
@@ -38,6 +46,16 @@ public:
 
         cout<<endl;
     }
+
+    void printList(ListNode *head) {
+        ListNode *temp = head;
+        while (temp != nullptr) {
+            cout<<temp->val<<"->";
+            temp = temp->next;
+        }
+        cout<<"NULL"<<endl;
+    }
+
 };
 
 #endif /* Tools_hpp */
