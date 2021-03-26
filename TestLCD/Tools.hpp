@@ -56,6 +56,31 @@ public:
         cout<<"NULL"<<endl;
     }
 
+    ListNode *createList(vector<int>& arr, int cyclePos) {
+        ListNode *cyclePtr = nullptr;
+        ListNode *head = nullptr;
+        ListNode *current = nullptr;
+        for (int i = 0; i < arr.size(); i++) {
+            if (head == nullptr) {
+                head = new ListNode(arr[i]);
+                current = head;
+            }
+            else {
+                ListNode *node = new ListNode(arr[i]);
+                current->next = node;
+                current = node;
+            }
+
+            if (i == cyclePos) {
+                cyclePtr = current;
+            }
+        }
+
+        current->next = cyclePtr;
+
+        return head;
+    }
+
 };
 
 #endif /* Tools_hpp */
