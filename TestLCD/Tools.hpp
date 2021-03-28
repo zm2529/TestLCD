@@ -29,7 +29,7 @@ public:
     {
         vector<int>::iterator it = vec.begin();
         while (it != vec.end()) {
-            cout<<*it<<" ";
+            cout<<*it<<",";
             it++;
         }
         cout<<endl;
@@ -76,7 +76,9 @@ public:
             }
         }
 
-        current->next = cyclePtr;
+        if (current != nullptr) {
+            current->next = cyclePtr;
+        }
 
         return head;
     }
