@@ -12,6 +12,9 @@
 #include <cstring>
 #include <deque>
 #include <map>
+#include <unordered_map>
+#include <set>
+#include <unordered_set>
 
 #include "Tools.hpp"
 #include "Sort.hpp"
@@ -2276,7 +2279,7 @@ Tool tool;
 //    }
 //};
 
-#pragma mark - 143
+#pragma mark - 142
 //class Solution {
 //public:
 //    ListNode *detectCycle(ListNode *head) {
@@ -2349,50 +2352,471 @@ Tool tool;
 //};
 
 #pragma mark - 209
+//class Solution {
+//public:
+//    int minSubArrayLen(int target, vector<int>& nums) {
+//        //双指针
+//        if (nums.size() == 0) {
+//            return 0;
+//        }
+//        int l = 0, r = 1;
+//        int minLength = INT_MAX;
+//        int count = nums[l];
+//        while (r <= nums.size()) {
+//            if (count >= target) {
+//                minLength = min(minLength, r - l);
+//
+//                if (minLength == 1) {
+//                    return minLength;
+//                }
+//
+//                count -= nums[l];
+//                l++;
+//                continue;
+//            }
+//            if (r < nums.size()) {
+//                count += nums[r];
+//            }
+//            r++;
+//
+//
+//        }
+//
+//        return minLength > nums.size() ? 0 : minLength;
+//    }
+//
+//    int minSubArrayLen2(int target, vector<int>& nums) {
+//        //前缀和 二分
+//        vector<int> sums(nums);
+//        int minLength = INT_MAX;
+//        for (int i = 1; i < sums.size(); i++) {
+//            sums[i] = sums[i] + sums[i - 1];
+//        }
+//
+//        for (int i = 0; i < sums.size(); i++) {
+//            if (sums[i] >= target) {
+//                int lessIndex = getLessNumIndex(sums, sums[i] - target, 0, i);
+//                if (lessIndex == i) {
+//                    return 1;
+//                }
+//                minLength = min(minLength, i - lessIndex);
+//
+//            }
+//        }
+//
+//        return minLength > nums.size() ? 0 : minLength;
+//    }
+//
+//    int getLessNumIndex(vector<int>& arr, int target, int l, int r) {
+//        int temp = -1;
+//        while (l <= r) {
+//            int mid = l + ((r - l) >> 1);
+//            if (arr[mid] > target) {
+//                r = mid - 1;
+//            }
+//            else {
+//                temp = mid;
+//                l = mid + 1;
+//            }
+//        }
+//
+//        return temp;
+//    }
+//
+//    void check() {
+//        for (int i = 0; i < 100; i++) {
+//            int n = rand() % 10;
+//            vector<int> arr(n);
+//            for (int j = 0; j < n; j++) {
+//                arr[j] = rand() % 10;
+//            }
+//            int target = rand() % 10;
+//            int result = minSubArrayLen(target, arr);
+//            int result2 = minSubArrayLen2(target, arr);
+//
+//            if (result != result2) {
+//                cout<<"false:"<<result<<" "<<result2<<endl;
+//                tool.printVector(arr);
+//                cout<<"target:"<<target<<endl;
+//                return;
+//            }
+//        }
+//
+//        cout<<"success"<<endl;
+//    }
+//
+//    void test() {
+//        check();
+//        return;
+//
+//        vector<int> nums = {0,9,2,4};
+//        int result = minSubArrayLen2(9, nums);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 59
+//class Solution {
+//public:
+//    vector<vector<int>> generateMatrix(int n) {
+//        //循环
+//        vector<vector<int>> result(n, vector<int>(n));
+//        int limitI = 0, limitJ = 0;
+//        int i = 0, j = 0;
+//        int count = 1;
+//        while (limitI <= (n >> 1)) {
+//            i = limitI;
+//            j = limitJ;
+//            while (j < n - limitJ) {
+//                result[i][j++] = count++;
+//            }
+//
+//
+//            j = n - limitJ - 1;
+//            i++;
+//            while (i < n - limitI) {
+//                result[i++][j] = count++;
+//            }
+//
+//            i = n - limitI - 1;
+//            j--;
+//            limitI++;
+//            while (j >= limitJ) {
+//                result[i][j--] = count++;
+//            }
+//
+//            j = limitJ;
+//            i--;
+//            while (i >= limitI) {
+//                result[i--][j] = count++;
+//            }
+//            limitJ++;
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<vector<int>> result = generateMatrix(2);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 203
+//class Solution {
+//public:
+//    ListNode* removeElements(ListNode* head, int val) {
+//        //新链表
+//        ListNode *newHead = nullptr;
+//        ListNode *ptr = nullptr;
+//        while (head != nullptr) {
+//            if (head->val != val) {
+//                if (newHead == nullptr) {
+//                    newHead = new ListNode(head->val);
+//                    ptr = newHead;
+//                }
+//                else {
+//                    ListNode *node = new ListNode(head->val);
+//                    ptr->next = node;
+//                    ptr = ptr->next;
+//                }
+//            }
+//            head = head->next;
+//        }
+//
+//        return newHead;
+//    }
+//
+//    ListNode* removeElements2(ListNode* head, int val) {
+//        //原链表删除
+//        ListNode *ptr = head;
+//        ListNode *temp = nullptr;
+//        ListNode *lastPtr = nullptr;
+//        while (ptr != nullptr) {
+//            if (ptr->val == val) {
+//                if (ptr == head) {
+//                    head = head->next;
+//                    delete ptr;
+//                    ptr = head;
+//                    continue;
+//                }
+//                else {
+//                    temp = ptr->next;
+//                    delete ptr;
+//                    lastPtr->next = temp;
+//                    ptr = temp;
+//                    continue;
+//                }
+//            }
+//            lastPtr = ptr;
+//            ptr = ptr->next;
+//        }
+//        return head;
+//    }
+//
+//    ListNode* removeElements3(ListNode* head, int val) {
+//        //原链表 虚拟头节点
+//        ListNode *virtualHead = new ListNode(0, head);
+//        ListNode *ptr = virtualHead;
+//        while (ptr != nullptr && ptr->next != nullptr) {
+//            if (ptr->next->val == val) {
+//                ListNode *node = ptr->next->next;
+//                delete ptr->next;
+//                ptr->next = node;
+//                continue;
+//            }
+//            ptr = ptr->next;
+//        }
+//
+//        return virtualHead->next;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {2,2,2,23,4,5,6,7};
+//        ListNode *head = tool.createList(arr, -1);
+//        tool.printList(head);
+//        ListNode *newHead = removeElements3(head, 2);
+//        tool.printList(newHead);
+//    }
+//};
+
+#pragma mark - 707
+//class MyLinkedList {
+//
+//public:
+//
+//    ListNode *head;
+//    int size;
+//
+//    /** Initialize your data structure here. */
+//    MyLinkedList() {
+//        head = new ListNode(0);
+//        size = 0;
+//    }
+//
+//    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+//    int get(int index) {
+//        if (index >= size || index < 0) {
+//            return -1;
+//        }
+//        ListNode *ptr = head->next;
+//        for (int i = 0; i < index; i++) {
+//            ptr = ptr->next;
+//        }
+//
+//        return ptr->val;
+//    }
+//
+//    /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+//    void addAtHead(int val) {
+//        ListNode *ptr = head->next;
+//        ListNode *temp = new ListNode(val, ptr);
+//        head->next = temp;
+//        size++;
+//    }
+//
+//    /** Append a node of value val to the last element of the linked list. */
+//    void addAtTail(int val) {
+//        ListNode *ptr = head;
+//        while (ptr->next != nullptr) {
+//            ptr = ptr->next;
+//        }
+//        ptr->next = new ListNode(val);
+//        size++;
+//    }
+//
+//    /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+//    void addAtIndex(int index, int val) {
+//        if (index > size || index < 0) {
+//            return;
+//        }
+//        ListNode *ptr = head;
+//        for (int i = 0; i < index; i++) {
+//            ptr = ptr->next;
+//        }
+//        ListNode *temp = ptr->next;
+//        ptr->next = new ListNode(val, temp);
+//        size++;
+//    }
+//
+//    /** Delete the index-th node in the linked list, if the index is valid. */
+//    void deleteAtIndex(int index) {
+//        if (index >= size || index < 0) {
+//            return;
+//        }
+//        ListNode *ptr = head;
+//        for (int i = 0; i < index; i++) {
+//            ptr = ptr->next;
+//        }
+//
+//        ListNode *temp = ptr->next->next;
+//        delete ptr->next;
+//        ptr->next = temp;
+//        size--;
+//    }
+//
+//};
+//
+//class Solution {
+//public:
+//    void test() {
+//        MyLinkedList list;
+//        vector<int> arr = {2,3,4,5,6,7,78,3,3,1,4};
+//        //test addAtHead
+//        for (int i = 0; i < arr.size(); i++) {
+////            list.addAtHead(arr[i]);
+//        }
+//
+//        //test addAtTail
+//        for (int i = 0; i < arr.size(); i++) {
+//            list.addAtTail(arr[i]);
+//        }
+//
+//        //test addAtIndex
+//        list.addAtIndex(11, 99);
+//
+//        //test deleteAtIndex
+//        list.deleteAtIndex(-1);
+//
+//        tool.printList(list.head);
+//
+//        //test get
+//        int getVal = list.get(12);
+//        cout<<getVal<<endl;
+//    }
+//};
+
+/**
+ * Your MyLinkedList object will be instantiated and called as such:
+ * MyLinkedList* obj = new MyLinkedList();
+ * int param_1 = obj->get(index);
+ * obj->addAtHead(val);
+ * obj->addAtTail(val);
+ * obj->addAtIndex(index,val);
+ * obj->deleteAtIndex(index);
+ */
+
+#pragma mark - 242
+//class Solution {
+//public:
+//    bool isAnagram(string s, string t) {
+//        unordered_map<char, int> map;
+//        if (s.size() != t.size()) {
+//            return false;
+//        }
+//        for (int i = 0; i < s.size(); i++) {
+//            map[s[i]]++;
+//        }
+//
+//        for (int i = 0; i < t.size(); i++) {
+//            if (map[t[i]] <= 0) {
+//                return false;
+//            }
+//            map[t[i]]--;
+//        }
+//
+//        return true;
+//    }
+//
+//    void test() {
+//        bool result = isAnagram(" ", "1");
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 349
+//class Solution {
+//public:
+//    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+//        unordered_map<int, int> recodeMap;
+//        unordered_map<int, int> resultMap;
+//        for (int i = 0; i < nums1.size(); i++) {
+//            recodeMap[nums1[i]] = 1;
+//        }
+//
+//        for (int i = 0; i < nums2.size(); i++) {
+//            if (recodeMap.count(nums2[i]) != 0) {
+//                resultMap[nums2[i]] = 1;
+//            }
+//        }
+//
+//        vector<int> result;
+//        unordered_map<int, int>::iterator it = resultMap.begin();
+//        while (it != resultMap.end()) {
+//            result.push_back(it->first);
+//            it++;
+//        }
+//
+//        return result;
+//    }
+//
+//    vector<int> intersection2(vector<int>& nums1, vector<int>& nums2) {
+//
+//        vector<int> result;
+//        //排序 双指针
+//        sort(nums1.begin(), nums1.end());
+//        sort(nums2.begin(), nums2.end());
+//
+//        for (int i = 0,j = 0; j < nums2.size() && i < nums1.size();) {
+//
+//            if (nums1[i] == nums2[j]) {
+//                if (result.size() == 0 || nums1[i] != result[result.size() - 1]) {
+//                    result.push_back(nums1[i]);
+//                }
+//                i++;
+//                j++;
+//            }
+//            else if (nums1[i] > nums2[j]) {
+//                j++;
+//            }
+//            else {
+//                i++;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> nums1 = {4,9,5};
+//        vector<int> nums2 = {5,9,4,9,8,4};
+//        vector<int> result = intersection2(nums1, nums2);
+//        tool.printVector(result);
+//    }
+//};
+
+#pragma mark - 202
 class Solution {
 public:
-    int minSubArrayLen(int target, vector<int>& nums) {
-        //双指针
-
-        if (nums.size() == 0) {
-            return 0;
-        }
-
-        if (nums.size() == 1 && nums[0] >= target) {
-            return 1;
-        }
-
-        int currentSum = 0;
-        int count = 0;
-        int minCount = INT_MAX;
-
-        int i = 0, j = 0;
-        while (i < nums.size()) {
-            if (currentSum < target) {
-                currentSum += nums[i];
-                count++;
+    bool isHappy(int n) {
+        unordered_set<int> recodeSet;
+        int sum = n;
+        while (sum != 1) {
+            sum = getHappySum(sum);
+            
+            if (recodeSet.find(sum) != recodeSet.end()) {
+                return false;
             }
-
-            if (currentSum >= target) {
-                minCount = min(count, minCount);
-                currentSum -= nums[j];
-                count--;
-                j++;
-                continue;
-            }
-
-            i++;
+            
+            recodeSet.insert(sum);
         }
-
-        if (minCount > nums.size()) {
-            return 0;
-        }
-        return minCount;
+        
+        return true;
     }
+    
+    int getHappySum(int n) {
+        int sum = 0;
+        do {
+            int temp = n % 10;
+            sum += temp * temp;
+            n = n / 10;
+        } while (n != 0);
 
+        return sum;
+    }
+    
     void test() {
-        vector<int> nums = {2,3,1,2,4,3};
-        int result = minSubArrayLen(7, nums);
+        bool result = isHappy(2);
         cout<<result<<endl;
     }
 };
