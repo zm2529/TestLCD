@@ -2277,74 +2277,123 @@ Tool tool;
 //};
 
 #pragma mark - 143
+//class Solution {
+//public:
+//    ListNode *detectCycle(ListNode *head) {
+//
+//        //floyd判环
+//        if (head == nullptr) {
+//            return nullptr;
+//        }
+//
+//        ListNode *slow = head, *fast = head;
+//        int time = 0;
+//        while (true) {
+//            if (fast == slow) {
+//                time++;
+//
+//                if (time == 3) return fast;
+//
+//                if (time == 2) {
+//                    fast = head;
+//                    continue;
+//                }
+//            }
+//
+//            if (fast->next == nullptr || fast->next->next == nullptr) {
+//                return nullptr;
+//            }
+//
+//            if (time == 1) {
+//                fast = fast->next->next;
+//                slow = slow->next;
+//            }
+//
+//            if (time == 2) {
+//                fast = fast->next;
+//                slow = slow->next;
+//            }
+//        }
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1};
+//        int pos = 0;
+//
+//        //create list
+//        ListNode *cyclePtr = nullptr;
+//        ListNode *head = nullptr;
+//        ListNode *current = nullptr;
+//        for (int i = 0; i < arr.size(); i++) {
+//            if (head == nullptr) {
+//                head = new ListNode(arr[i]);
+//                current = head;
+//            }
+//            else {
+//                ListNode *node = new ListNode(arr[i]);
+//                current->next = node;
+//                current = node;
+//            }
+//
+//            if (i == pos) {
+//                cyclePtr = current;
+//            }
+//        }
+//
+//        current->next = cyclePtr;
+//
+////        tool.printList(head);
+//        ListNode *result = detectCycle(head);
+//        int i = 0;
+//    }
+//};
+
+#pragma mark - 209
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) {
+    int minSubArrayLen(int target, vector<int>& nums) {
+        //双指针
 
-        //floyd判环
-        if (head == nullptr) {
-            return nullptr;
+        if (nums.size() == 0) {
+            return 0;
         }
 
-        ListNode *slow = head, *fast = head;
-        int time = 0;
-        while (true) {
-            if (fast == slow) {
-                time++;
-
-                if (time == 3) return fast;
-
-                if (time == 2) {
-                    fast = head;
-                    continue;
-                }
-            }
-
-            if (fast->next == nullptr || fast->next->next == nullptr) {
-                return nullptr;
-            }
-
-            if (time == 1) {
-                fast = fast->next->next;
-                slow = slow->next;
-            }
-
-            if (time == 2) {
-                fast = fast->next;
-                slow = slow->next;
-            }
+        if (nums.size() == 1 && nums[0] >= target) {
+            return 1;
         }
+
+        int currentSum = 0;
+        int count = 0;
+        int minCount = INT_MAX;
+
+        int i = 0, j = 0;
+        while (i < nums.size()) {
+            if (currentSum < target) {
+                currentSum += nums[i];
+                count++;
+            }
+
+            if (currentSum >= target) {
+                minCount = min(count, minCount);
+                currentSum -= nums[j];
+                count--;
+                j++;
+                continue;
+            }
+
+            i++;
+        }
+
+        if (minCount > nums.size()) {
+            return 0;
+        }
+        return minCount;
     }
 
     void test() {
-        vector<int> arr = {1};
-        int pos = 0;
-
-        //create list
-        ListNode *cyclePtr = nullptr;
-        ListNode *head = nullptr;
-        ListNode *current = nullptr;
-        for (int i = 0; i < arr.size(); i++) {
-            if (head == nullptr) {
-                head = new ListNode(arr[i]);
-                current = head;
-            }
-            else {
-                ListNode *node = new ListNode(arr[i]);
-                current->next = node;
-                current = node;
-            }
-
-            if (i == pos) {
-                cyclePtr = current;
-            }
-        }
-
-        current->next = cyclePtr;
-
-//        tool.printList(head);
-        ListNode *result = detectCycle(head);
-        int i = 0;
+        vector<int> nums = {2,3,1,2,4,3};
+        int result = minSubArrayLen(7, nums);
+        cout<<result<<endl;
     }
 };
 
