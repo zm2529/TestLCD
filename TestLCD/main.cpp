@@ -42,14 +42,61 @@ Tool tool;
 //        }
 //        return result;
 //    }
-//    void test(){
-//        vector<int> nums = {1,2,3,8,9};
-//        vector<int> vec = this->twoSum(nums, 10);
-//        vector<int>::iterator it = vec.begin();
-//        while (it != vec.end()) {
-//            cout<<*it<<endl;
-//            it++;
+//
+//    vector<int> twoSum2(vector<int>& nums, int target) {
+//        if (nums.size() < 2) {
+//            return {};
 //        }
+//        //双指针
+//        vector<int> temp(nums);
+//        vector<int> result;
+//        sort(nums.begin(), nums.end());
+//        int l = 0, r = (int)nums.size() - 1;
+//        while (l < r) {
+//            if (nums[l] + nums[r] == target) {
+//                for (int i = 0; i < temp.size(); i++) {
+//                    if (temp[i] == nums[l] || temp[i] == nums[r]) {
+//                        result.push_back(i);
+//                        if (result.size() == 2) {
+//                            return result;
+//                        }
+//                    }
+//                }
+//            }
+//            else if (nums[l] + nums[r] < target) {
+//                l++;
+//            }
+//            else {
+//                r--;
+//            }
+//        }
+//
+//        return {};
+//    }
+//
+//    vector<int> twoSum3(vector<int>& nums, int target) {
+//        //map
+//        unordered_map<int, int> map;
+//        for (int i = 0; i < nums.size(); i++) {
+//            map[nums[i]] = i;
+//        }
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            int temp = target - nums[i];
+//            if (map.count(temp) != 0) {
+//                if (map[temp] != i) {
+//                    return {map[temp] , i};
+//                }
+//            }
+//        }
+//
+//        return {};
+//    }
+//    void test(){
+//        vector<int> nums = {3,2,4};
+//        vector<int> vec = twoSum3(nums, 5);
+//
+//        tool.printVector(vec);
 //    }
 //};
 #pragma mark - 2
@@ -2786,38 +2833,363 @@ Tool tool;
 //};
 
 #pragma mark - 202
+//class Solution {
+//public:
+//    bool isHappy(int n) {
+//        unordered_set<int> recodeSet;
+//        int sum = n;
+//        while (sum != 1) {
+//            sum = getHappySum(sum);
+//
+//            if (recodeSet.find(sum) != recodeSet.end()) {
+//                return false;
+//            }
+//
+//            recodeSet.insert(sum);
+//        }
+//
+//        return true;
+//    }
+//
+//    int getHappySum(int n) {
+//        int sum = 0;
+//        do {
+//            int temp = n % 10;
+//            sum += temp * temp;
+//            n = n / 10;
+//        } while (n != 0);
+//
+//        return sum;
+//    }
+//
+//    void test() {
+//        bool result = isHappy(2);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 454
+//class Solution {
+//public:
+//    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+//        //循环 map
+//        unordered_map<int, int> map;
+//        for (int i = 0; i < A.size(); i++) {
+//            for (int j = 0; j < B.size(); j++) {
+//                map[A[i] + B[j]]++;
+//            }
+//        }
+//
+//        int count = 0;
+//        for (int i = 0; i < C.size(); i++) {
+//            for (int j = 0; j < D.size(); j++) {
+//                int temp = - (C[i] + D[j]);
+//                if (map.count(temp) != 0) {
+//                    count += map[temp];
+//                }
+//            }
+//        }
+//
+//        return count;
+//    }
+//    void test() {
+//        vector<int> A = {1, 2};
+//        vector<int> B = {-2, -1};
+//        vector<int> C = {-1, 2};
+//        vector<int> D = {0, 2};
+//
+//        int count = fourSumCount(A, B, C, D);
+//        cout<<count<<endl;
+//    }
+//};
+
+#pragma mark - 383
+//class Solution {
+//public:
+//    bool canConstruct(string ransomNote, string magazine) {
+//        // map
+//        unordered_map<char, int> map;
+//        for (int i = 0; i < magazine.size(); i++) {
+//            map[magazine[i]]++;
+//        }
+//
+//        for (int i = 0; i < ransomNote.size(); i++) {
+//            if (map.count(ransomNote[i]) != 0) {
+//                if (--map[ransomNote[i]] < 0) {
+//                    return false;
+//                }
+//            }
+//            else {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    bool canConstruct2(string ransomNote, string magazine) {
+//        //数组
+//        vector<int> arrMagazineCount(26);
+//        for (int i = 0; i < magazine.size(); i++) {
+//            arrMagazineCount[(magazine[i] - 'a')]++;
+//        }
+//
+//        for (int i = 0; i < ransomNote.size(); i++) {
+//            if (--(arrMagazineCount[(ransomNote[i] - 'a')]) < 0) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    void test() {
+//        bool result = canConstruct2("a", "ab");
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 344
+//class Solution {
+//public:
+//    void reverseString(vector<char>& s) {
+//        int l = 0, r = (int)s.size() - 1;
+//        while (l < r) {
+//            swap(s, l++, r--);
+//        }
+//    }
+//
+//    void swap(vector<char>& arr, int i, int j) {
+//        char temp = arr[i];
+//        arr[i] = arr[j];
+//        arr[j] = temp;
+//    }
+//
+//    void test() {
+//        vector<char> s = {'h','e','l','l','o'};
+//        reverseString(s);
+//        vector<char>::iterator it = s.begin();
+//        while (it != s.end()) {
+//            cout<<*it<<",";
+//            it++;
+//        }
+//        cout<<endl;
+//    }
+//};
+
+#pragma mark - 541
+//class Solution {
+//public:
+//    string reverseStr(string s, int k) {
+//        if (k <= 1) {
+//            return s;
+//        }
+//        for (int i = 0, n = 0; i < s.size(); i += k, n++) {
+//            if (n % 2 == 0) {
+//                int r = i + k - 1;
+//                if (i + k > s.size()) {
+//                    r = (int)s.size() - 1;
+//                }
+//                reverseString(s, i, r);
+//            }
+//        }
+//
+//        return s;
+//    }
+//
+//    void reverseString(string& s, int i ,int j) {
+//        int l = i, r = j;
+//        while (l < r) {
+//            swap(s, l++, r--);
+//        }
+//    }
+//
+//    void swap(string& s, int i, int j) {
+//        char temp = s[i];
+//        s[i] = s[j];
+//        s[j] = temp;
+//    }
+//
+//    void test() {
+//        string s = "abcdefghijklmn";
+//        string result = reverseStr(s, 0);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 剑指05
+//class Solution {
+//public:
+//    string replaceSpace(string s) {
+//        //新字符串
+//        string result = "";
+//        for (int i = 0; i < s.size(); i++) {
+//            if (s[i] != ' ') {
+//                result += s[i];
+//            }
+//            else {
+//                result += "%20";
+//            }
+//        }
+//        return result;
+//    }
+//
+//    string replaceSpace2(string s) {
+//        //原数组添加
+//        int length = (int)s.size();
+//        int count = 0;
+//        for (int i = 0; i < s.size(); i++) {
+//            if (s[i] == ' ') count++;
+//        }
+//
+//        if (count == 0) {
+//            return s;
+//        }
+//
+//        s.resize(s.size() + count * 2);
+//
+//        int j = (int)s.size() - 1;
+//        for (int i = length - 1; i >= 0; i--) {
+//            if (s[i] == ' ') {
+//                s[j--] = '0';
+//                s[j--] = '2';
+//                s[j--] = '%';
+//            }
+//            else {
+//                s[j--] = s[i];
+//            }
+//        }
+//
+//        return s;
+//    }
+//
+//    void test() {
+//        string result = replaceSpace2("We are happy.");
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 151
+//class Solution {
+//public:
+//    string reverseWords(string s) {
+//        //数组
+//        vector<string> arrResult;
+//        int l = -1;
+//        for (int i = 0; i < s.size(); i++) {
+//            if (s[i] != ' ' && l == -1) {
+//                l = i;
+//            }
+//
+//            if (s[i] == ' ' && l != -1 ) {
+//                string str = s.substr(l, i - l);
+//                arrResult.push_back(str);
+//                l = -1;
+//            }
+//
+//            if (i == s.size() - 1 && l != -1) {
+//                string str = s.substr(l, i - l + 1);
+//                arrResult.push_back(str);
+//                l = -1;
+//            }
+//        }
+//
+//        reverse(arrResult.begin(), arrResult.end());
+//        string resultStr = "";
+//        for (int i = 0; i < arrResult.size(); i++) {
+//            resultStr += arrResult[i];
+//            if (i != arrResult.size() - 1) {
+//                resultStr += " ";
+//            }
+//        }
+//
+//        return resultStr;
+//    }
+//
+//    string reverseWords2(string s) {
+//        //原地处理
+//
+//        //过滤空格
+//        int k = 0;
+//        bool isSpace = false;
+//        for (int i = 0; i < s.size(); i++) {
+//            if (s[i] != ' ') {
+//                if (isSpace == true) {
+//                    if (k != 0) {
+//                        s[k++] = ' ';
+//                    }
+//                    isSpace = false;
+//                }
+//                s[k++] = s[i];
+//            }
+//            else {
+//                isSpace = true;
+//            }
+//        }
+//
+//        int length = k;
+//        s.resize(length);//重新设置新大小
+//        reverseString(s, 0, length - 1);//整体反转字符串
+//        int l = -1;
+//        //每个小字符串反转
+//        for (int i = 0; i < length; i++) {
+//            if (s[i] != ' ' && l == -1) {
+//                l = i;
+//            }
+//
+//            if (s[i] == ' ' && l != -1) {
+//                reverseString(s, l, i - 1);
+//                l = -1;
+//            }
+//
+//            if (i == length - 1 && l != -1) {
+//                reverseString(s, l, i);
+//                l = -1;
+//            }
+//        }
+//
+//        return s;
+//    }
+//
+//    void reverseString(string& s, int i, int j) {
+//        int l = i , r = j;
+//        while (l < r) {
+//            swap(s[l++], s[r--]);
+//        }
+//    }
+//
+//    void test() {
+//        string result = reverseWords2("    the    sky is    blue   ");
+//        cout<<"!"<<result<<"!"<<endl;
+//    }
+//};
+
+#pragma mark - 剑指 58 II
 class Solution {
 public:
-    bool isHappy(int n) {
-        unordered_set<int> recodeSet;
-        int sum = n;
-        while (sum != 1) {
-            sum = getHappySum(sum);
-            
-            if (recodeSet.find(sum) != recodeSet.end()) {
-                return false;
-            }
-            
-            recodeSet.insert(sum);
-        }
-        
-        return true;
-    }
-    
-    int getHappySum(int n) {
-        int sum = 0;
-        do {
-            int temp = n % 10;
-            sum += temp * temp;
-            n = n / 10;
-        } while (n != 0);
+    string reverseLeftWords(string s, int n) {
+        //原地处理
 
-        return sum;
+        //反转第一部分字串
+        reverseString(s, 0, n - 1);
+        //反转第二部分字串
+        reverseString(s, n, (int)s.size() - 1);
+        //整体反转
+        reverseString(s, 0, (int)s.size() - 1);
+
+        return s;
     }
-    
+
+    void reverseString(string& s, int i, int j) {
+        int l = i, r = j;
+        while (l < r) {
+            swap(s[l++], s[r--]);
+        }
+    }
+
     void test() {
-        bool result = isHappy(2);
-        cout<<result<<endl;
+        string result = reverseLeftWords("", 0);
+        cout<<"!"<<result<<"!"<<endl;
     }
 };
 
