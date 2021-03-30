@@ -12,6 +12,7 @@
 		98CA984826095FF100734915 /* LeaZCY.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA984626095FF100734915 /* LeaZCY.cpp */; };
 		98CA984D260B120100734915 /* LeaSTT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA984B260B120100734915 /* LeaSTT.cpp */; };
 		98CA9854260C23B900734915 /* Tools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA9852260C23B900734915 /* Tools.cpp */; };
+		98CA98602612FDE300734915 /* backup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA985F2612FDE200734915 /* backup.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,7 @@
 		98CA984C260B120100734915 /* LeaSTT.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LeaSTT.hpp; sourceTree = "<group>"; };
 		98CA9852260C23B900734915 /* Tools.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tools.cpp; sourceTree = "<group>"; };
 		98CA9853260C23B900734915 /* Tools.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tools.hpp; sourceTree = "<group>"; };
+		98CA985F2612FDE200734915 /* backup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = backup.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				98CA98122600806B00734915 /* main.cpp */,
+				98CA985F2612FDE200734915 /* backup.cpp */,
 				98CA9820260430D500734915 /* Sort.hpp */,
 				98CA981F260430D500734915 /* Sort.cpp */,
 				98CA984726095FF100734915 /* LeaZCY.hpp */,
@@ -141,6 +144,7 @@
 				98CA984D260B120100734915 /* LeaSTT.cpp in Sources */,
 				98CA9854260C23B900734915 /* Tools.cpp in Sources */,
 				98CA984826095FF100734915 /* LeaZCY.cpp in Sources */,
+				98CA98602612FDE300734915 /* backup.cpp in Sources */,
 				98CA98132600806B00734915 /* main.cpp in Sources */,
 				98CA9821260430D500734915 /* Sort.cpp in Sources */,
 			);
