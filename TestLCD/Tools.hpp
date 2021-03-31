@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <vector>
+#include <deque>
 
 using namespace std;
 
@@ -21,6 +22,15 @@ struct ListNode {
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+struct TreeNode {
+    int val;
+    TreeNode * left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
 class Tool {
@@ -81,6 +91,114 @@ public:
         }
 
         return head;
+    }
+
+    void printBT(TreeNode *node) {//层先
+        deque<TreeNode *> deque;
+        deque.push_back(node);
+        deque.push_back(new TreeNode(-999));
+        while (deque.empty() == false) {
+
+            while (deque.front()->val != -999) {
+                TreeNode *temp = deque.front();
+                deque.pop_front();
+
+                if (temp->val == -1) {
+                    cout<<"N ";
+                }
+                else if (temp->val == -2) {
+                    cout<<"N ";
+                }
+                else {
+                    cout<<temp->val<<" ";
+                }
+
+                if (temp->left != nullptr || temp->right != nullptr) {
+                    if (temp->left != nullptr) {
+                        deque.push_back(temp->left);
+                    }
+                    else {
+                        deque.push_back(new TreeNode(-1));
+                    }
+
+                    if (temp->right != nullptr) {
+                        deque.push_back(temp->right);
+                    }
+                    else {
+                        deque.push_back(new TreeNode(-2));
+                    }
+                }
+            }
+            deque.pop_front();
+            cout<<endl;
+            if (deque.empty() == false) {
+                deque.push_back(new TreeNode(-999));
+            }
+        }
+
+    }
+
+    TreeNode *createBT(vector<int>& arr) {// 层先
+        deque<TreeNode *> deque;
+        TreeNode *root = nullptr;
+
+        int i = 0;
+        while (i < arr.size()) {
+            if (root == nullptr) {
+                root = new TreeNode(arr[i++]);
+                deque.push_back(root);
+            }
+            else {
+                if (i < arr.size()) {
+                    int tempVal = arr[i++];
+                    if (tempVal != -1) {
+                        TreeNode *tempRoot = deque.front();
+                        tempRoot->left = new TreeNode(tempVal);
+                        deque.push_back(tempRoot->left);
+                    }
+                }
+
+                if (i < arr.size()) {
+                    int tempVal = arr[i++];
+                    if (tempVal != -1) {
+                        TreeNode *tempRoot = deque.front();
+                        tempRoot->right = new TreeNode(tempVal);
+                        deque.push_back(tempRoot->right);
+                    }
+                }
+
+                deque.pop_front();
+            }
+        }
+
+        return root;
+    }
+
+    void DLRTraversal(TreeNode *node) {
+        if (node == nullptr) {
+            return;
+        }
+        cout<<node->val<<"->";
+        DLRTraversal(node->left);
+        DLRTraversal(node->right);
+    }
+
+    void LDRTraversal(TreeNode *node) {
+        if (node == nullptr) {
+            return;
+        }
+        LDRTraversal(node->left);
+        cout<<node->val<<"->";
+        LDRTraversal(node->right);
+    }
+
+    void LRDTraversal(TreeNode *node) {
+        if (node == nullptr) {
+            return;
+        }
+        LRDTraversal(node->left);
+        LRDTraversal(node->right);
+        cout<<node->val<<"->";
     }
 
 };
