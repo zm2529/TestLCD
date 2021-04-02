@@ -158,8 +158,8 @@
             filePath = "TestLCD/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -174,8 +174,8 @@
             filePath = "TestLCD/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -190,8 +190,8 @@
             filePath = "TestLCD/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -206,8 +206,8 @@
             filePath = "TestLCD/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -222,8 +222,8 @@
             filePath = "TestLCD/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -238,8 +238,8 @@
             filePath = "TestLCD/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -254,10 +254,74 @@
             filePath = "TestLCD/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1179"
-            endingLineNumber = "1179"
-            landmarkName = "largestValues3(root)"
-            landmarkType = "7">
+            startingLineNumber = "1180"
+            endingLineNumber = "1180"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B912EB82-DD83-47EB-B07C-1648AC6B3CA5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestLCD/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1644"
+            endingLineNumber = "1644"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8818215A-EAA2-408B-9909-4ED01FAB5195"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestLCD/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2081"
+            endingLineNumber = "2081"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8DC149A3-4736-40A0-8C8B-B8EE9032E1B1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestLCD/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2125"
+            endingLineNumber = "2125"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B8E087B2-CAF7-494C-82C3-816108E9FFC4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestLCD/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "2272"
+            endingLineNumber = "2272"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

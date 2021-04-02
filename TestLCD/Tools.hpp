@@ -99,7 +99,7 @@ public:
         deque.push_back(new TreeNode(-999));
         while (deque.empty() == false) {
 
-            while (deque.front()->val != -999) {
+            while (deque.front() != nullptr && deque.front()->val != -999) {
                 TreeNode *temp = deque.front();
                 deque.pop_front();
 
@@ -135,7 +135,7 @@ public:
                 deque.push_back(new TreeNode(-999));
             }
         }
-
+        cout<<endl;
     }
 
     TreeNode *createBT(vector<int>& arr) {// 层先
