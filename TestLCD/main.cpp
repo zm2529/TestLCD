@@ -2588,40 +2588,340 @@ Tool tool;
 //};
 
 #pragma mark - 98
+//class Solution {
+//public:
+//    TreeNode *lastNode;
+//    bool isValidBST(TreeNode* root) {
+//        //递归
+//
+//        return LDRTraversal(root);
+//    }
+//
+//    bool LDRTraversal(TreeNode* node) {
+//        if (node == nullptr) {
+//            return true;
+//        }
+//
+//        bool isLeftBST = LDRTraversal(node->left);
+//
+//        if ( lastNode == nullptr || (lastNode)->val < node->val) {
+//            lastNode = node;
+//        }
+//        else {
+//            return false;
+//        }
+//
+//        bool isRightBST = LDRTraversal(node->right);
+//
+//        return isLeftBST && isRightBST;
+//    }
+//
+//    bool isValidBST2(TreeNode* root) {
+//        //迭代 stack
+//        if (root == nullptr) {
+//            return true;
+//        }
+//
+//        stack<TreeNode *> stack;
+//        TreeNode* node = root;
+//
+//        while (stack.empty() == false || node != nullptr) {
+//
+//            while (node != nullptr) {
+//                stack.push(node);
+//                node = node->left;
+//            }
+//
+//            node = stack.top();
+//            stack.pop();
+//
+////            cout<<node->val<<"->";
+//            if (lastNode == nullptr || lastNode->val < node->val) {
+//                lastNode = node;
+//            }
+//            else {
+//                return false;
+//            }
+//
+//            node = node->right;
+//        }
+//
+//        return true;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,1};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        bool result = isValidBST2(root);
+//        cout<<endl<<result<<endl;
+//    }
+//};
+
+#pragma mark - 530
+//class Solution {
+//public:
+//    TreeNode *lastNode;
+//    int getMinimumDifference(TreeNode* root) {
+//        //递归 中序遍历 差
+//        if (root == nullptr) {
+//            return INT_MAX;
+//        }
+//
+//        int minVal = getMinimumDifference(root->left);
+//
+//        if (minVal == 1) {
+//            return 1;
+//        }
+//
+//
+//        if (lastNode != nullptr) {
+//            minVal = min(minVal, root->val - lastNode->val);
+//        }
+//        lastNode = root;
+//
+//        if (minVal == 1) {
+//            return 1;
+//        }
+//
+//
+//        minVal = min(minVal, getMinimumDifference(root->right));
+//
+//        return minVal;
+//    }
+//
+//    int getMinimumDifference2(TreeNode* root) {
+//        //最左 最右差
+//
+//        if (root == nullptr) {
+//            return 0;
+//        }
+//
+//        int minVal = 0, maxVal = 0;
+//        TreeNode* node = root;
+//        while (node != nullptr) {
+//            minVal = node->val;
+//            node = node->left;
+//        }
+//
+//        node = root;
+//        while (node != nullptr) {
+//            maxVal = node->val;
+//            node = node->right;
+//        }
+//
+//        return maxVal - minVal;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {543,384,652,-1,445,-1,699};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//        int result = getMinimumDifference(root);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 501
+//class Solution {
+//public:
+//    int modeCount;
+//    int currCount;
+//    int currVal;
+//    vector<int> findMode(TreeNode* root) {
+//        //递归 中序
+//        if (root == nullptr) {
+//            return {};
+//        }
+//
+//        currVal = root->val;
+//        modeCount = 0;
+//        currCount = 0;
+//
+//        vector<int> modeValVec;
+//
+//        traveral(root, modeValVec);
+//
+//        return modeValVec;
+//    }
+//
+//    void traveral(TreeNode *node, vector<int>& modeValVec) {
+//        if (node == nullptr) {
+//            return;
+//        }
+//
+//        traveral(node->left, modeValVec);
+//
+//        if (currVal == node->val) {
+//            currCount++;
+//        }
+//        else {
+//            currCount = 1;
+//            currVal = node->val;
+//        }
+//
+//        if (currCount > modeCount) {
+//            modeCount = currCount;
+//            modeValVec.clear();
+//            modeValVec.push_back(currVal);
+//        }
+//        else if (currCount == modeCount) {
+//            modeValVec.push_back(currVal);
+//        }
+//
+//        traveral(node->right, modeValVec);
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,-1,2,2};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        vector<int> result = findMode(root);
+//        tool.printVector(result);
+//    }
+//};
+
+#pragma mark - 236
+//class Solution {
+//public:
+//    TreeNode *ancstor = nullptr;
+//    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//
+//        LRDTraversal(root, p, q);
+//
+//        return ancstor;
+//    }
+//
+//    bool LRDTraversal(TreeNode *node, TreeNode* p, TreeNode *q) {
+//        if (node == nullptr) {
+//            return false;
+//        }
+//
+//        if (ancstor != nullptr) {
+//            return true;
+//        }
+//
+//        bool left = LRDTraversal(node->left, p, q);
+//
+//        bool right = LRDTraversal(node->right, p, q);
+//
+//        if (left && right) {
+//            if (ancstor == nullptr) {
+//                ancstor = node;
+//            }
+//            return true;
+//        }
+//
+//        if (node == p || node == q) {
+//            if (left || right) {
+//                ancstor = node;
+//            }
+//            return true;
+//        }
+//        else {
+//            return left || right;
+//        }
+//
+//    }
+//    void test() {
+//        vector<int> arr = {};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+////        TreeNode *result = lowestCommonAncestor(root, <#TreeNode *p#>, <#TreeNode *q#>)
+//    }
+//};
+
+#pragma mark - 235
 class Solution {
 public:
-    bool isValidBST(TreeNode* root) {
+    TreeNode *ancestor;
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
         //递归
-
-        return LDRTraversal(root, nullptr);
+        
+        LRDTraversal(root, p, q);
+        return ancestor;
     }
-
-    bool LDRTraversal(TreeNode *node, TreeNode *lastNode) {
+    
+    bool LRDTraversal(TreeNode *node, TreeNode* p, TreeNode *q) {
         if (node == nullptr) {
-            return true;
-        }
-
-        bool isLeftBST = LDRTraversal(node->left, lastNode);
-
-        if ( lastNode == nullptr || lastNode->val < node->val) {
-            lastNode = node;
-        }
-        else {
             return false;
         }
-
-        bool isRightBST = LDRTraversal(node->right, lastNode);
-
-        return isLeftBST && isRightBST;
+        
+        if (ancestor != nullptr) {
+            return true;
+        }
+        
+        bool left = LRDTraversal(node->left, p, q);
+        bool right = LRDTraversal(node->right, p, q);
+        
+                
+        if (left && right) {
+            if (ancestor == nullptr) {
+                ancestor = node;
+            }
+            return true;
+        }
+        
+        if (node == p || node == q) {
+            if (left || right) {
+                if (ancestor == nullptr) {
+                    ancestor = node;
+                }
+            }
+            return true;
+        }
+        
+        return left || right;
     }
-
+    
     void test() {
-        vector<int> arr = {5,4,6,-1,-1,3,7};
+        vector<int> arr = {6,2,8,0,4,7,9,-1,-2,3,5};
         TreeNode *root = tool.createBT(arr);
         tool.printBT(root);
-
-        bool result = isValidBST(root);
-        cout<<result<<endl;
+        
+        int pVal = 3, qVal = 9;
+        TreeNode *curr = root;
+        TreeNode *p = nullptr, *q = nullptr;
+        while (p == nullptr) {
+            
+            if (curr->val == pVal) {
+                p = curr;
+                break;
+            }
+            if (curr->val < pVal) {
+                curr = curr->right;
+            }
+            else{
+                curr = curr->left;
+            }
+        }
+        
+        curr = root;
+        while (q == nullptr) {
+            
+            if (curr->val == qVal) {
+                q = curr;
+                break;
+            }
+            if (curr->val < qVal) {
+                curr = curr->right;
+            }
+            else{
+                curr = curr->left;
+            }
+        }
+        
+        TreeNode *node = lowestCommonAncestor(root, p, q);
+        if (node != nullptr) {
+            cout<<endl<<node->val<<endl;
+        }
+        else {
+            cout<<endl<<"NULL"<<endl;
+        }
+        
     }
 };
 
