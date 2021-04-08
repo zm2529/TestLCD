@@ -73,38 +73,38 @@ int stairs(int n) {
     return result[n];
 }
 
-class Solution {
-public:
-    vector<int> f;
-    int mod = 1000000007;
-    int waysToStep(int n) {
-        f.resize(n+1);
-        f[0] = 1;
-        for(int i = 1; i <= n; i++) {
-            f[i] = f[i-1];
-            if(i >= 2) f[i] = (f[i] + f[i-2]) % mod;
-            if(i >= 3) f[i] = (f[i] + f[i-3]) % mod;
-        }
-        return f[n];
-    }
-};
-
-
-void LeaStt::test() {
-
-//    vector<int> arr = {};
-//    vector<int> result = gem(arr);
+//class Solution {
+//public:
+//    vector<int> f;
+//    int mod = 1000000007;
+//    int waysToStep(int n) {
+//        f.resize(n+1);
+//        f[0] = 1;
+//        for(int i = 1; i <= n; i++) {
+//            f[i] = f[i-1];
+//            if(i >= 2) f[i] = (f[i] + f[i-2]) % mod;
+//            if(i >= 3) f[i] = (f[i] + f[i-3]) % mod;
+//        }
+//        return f[n];
+//    }
+//};
 //
-//    int i = 0;
-
-//    int result = stairs(76);
-    Solution solution;
-    for (int i = 0; i < 10; i++) {
-        int r = rand() % 100;
-        cout<<r<<"  ";
-        int result = solution.waysToStep(r);
-        int result2 = stairs(r);
-
-        cout<<result<<"  "<<result2<<endl;
-    }
-}
+//
+//void LeaStt::test() {
+//
+////    vector<int> arr = {};
+////    vector<int> result = gem(arr);
+////
+////    int i = 0;
+//
+////    int result = stairs(76);
+//    Solution solution;
+//    for (int i = 0; i < 10; i++) {
+//        int r = rand() % 100;
+//        cout<<r<<"  ";
+//        int result = solution.waysToStep(r);
+//        int result2 = stairs(r);
+//
+//        cout<<result<<"  "<<result2<<endl;
+//    }
+//}

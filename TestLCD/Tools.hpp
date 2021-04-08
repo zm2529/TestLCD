@@ -48,10 +48,14 @@ public:
     void printMatrix(vector<vector<int>>& matrix)
     {
         for (int i = 0; i < matrix.size(); i++) {
+            cout<<"[";
             for (int j = 0; j < matrix[i].size(); j++) {
-                cout<<matrix[i][j]<<" ";
+                cout<<matrix[i][j];
+                if (j != matrix[i].size() - 1) {
+                    cout<<",";
+                }
             }
-            cout<<endl;
+            cout<<"]"<<endl;
         }
 
         cout<<endl;
