@@ -21,6 +21,7 @@
 #include <list>
 #include <functional>
 #include <utility>
+#include <numeric>
 
 #include "Tools.hpp"
 #include "Sort.hpp"
@@ -1115,19 +1116,308 @@ Tool tool;
 //class Solution {
 //public:
 //    int wiggleMaxLength(vector<int>& nums) {
-//        bool isUp;
+//
+//        if (nums.size() <= 1) return (int)nums.size();
+//
+//        int count = 1;
+//        cout<<nums[0]<<" ";
+//
+//        int start = 1;
+//        bool isUp = false;
+//        while (start < nums.size()) {//获取初始趋势
+//            if (nums[start - 1] == nums[start]) {
+//                start++;
+//            }
+//            else {
+//                isUp = nums[start] > nums[start - 1] ? true : false;
+//                break;
+//            }
+//        }
+//
+//        for (int i = start; i < nums.size(); i++) {
+//
+//            if (isUp == false && nums[i - 1] < nums[i]) {//下降趋势,趋势转变
+//                cout<<nums[i - 1]<<" ";
+//                count++;
+//                isUp = true;
+//            }
+//
+//            if (isUp == true && nums[i - 1] > nums[i]) {//上升趋势，趋势转变
+//                cout<<nums[i - 1]<<" ";
+//                count++;
+//                isUp = false;
+//            }
+//
+//            if (i == nums.size() - 1) {
+//                cout<<nums[i]<<" ";
+//                count++;
+//            }
+//        }
+//
+//        return count;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,1,1,2,2,2,2,2,2};
+//        int result = wiggleMaxLength(arr);
+//
+//        cout<<endl<<result<<endl;
+//    }
+//};
+
+#pragma mark - 53
+//class Solution {
+//public:
+//    int maxSubArray(vector<int>& nums) {
+//        int lastCount = nums[0];
+//        int maxCount = nums[0];
+//        for (int i = 1; i < nums.size(); i++) {
+//            lastCount = max(lastCount + nums[i], nums[i]);//继续累加，还是从头开始
+//            maxCount = max(maxCount, lastCount);
+//        }
+//
+//        return maxCount;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {-2};
+//        int result = maxSubArray(nums);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 122
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices) {
+//        //上升趋势最低买，最高卖
 //        int count = 0;
+//        int lowIndex = 0;
+//        for (int i = 1; i < prices.size(); i++) {
+//            if (prices[i] > prices[i - 1]) {
+////                cout<<"买入"<<prices[i - 1]<<"->";
+//            }
+//            else {
+//
+//                count += prices[i - 1] - prices[lowIndex];
+////                if (i - 1 != lowIndex) {
+////                    cout<<"卖出"<<prices[i - 1]<<" ";
+////                }
+//                lowIndex = i;
+//            }
+//
+//            if (i == prices.size() - 1 && prices[i] > prices[lowIndex]) {
+////                cout<<"卖出"<<prices[i]<<" ";
+//                count += prices[i] - prices[lowIndex];
+//            }
+//        }
+//
+//        return count;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {7};
+//        int result = maxProfit(arr);
+//
+//        cout<<endl<<result<<endl;
+//    }
+//};
+
+#pragma mark - 55
+//class Solution {
+//public:
+//    bool canJump(vector<int>& nums) {
+//        //回溯
+//
+//        if (nums.size() <= 1) {
+//            return true;
+//        }
+//
+//        return backtrack(nums, 0);
+//    }
+//
+//    bool backtrack(vector<int>& nums, int start) {
+//        if (start >= nums.size()) {
+//            return false;
+//        }
+//        for (int j = nums[start]; j >= 1; j--) {
+//            int jump = nums[start];
+//            if (jump + start >= nums.size() - 1) {
+//                return true;
+//            }
+//            else {
+//                if( backtrack(nums, start + j)) {
+//                    return true;
+//                };
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    bool canJump2(vector<int>& nums) {
+//
+//        if (nums.size() <= 1) {
+//            return true;
+//        }
+//
+//        //记录最远到达的位置，是否可以越过0的位置
+//        int maxPos = 0;
+//
 //        for (int i = 0; i < nums.size(); i++) {
-//            if (nums[]) {
-//                <#statements#>
+//
+//            if (nums[i] == 0) {
+//                if (maxPos <= i) {
+//                    return false;
+//                }
+//            }
+//
+//            if (maxPos < nums[i] + i) {
+//                maxPos = nums[i] + i;
+//            }
+//
+//            if (maxPos >= nums.size() - 1) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {2,0,0};
+//        bool result = canJump2(arr);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 45
+//class Solution {
+//public:
+//    int count = 0;
+//    int jump(vector<int>& nums) {
+//
+//        if (nums.size() <= 1) {
+//            return 0;
+//        }
+//
+//        //找到最早能到达最后位置的，位置pos，在递归寻找到达pos的位置，直到0位置
+//        backtrack(nums, (int)nums.size() - 1);
+//        return count;
+//    }
+//    void backtrack(vector<int>nums, int arrivedPos) {
+//        if (arrivedPos == 0) {
+//            return;
+//        }
+//        for (int i = 0; i < arrivedPos; i++) {
+//            int maxPos = nums[i] + i;
+//            if (maxPos >= arrivedPos) {
+//                count++;
+//                backtrack(nums, i);
+//                break;
 //            }
 //        }
 //    }
 //
 //    void test() {
+//        vector<int> arr = {2};
+//        int result = jump(arr);
 //
+//        cout<<result<<endl;
 //    }
 //};
+
+#pragma mark - 1005
+//class Solution {
+//public:
+//    int largestSumAfterKNegations(vector<int>& A, int K) {
+//        //最小数反转
+//        for (int i = 0; i < K; i++) {
+//            vector<int>::iterator pos = min_element(A.begin(), A.end());
+//
+//            *pos *= -1;
+//        }
+//
+//        return accumulate(A.begin(), A.end(), 0);
+//    }
+//
+//    int largestSumAfterKNegations2(vector<int>& A, int K) {
+//        if (A.size() == 0) {
+//            return 0;
+//        }
+//
+//        sort(A.begin(), A.end(), [](int a, int b) {
+//            return abs(a) > abs(b);
+//        });
+//
+//        int count = 0;
+//        for (int i = 0; i < A.size() - 1; i++) {
+//            if (A[i] < 0 && K > 0) {
+//                count -= A[i];
+//                K--;
+//            }
+//            else {
+//                count += A[i];
+//            }
+//        }
+//
+//        if (K % 2 == 0) {
+//            count += A[A.size() - 1];
+//        }
+//        else {
+//            count -= A[A.size() - 1];
+//        }
+//
+//        return count;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {4,2,3};
+//        int result = largestSumAfterKNegations2(arr, 1);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 134
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        //记录从每站离开时剩余的油量
+        int oweGas = 0;
+        int pos = -1;
+        for (int i = 0; i < gas.size(); i++) {
+            int balance = gas[i] - cost[i];
+            oweGas += balance;
+            if (gas[i] - cost[i] >= 0) {
+                if (pos == -1) {
+                    pos = i;
+                }
+            }
+            else {
+                if (oweGas < 0) {
+                    pos = -1;
+                }
+            }
+        }
+
+        if (oweGas >= 0) {
+            return pos;
+        }
+        else {
+            return - 1;
+        }
+    }
+
+    void test() {
+        vector<int> gas = {3,1,1};
+        vector<int> cost = {1,2,2};
+        int result = canCompleteCircuit(gas, cost);
+
+        cout<<result<<endl;
+    }
+};
 
 int main(int argc, const char * argv[]) {
     // insert code here...
