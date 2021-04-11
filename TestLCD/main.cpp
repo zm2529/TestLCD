@@ -1381,40 +1381,535 @@ Tool tool;
 //};
 
 #pragma mark - 134
+//class Solution {
+//public:
+//    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+//        /**
+//
+//         */
+//        //记录从每站离开时剩余的油量
+//        int oweGas = 0;//在记录开始点之前欠的汽油
+//        int startPosBalance = 0;//开始点之后汽油余量
+//        int pos = -1;//开始点位置
+//        for (int i = 0; i < gas.size(); i++) {
+//            int curBalance = gas[i] - cost[i];//当前点余量
+//            int nextBalance = i == (int)gas.size() - 1 ? 0 : gas[i + 1] - cost[i];//下一个点余量
+//            if (pos == -1) {//没有记录当前点
+//                if (curBalance + nextBalance >= 0 && curBalance >= 0) {//当前点能到达下一点，当前点有余量，
+//                    //记录起始点，其实点余量
+//                    pos = i;
+//                    startPosBalance += curBalance;
+//                }
+//                else {
+//                    //记录开始点之前的欠量
+//                    oweGas += curBalance;
+//                }
+//            }
+//            else {
+//                startPosBalance += curBalance;
+//                if (startPosBalance < 0) {//当点开始点到达不了下一个点
+//                    //重制起始点
+//                    pos = -1;
+//                    oweGas += startPosBalance;
+//                    startPosBalance = 0;
+//                }
+//            }
+//        }
+//        if (oweGas + startPosBalance >= 0) {//起始点欠量 小于 起始点之后的余量
+//            return pos;
+//        }
+//        return -1;
+//    }
+//
+//    void test() {
+//        /**
+//         [2,3,4]
+//         [3,4,3]
+//
+//         [1,2,3,4,5]
+//         [3,4,5,1,2]
+//
+//         [5,1,2,3,4]
+//         [4,4,1,5,1]
+//
+//         [1,2,3,4,5]
+//         [3,4,5,1,2]
+//
+//         [6,1,4,3,5]
+//         [3,8,2,4,2]
+//         */
+//        vector<int> gas = {2,3,4};
+//        vector<int> cost = {3,4,3};
+//        int result = canCompleteCircuit(gas, cost);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 135
+//class Solution {
+//public:
+//    int candy(vector<int>& ratings) {
+//        //找到第一个最小值的位置
+//        //从最小值位置先向左遍历，然后向右遍历，如果碰到其他最小值，再次向左遍历，
+//        vector<int> result(ratings.size(), 0);
+//        int minVal = INT_MAX, minFirstPos = 0;
+//        for (int i = 0; i < ratings.size(); i++) {
+//            if (ratings[i] < minVal) {
+//                minVal = ratings[i];
+//                minFirstPos = i;
+//            }
+//        }
+//
+//        result[minFirstPos] = 1;
+//
+//        int lastRightIndex = minFirstPos + 1;
+//        int currentIndex = minFirstPos - 1;
+//        while (currentIndex < (int)ratings.size()) {
+//
+//            if (currentIndex < lastRightIndex) {//向左
+//                if (currentIndex >= 0 && ratings[currentIndex] != minVal) {//碰到边界之前
+//                    int tempVal = 0;
+//                    if (ratings[currentIndex] > ratings[currentIndex + 1]) {
+//                        tempVal = result[currentIndex + 1] + 1;
+//                    }
+//                    else if (ratings[currentIndex] <= ratings[currentIndex + 1]) {
+//                        tempVal = 1;
+//                    }
+//                    result[currentIndex] = max(result[currentIndex], tempVal);
+//                    currentIndex--;
+//                    continue;
+//                }
+//                else {
+//                    currentIndex = lastRightIndex;
+//                }
+//            }
+//            else {//向右
+//                if (currentIndex <= ratings.size() - 1 && ratings[currentIndex] != minVal) { //碰到边界之前
+//                    int tempVal = 0;
+//                    if (ratings[currentIndex] > ratings[currentIndex - 1]) {
+//                        tempVal = result[currentIndex - 1] + 1;
+//                    }
+//                    else if (ratings[currentIndex] <= ratings[currentIndex - 1]) {
+//                        tempVal = 1;
+//                    }
+//                    result[currentIndex] = tempVal;
+//                    currentIndex++;
+//                }
+//                else if (ratings[currentIndex] == minVal) { //碰到最小值，向左遍历
+//                    result[currentIndex] = 1;
+//                    lastRightIndex = currentIndex + 1;
+//                    currentIndex--;
+//                }
+//            }
+//        }
+//
+//        int count = accumulate(result.begin(), result.end(), 0);
+//
+//        return count;
+//    }
+//
+//    int candy2(vector<int>& ratings) {
+//        vector<int> result(ratings.size(), 0);
+//        result[0] = 1;
+//        for (int i = 1; i < ratings.size(); i++) {
+//            int tempVal = 1;
+//            if (ratings[i] > ratings[i - 1]) {
+//                tempVal = result[i - 1] + 1;
+//            }
+//            result[i] = tempVal;
+//        }
+//
+//        int count = result[result.size() - 1];
+//        for (int i = (int)ratings.size() - 2; i >= 0; i--) {
+//            int tempVal = 0;
+//            if (ratings[i] > ratings[i + 1]) {
+//                tempVal = result[i + 1] + 1;
+//            }
+//            result[i] = max(result[i], tempVal);
+//            count += result[i];
+//
+//        }
+//        return count;
+//    }
+//
+//    void test() {
+//        /*3,2,1,5,2,1,2,
+//         [29,51,87,87,72,12]
+//         */
+//        vector<int> arr = {1,2,2};
+//
+//        int result = candy2(arr);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 860
+//class Solution {
+//public:
+//    bool lemonadeChange(vector<int>& bills) {
+//        //记录5元数量，10元数量
+//        //支付20时优先找10元
+//        int fiveCount = 0;
+//        int tenCount = 0;
+//
+//        for (int i = 0; i < bills.size(); i++) {
+//            if (bills[i] == 5) {
+//                fiveCount++;
+//            }
+//            else if (bills[i] == 10) {
+//                fiveCount--;
+//                tenCount++;
+//            }
+//            else {
+//                if (tenCount > 0) {
+//                    tenCount--;
+//                    fiveCount--;
+//                }
+//                else {
+//                    fiveCount -= 3;
+//                }
+//            }
+//
+//            if (fiveCount < 0 || tenCount < 0) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    void test() {
+//        vector<int> bills = {5,5,5,5,10,5,10,10,10,20};
+//        bool result = lemonadeChange(bills);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 406
+//class Solution {
+//public:
+//    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+//        sort(people.begin(), people.end(), [](vector<int>a, vector<int>b){
+//            if (a[0] == b[0]) {
+//                return a[1] < b[1];
+//            }
+//
+//            return a[0] > b[0];
+//        });
+//
+////        vector<vector<int>> result;
+//        list<vector<int>> result;
+//        for (int i = 0; i < people.size(); i++) {
+//            list<vector<int>>::iterator it = result.begin();
+//            int count = 0;
+//            while (count < people[i][1]) {
+//                count++;
+//                it++;
+//            }
+//            result.insert(it, people[i]);
+//        }
+//
+//        return vector<vector<int>>(result.begin(), result.end());
+//    }
+//
+//    void test() {
+//        /*
+//         {{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}}
+//
+//         {{6,0},{5,0},{4,0},{3,2},{2,2},{1,4}}
+//
+//         {{2,4},{3,4},{9,0},{0,6},{7,1},{6,0},{7,3},{2,5},{1,1},{8,0}}
+//
+//         {{8,2},{4,2},{4,5},{2,0},{7,2},{1,4},{9,1},{3,1},{9,0},{1,0}}
+//         */
+//        vector<vector<int>> arr = {{8,2},{4,2},{4,5},{2,0},{7,2},{1,4},{9,1},{3,1},{9,0},{1,0}};
+//
+//        vector<vector<int>> result = reconstructQueue(arr);
+//
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 452
+//class Solution {
+//public:
+//    int findMinArrowShots(vector<vector<int>>& points) {
+//        //按左值排序
+//        if (points.size() <= 1) return (int)points.size();
+//         //按左值排序
+//         sort(points.begin(), points.end(), [](vector<int>a, vector<int>b){
+//             if (a[0] == b[0]) {
+//                 return a[1] < b[1];
+//             }
+//             return a[0] < b[0];
+//         });
+//
+//         int count = 1;
+//         int maxRightPos = points[0][1];
+//         for (int i = 0; i < points.size(); i++) {
+//             if (maxRightPos < points[i][0]) {
+//                 count++;
+//                 maxRightPos = points[i][1];
+//             }
+//             else {
+//                 maxRightPos = min(maxRightPos, points[i][1]);
+//             }
+//         }
+//
+//         return count;
+//    }
+//
+//    void test() {
+//        vector<vector<int>> arr =  {{9,12},{1,10},{4,11},{8,12},{3,9},{6,9},{6,7}};
+//
+//        int result = findMinArrowShots(arr);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 435
+//class Solution {
+//public:
+//    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+//        if (intervals.size() <= 1) {
+//            return 0;
+//        }
+//
+//        //左值排序，保留右值最小的
+//        sort(intervals.begin(), intervals.end(), [](vector<int>a, vector<int>b){
+//            return a[0] < b[0];
+//        });
+//
+//        int count = 0;
+//        int lastRightInterVal = intervals[0][1];
+//        for (int i = 1; i < intervals.size(); i++) {
+//            if (lastRightInterVal > intervals[i][0]) {//右值大于当前左值，重叠，保留右值小的
+//                if (lastRightInterVal > intervals[i][1]) {
+//
+//                    lastRightInterVal = intervals[i][1];
+//                }
+//                count++;
+//                continue;
+//            }
+//            lastRightInterVal = intervals[i][1];
+//        }
+//
+//        return count;
+//    }
+//
+//    void test() {
+//        vector<vector<int>> arr = {{23,37},{24,125},{25,99},{26,45},{27,63},{28,40},{29,97},{30,78},{31,102},{32,120},{33,91},{34,107},{35,62},{36,137},{37,55}};
+//
+//        int result = eraseOverlapIntervals(arr);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 763
+//class Solution {
+//public:
+//    vector<int> partitionLabels(string S) {
+//        //记录经过的字母，
+//        string luguo;
+//        string partition;
+//
+//        vector<int> result;
+//        int lastPos = 0;
+//        while (lastPos < S.size()) {
+//            int start = lastPos;
+//            for (int i = lastPos; i < S.size(); i++) {
+//                if (partition.size() == 0) {
+//                    partition.push_back(S[i]);
+//                    continue;
+//                }
+//                if (partition.find(S[i]) == -1) {
+//                    luguo.push_back(S[i]);
+//                }
+//                else{
+//                    partition.append(luguo);
+//                    luguo.clear();
+//                    lastPos = i;
+//                }
+//            }
+//
+//            result.push_back(lastPos - start + 1);
+//            lastPos++;
+//            partition.clear();
+//            luguo.clear();
+//        }
+//
+//        return result;
+//    }
+//
+//    vector<int> partitionLabels2(string S) {
+//        //每个字母最后的位置
+//        vector<int> lastPosVec(26);
+//        for (int i = 0; i < S.size(); i++) {
+//            lastPosVec[S[i] - 'a'] = i;
+//        }
+//
+//        int curPos = 0;
+//        vector<int> result;
+//        while (curPos < S.size()) {
+//            int start = curPos;
+//            int maxLastPos = lastPosVec[S[curPos] - 'a'];
+//            while (curPos <= maxLastPos) {
+//                maxLastPos = max(maxLastPos, lastPosVec[S[curPos] - 'a']);
+//                curPos++;
+//            }
+//
+//            result.push_back(curPos - start);
+//
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> result = partitionLabels2("ababcbacadefegdehijhklij");
+//
+//        tool.printVector(result);
+//    }
+//};
+
+#pragma mark - 56
+//class Solution {
+//public:
+//    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+//        if (intervals.size() <= 1) {
+//            return intervals;
+//        }
+//
+//        //左值排序，保留重叠最大右值
+//        sort(intervals.begin(), intervals.end(), [](vector<int> &a, vector<int> &b) {
+//            return a[0] < b[0];
+//        });
+//
+//        vector<vector<int>> result;
+//        vector<int> current = intervals[0];
+//        for (int i = 1; i < intervals.size(); i++) {
+//            if (current[1] >= intervals[i][0]) {//重叠,记录大的右值
+//                current[1] = max(current[1], intervals[i][1]);
+//            }
+//            else {
+//                result.push_back(current);
+//                current = intervals[i];
+//            }
+//        }
+//        //
+//        result.push_back(current);
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        /*[1,3],[2,6],[8,10],[15,18]
+//         */
+//        vector<vector<int>> arr = {{1,3},{2,6},{8,10},{15,18}};
+//
+//        vector<vector<int>> result = merge(arr);
+//
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 738
+//class Solution {
+//public:
+//    int monotoneIncreasingDigits(int N) {
+//        //记录每位数，如果高位>低位，则高位-1，后面低位都是9
+//        vector<int> posNum;
+//        while (N > 0) {
+//            posNum.push_back(N % 10);
+//            N /= 10;
+//        }
+//
+//        int isAllNinePos = -1;//后面全是9的位置
+//        for (int i = 0; i < (int)posNum.size() - 1; i++) {
+//            if (posNum[i] < posNum[i + 1]) {
+//                posNum[i + 1]--;
+//                isAllNinePos = i;
+//            }
+//        }
+//
+//        int result = 0;
+//        for (int i = (int)posNum.size() - 1; i >= 0; i--) {
+//            if (isAllNinePos + 1 <= i) {
+//                result = result * 10 + posNum[i];
+//            }
+//            else {
+//                result = result * 10 + 9;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        int result = monotoneIncreasingDigits(1);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 714
 class Solution {
 public:
-    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
-        //记录从每站离开时剩余的油量
-        int oweGas = 0;
-        int pos = -1;
-        for (int i = 0; i < gas.size(); i++) {
-            int balance = gas[i] - cost[i];
-            oweGas += balance;
-            if (gas[i] - cost[i] >= 0) {
-                if (pos == -1) {
-                    pos = i;
+    int maxProfit(vector<int>& prices, int fee) {
+        //能赚钱才买，卖出后今后还能赚钱就卖
+        
+        //记录每个位置后面时间的最高价
+        vector<int> maxPricesVec(prices);
+        //记录每个位置后面时间的最低价
+        vector<int> minPricesVec(prices);
+        for (int i = (int)prices.size() - 2; i >= 0; i--) {
+            maxPricesVec[i] = max(prices[i], maxPricesVec[i + 1]);
+            minPricesVec[i] = min(prices[i], minPricesVec[i + 1]);
+        }
+                
+        int inPos = -1;
+        int outPos = -1;
+        int count = 0;
+        for (int i = 0; i < prices.size(); i++) {
+            if (inPos == -1) {//未买入
+                if (prices[i] + fee < maxPricesVec[i]) {//今日买，今后能赚钱，买入
+                    inPos = i;
                 }
             }
             else {
-                if (oweGas < 0) {
-                    pos = -1;
+                if (outPos == -1) {//已买入，未卖出
+                    if (prices[i] < maxPricesVec[i] && prices[i] > minPricesVec[i] + fee) {//当前价格小于今后最高价，今后最低价加手续费低于今日值，卖出
+                        outPos = i;
+                        count += prices[outPos] - prices[inPos] - fee;
+                        inPos = -1;
+                        outPos = -1;
+                        continue;
+                    }
+                    
+                    if (prices[i] == maxPricesVec[i]) {//当前价格已经是今后的最高价,卖出
+                        outPos = i;
+                        count += prices[outPos] - prices[inPos] - fee;
+                        inPos = -1;
+                        outPos = -1;
+                        continue;
+                    }
+                    
                 }
             }
         }
-
-        if (oweGas >= 0) {
-            return pos;
-        }
-        else {
-            return - 1;
-        }
+        
+        return count;
     }
-
+    
     void test() {
-        vector<int> gas = {3,1,1};
-        vector<int> cost = {1,2,2};
-        int result = canCompleteCircuit(gas, cost);
-
+        vector<int> arr = {1,3,2,8,4,9};
+        
+        int result = maxProfit(arr, 2);
+        
         cout<<result<<endl;
     }
 };
