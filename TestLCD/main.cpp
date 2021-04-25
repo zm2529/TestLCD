@@ -34,7 +34,6 @@ Tool tool;
 
 #define string(x) #x
 
-
 #pragma mark - 844
 //class Solution {
 //public:
@@ -356,22 +355,124 @@ Tool tool;
 //    }
 //};
 
+#pragma mark - 704
+//class Solution {
+//public:
+//    int search(vector<int>& nums, int target) {
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (target == nums[i]) {
+//                return i;
+//            }
+//        }
+//
+//        return -1;
+//    }
+//
+//    int search2(vector<int>& nums, int target) {
+//        //2分
+//        int l = 0, r = (int)nums.size() - 1;
+//        while (l <= r) {
+//            int m = ((r - l) >> 1) + l;
+//            if (nums[m] == target) {
+//                return m;
+//            }
+//
+//            if (nums[m] > target) {
+//                r = m - 1;
+//            }
+//            else {
+//                l = m + 1;
+//            }
+//        }
+//
+//        return -1;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {-1,0,3,5,9,12};
+//
+//        int result = search2(arr, 12);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 367
+//class Solution {
+//public:
+//    bool isPerfectSquare(int num) {
+//
+//        int l = 0, r = num;
+//        long m = 0;
+//        while (l <= r) {
+//            m = ((r - l) >> 1) + l;
+//            if (m * m == num) {
+//                return true;
+//            }
+//
+//            if (m * m > num) {
+//                r = (int)m - 1;
+//            }
+//            else {
+//                l = (int)m + 1;
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    void test() {
+//        bool result = isPerfectSquare(2147483647);
+//
+//        cout<<result2<<endl;
+//    }
+//};
+
+#pragma mark - 283
+//class Solution {
+//public:
+//    void moveZeroes(vector<int>& nums) {
+//
+//        int curr = 0;
+//        for (int i = 0; i < nums.size(); i++) {
+//
+//            if (nums[i] != 0) {
+//                nums[curr] = nums[i];
+//                curr++;
+//            }
+//        }
+//
+//        for (int i = curr; i < nums.size(); i++) {
+//            nums[i] = 0;
+//        }
+//
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,0};
+//
+//        moveZeroes(arr);
+//
+//        tool.printVector(arr);
+//    }
+//};
+
 #pragma mark - 992
 class Solution {
 public:
     int subarraysWithKDistinct(vector<int>& A, int K) {
         //双指针
-        
+
         unordered_map<int, int> map;
-        
+
         int l = 0, r = 0;
         int count = 0;
-        
+
         while (r < A.size()) {
             if (map.size() <= K) {//小于等于K个数，往后加一个数
                 map[A[r++]]++;
             }
-                        
+
             while (map.size() > K) {//大于K个数，从前往后删除
                 map[A[l]]--;
                 if (map[A[l]] <= 0) {
@@ -379,7 +480,7 @@ public:
                 }
                 l++;
             }
-            
+
             if (map.size() == K) {//等于K个数，尝试从前往后删除数，是否还符合条件，
                 count++;
                 int tempL = l;
@@ -397,23 +498,25 @@ public:
             }
 
         }
-        
+
         return count;
     }
-    
+
     void test() {
         vector<int> A = {1,2,1,2,3};
-        
+
         int K = 2;
-        
+
         int result = subarraysWithKDistinct(A, K);
-        
+
         cout<<result<<endl;
     }
 };
 
+
 #pragma mark - 698
 //未完成
+//
 //class Solution {
 //public:
 //    bool canPartitionKSubsets(vector<int>& nums, int k) {
