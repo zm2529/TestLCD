@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9820913D263FAE5200E439DD /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9820913C263FAE5200E439DD /* test.cpp */; };
+		9820913F2642E2E800E439DD /* backup4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9820913E2642E2E800E439DD /* backup4.cpp */; };
 		98BD0736261C323900D14D64 /* backup2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98BD0735261C323900D14D64 /* backup2.cpp */; };
 		98CA98132600806B00734915 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA98122600806B00734915 /* main.cpp */; };
 		98CA9821260430D500734915 /* Sort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA981F260430D500734915 /* Sort.cpp */; };
@@ -30,6 +32,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9820913C263FAE5200E439DD /* test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
+		9820913E2642E2E800E439DD /* backup4.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = backup4.cpp; sourceTree = "<group>"; };
 		98BD0735261C323900D14D64 /* backup2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = backup2.cpp; sourceTree = "<group>"; };
 		98CA980F2600806B00734915 /* TestLCD */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestLCD; sourceTree = BUILT_PRODUCTS_DIR; };
 		98CA98122600806B00734915 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				98CA98122600806B00734915 /* main.cpp */,
+				9820913E2642E2E800E439DD /* backup4.cpp */,
+				9820913C263FAE5200E439DD /* test.cpp */,
 				98CF28DD2632C33C00EE82EC /* backup3.cpp */,
 				98BD0735261C323900D14D64 /* backup2.cpp */,
 				98CA985F2612FDE200734915 /* backup.cpp */,
@@ -149,9 +155,11 @@
 			files = (
 				98BD0736261C323900D14D64 /* backup2.cpp in Sources */,
 				98CA984D260B120100734915 /* LeaSTT.cpp in Sources */,
+				9820913D263FAE5200E439DD /* test.cpp in Sources */,
 				98CA9854260C23B900734915 /* Tools.cpp in Sources */,
 				98CA984826095FF100734915 /* LeaZCY.cpp in Sources */,
 				98CA98602612FDE300734915 /* backup.cpp in Sources */,
+				9820913F2642E2E800E439DD /* backup4.cpp in Sources */,
 				98CF28DE2632C33C00EE82EC /* backup3.cpp in Sources */,
 				98CA98132600806B00734915 /* main.cpp in Sources */,
 				98CA9821260430D500734915 /* Sort.cpp in Sources */,
