@@ -15,6 +15,7 @@
 		98CA9854260C23B900734915 /* Tools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA9852260C23B900734915 /* Tools.cpp */; };
 		98CA98602612FDE300734915 /* backup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA985F2612FDE200734915 /* backup.cpp */; };
 		98CF28DE2632C33C00EE82EC /* backup3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CF28DD2632C33C00EE82EC /* backup3.cpp */; };
+		98EFB952263BD77B007AABDB /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98EFB951263BD77B007AABDB /* test.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,7 @@
 		98CA9853260C23B900734915 /* Tools.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tools.hpp; sourceTree = "<group>"; };
 		98CA985F2612FDE200734915 /* backup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = backup.cpp; sourceTree = "<group>"; };
 		98CF28DD2632C33C00EE82EC /* backup3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = backup3.cpp; sourceTree = "<group>"; };
+		98EFB951263BD77B007AABDB /* test.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = test.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				98CF28DD2632C33C00EE82EC /* backup3.cpp */,
 				98BD0735261C323900D14D64 /* backup2.cpp */,
 				98CA985F2612FDE200734915 /* backup.cpp */,
+				98EFB951263BD77B007AABDB /* test.cpp */,
 				98CA9820260430D500734915 /* Sort.hpp */,
 				98CA981F260430D500734915 /* Sort.cpp */,
 				98CA984726095FF100734915 /* LeaZCY.hpp */,
@@ -149,6 +152,7 @@
 			files = (
 				98BD0736261C323900D14D64 /* backup2.cpp in Sources */,
 				98CA984D260B120100734915 /* LeaSTT.cpp in Sources */,
+				98EFB952263BD77B007AABDB /* test.cpp in Sources */,
 				98CA9854260C23B900734915 /* Tools.cpp in Sources */,
 				98CA984826095FF100734915 /* LeaZCY.cpp in Sources */,
 				98CA98602612FDE300734915 /* backup.cpp in Sources */,
