@@ -1935,8 +1935,580 @@ Tool tool;
 //    }
 //};
 
-#pragma mark - 116
+#pragma mark - 226
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    TreeNode* invertTree(TreeNode* root) {
+//        if (root == nullptr) {
+//            return nullptr;
+//        }
+//
+//        TreeNode *temp = root->left;
+//        root->left = root->right;
+//        root->right = temp;
+//
+//        invertTree(root->left);
+//        invertTree(root->right);
+//
+//
+//        return root;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {4,2,7,1,3,6,9};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        TreeNode *result = invertTree(root);
+//        tool.printBT(result);
+//    }
+//};
 
+#pragma mark - 543
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    int diameter = 0;
+//    int diameterOfBinaryTree(TreeNode* root) {
+//
+//        maxDistanceTree(root);
+//
+//        return diameter;
+//    }
+//
+//    int maxDistanceTree(TreeNode *node) {
+//        if (node == nullptr) {
+//            return 0;
+//        }
+//
+//        int left = maxDistanceTree(node->left);
+//        int right = maxDistanceTree(node->right);
+//
+//        diameter = max(diameter, left + right);
+//
+//        return max(left, right) + 1;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        int result = diameterOfBinaryTree(root);
+//        cout<<result<<endl;
+//    }
+//};
+#pragma mark - 662
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    int widthOfBinaryTree(TreeNode* root) {
+//        if (root == nullptr) {
+//            return 0;
+//        }
+//
+//        typedef pair<TreeNode*, int> NodePos;
+//        deque<NodePos> deque;
+//        deque.push_back(NodePos(root, 1));
+//
+//        int maxWidth = 0;
+//
+//        while (deque.size() != 0) {
+//            int size = (int)deque.size();
+//            int startPos = -1, endPos = -1;
+//            for (int i = 0; i < size; i++) {
+//                NodePos nodePos = deque.front();
+//                deque.pop_front();
+//
+//                TreeNode *node = nodePos.first;
+//                int pos = nodePos.second;
+//                if (startPos == -1) {
+//                    startPos = pos;
+//                }
+//                pos -= startPos;
+//                endPos = pos;
+//
+//                if (node->left != nullptr) {
+//                    deque.push_back(NodePos(node->left, pos * 2));
+//                }
+//
+//                if (node->right != nullptr) {
+//                    deque.push_back(NodePos(node->right, pos * 2 + 1));
+//                }
+//            }
+//
+//            maxWidth = max(maxWidth, endPos + 1);
+//        }
+//
+//        return maxWidth;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,1,1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,1,-1,-1,1,1,-1,1,-1,1,-1,1,-1,1,-1};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        int result = widthOfBinaryTree(root);
+//        cout<<result<<endl;
+//    }
+//
+//};
+
+#pragma mark - 971
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    vector<int> result;
+//    vector<int> flipMatchVoyage(TreeNode* root, vector<int>& voyage) {
+//        if (root == nullptr) {
+//            return {};
+//        }
+//
+//        int index = 0;
+//        treeTraversal(root, index, voyage);
+//
+//        return result;
+//    }
+//
+//    void treeTraversal(TreeNode *node, int &index, vector<int>& voyage) {
+//        if (node == nullptr) {
+//            return;
+//        }
+//
+//        if (index >= voyage.size()) {
+//            return;
+//        }
+//
+//        if (result.size() >= 1 && result[0] == -1) {
+//            return;
+//        }
+//
+//        if (node->val != voyage[index]) {
+//            result.clear();
+//            result.push_back(-1);
+//            return;
+//        }
+//
+//        if (node->left != nullptr && node->left->val != voyage[index + 1]) {
+//            TreeNode *temp = node->left;
+//            node->left = node->right;
+//            node->right = temp;
+//            result.push_back(node->val);
+//        }
+//
+//        index++;
+//        treeTraversal(node->left, index, voyage);
+//        treeTraversal(node->right, index, voyage);
+//
+//    }
+//
+//
+//    void test() {
+//        /**
+//         [1,2,null,3]
+//         [1,3,2]
+//         [15,26,40,25,38,29,6,48,1,16,8,18,27,21,19,31,39,46,null,49,45,null,22,34,41,42,null,9,null,2,4,null,null,null,17,null,null,null,null,36,24,null,33,null,30,null,null,23,37,null,null,5,12,null,10,7,null,null,null,13,null,null,null,11,43,null,null,null,null,null,null,50,35,3,32,null,null,null,null,null,null,null,null,null,47,null,28,44,14,null,null,null,null,null,20]
+//         [15,40,6,21,9,19,2,12,50,47,35,28,20,5,4,10,32,3,14,44,29,18,34,7,11,43,41,27,42,37,23,26,38,16,45,24,13,36,49,8,22,33,25,1,46,48,31,39,17,30]
+//
+//         [8,9,4,12,46,7,14,48,29,6,37,10,null,null,15,26,3,50,42,45,null,17,40,null,null,18,null,null,25,11,31,41,null,null,null,1,null,null,null,22,19,null,null,null,null,13,null,null,null,null,34,null,null,27,null,23,null,28,38,null,null,33,null,16,20,null,null,43,null,44,35,5,49,21,36,24,null,2,47,null,null,null,null,null,39,null,null,null,null,null,null,null,32,null,30]
+//         [8,9,12,29,42,50,41,34,48,26,25,49,31,11,13,38,43,24,28,46,6,45,1,37,40,22,27,33,44,47,30,2,32,35,19,23,16,5,3,39,20,36,21,17,4,14,15,18,7,10]
+//         */
+//        vector<int> arr = {1,2,3};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        vector<int> voyage = {1,3,2};
+//        vector<int> result = flipMatchVoyage(root, voyage);
+//
+//        tool.printBT(root);
+//
+//        tool.printVector(voyage);
+//        DLR(root);
+//        cout<<endl;
+//
+//        tool.printVector(result);
+//    }
+//
+//    void DLR(TreeNode *node) {
+//        if (node == nullptr) {
+//            return;
+//        }
+//
+//        cout<<node->val<<",";
+//        DLR(node->left);
+//        DLR(node->right);
+//    }
+//};
+
+#pragma mark - 987
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+*/
+
+//class Solution {
+//public:
+//    vector<vector<int>> verticalTraversal(TreeNode* root) {
+//
+//        //层先
+//        vector<vector<int>> result;
+//
+//        unordered_map<int, vector<int>> map;
+//        int minCol = 0, maxCol = 0;
+//
+//        typedef pair<int, int> NodePos;
+//        typedef pair<TreeNode*, NodePos> NodeInfo;
+//
+//        deque<NodeInfo> deque;
+//        if (root != nullptr) {
+//            deque.push_back(NodeInfo(root, NodePos(0,0)));
+//        }
+//
+//        while (deque.size() != 0) {
+//            int size = (int)deque.size();
+//            unordered_map<int, vector<int>> tempMap;
+//            for (int i = 0; i < size; i++) {
+//                NodeInfo info = deque.front();
+//                deque.pop_front();
+//
+//                TreeNode *node = info.first;
+//                NodePos pos = info.second;
+//
+//                maxCol = max(maxCol, pos.second);
+//                minCol = min(minCol, pos.second);
+//
+//                tempMap[pos.second].push_back(node->val);
+//
+//                if (node->left != nullptr) {
+//                    deque.push_back(NodeInfo(node->left, NodePos(pos.first + 1, pos.second - 1)));
+//                }
+//
+//                if (node->right != nullptr) {
+//                    deque.push_back(NodeInfo(node->right, NodePos(pos.first + 1, pos.second + 1)));
+//                }
+//            }
+//
+//            unordered_map<int, vector<int>>::iterator it = tempMap.begin();
+//            while (it != tempMap.end()) {
+//                int col = it->first;
+//                vector<int> arrVal = it->second;
+//                sort(arrVal.begin(), arrVal.end());
+//
+//                map[col].insert(map[col].end(), arrVal.begin(), arrVal.end());
+//                it++;
+//            }
+//        }
+//
+//
+//        for (int i = minCol; i <= maxCol; i++) {
+//            vector<int> colVal = map[i];
+//            if (colVal.size() > 0) {
+//                result.push_back(colVal);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {0,1,2,4,5,9,3,11,-1,-1,10,15,-1,6,18,14,-1,-1,21,-1,-1,7,12,-1,-1,22,-1,-1,24,13,8,-1,17,-1,-1,-1,-1,-1,-1,16,19,-1,-1,-1,-1,23,20};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        vector<vector<int>> result = verticalTraversal(root);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 863
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+//class Solution {
+//public:
+//    unordered_map<TreeNode*, TreeNode*> map;
+//    vector<int> result;
+//    vector<int> distanceK(TreeNode* root, TreeNode* target, int K) {
+//
+//        recodeTargetParents(root, target);
+//
+//        //查找target子节点
+//        findK(target, K);
+//
+//        //查找target兄弟节点和祖先节点
+//
+//        K -= 1;
+//        TreeNode *node = target;
+//        while (node != nullptr && K >= 0) {
+//            TreeNode *parentNode = map[node];
+//            if (parentNode != nullptr) {
+//                if (K == 0) {
+//                    result.push_back(parentNode->val);
+//                }
+//
+//                K -= 1;
+//                if (parentNode->left == node) {
+//                    findK(parentNode->right, K);
+//                }
+//                else {
+//                    findK(parentNode->left, K);
+//                }
+//            }
+//
+//            node = parentNode;
+//        }
+//
+//        return result;
+//    }
+//
+//    void findK(TreeNode *node, int K) {
+//        if (node == nullptr) {
+//            return;
+//        }
+//
+//        if (K == 0) {
+//            result.push_back(node->val);
+//            return;
+//        }
+//
+//        findK(node->left, K - 1);
+//        findK(node->right, K - 1);
+//    }
+//
+//    bool recodeTargetParents(TreeNode *node, TreeNode *target) {
+//        if (node == nullptr) {
+//            return false;
+//        }
+//
+//        if (node == target) {
+//            return true;
+//        }
+//
+//        bool isLeft = recodeTargetParents(node->left, target);
+//        if (isLeft) {
+//            map[node->left] = node;
+//        }
+//
+//        bool isRight = recodeTargetParents(node->right, target);
+//        if (isRight) {
+//            map[node->right] = node;
+//        }
+//
+//        return isLeft || isRight;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        vector<int> result = distanceK(root, root->left->left, 2);
+//        tool.printVector(result);
+//    }
+//
+//};
+
+#pragma mark - mianshi0406
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ *设计一个算法，找出二叉搜索树中指定节点的“下一个”节点（也即中序后继）。
+
+ 如果指定节点没有对应的“下一个”节点，则返回null。
+
+ 示例 1:
+
+ 输入: root = [2,1,3], p = 1
+
+   2
+  / \
+ 1   3
+
+ 输出: 2
+ 示例 2:
+
+ 输入: root = [5,3,6,2,4,null,null,1], p = 6
+
+       5
+      / \
+     3   6
+    / \
+   2   4
+  /
+ 1
+
+ 输出: null
+
+ 来源：力扣（LeetCode）
+ 链接：https://leetcode-cn.com/problems/successor-lcci
+ 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+ *
+ */
+//class Solution {
+//public:
+//    TreeNode *targetNode = nullptr;
+//    TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
+//        //找大于p的最小值
+//        if (root == nullptr) {
+//            return targetNode;
+//        }
+//
+//        if (root->val <= p->val) {//找大于p的值
+//            inorderSuccessor(root->right, p);
+//        }
+//        else {
+//            inorderSuccessor(root->left, p);
+//        }
+//        if (root->val > p->val) {//找到大于p值，取最小值
+//            if (targetNode == nullptr) {
+//                targetNode = root;
+//            }
+//            else if (root->val < targetNode->val) {
+//                targetNode = root;
+//            }
+//        }
+//
+//        return targetNode;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {5,3,6,2,4,-1,-1,1};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        TreeNode *result = inorderSuccessor(root, new TreeNode(3));
+//        cout<<result->val<<endl;
+//
+//    }
+//};
+
+#pragma mark - 1046
+//class Solution {
+//public:
+//    int lastStoneWeight(vector<int>& stones) {
+////        sort(stones.begin(), stones.end(), [](int a, int b){
+////            return a > b;
+////        });
+//
+//        int start = 0;
+//        while (start + 1 < (int)stones.size()) {
+//            if (stones[start + 1] != stones[start]) {
+//                stones.push_back(abs(stones[start] - stones[start + 1]));
+////                sort(stones.begin() + start + 2, stones.end(), [](int a, int b){
+////                    return a > b;
+////                });
+//            }
+//            start += 2;
+//        }
+//
+//        if (start == stones.size() - 1) {
+//            return stones[start];
+//        }
+//        else {
+//            return 0;
+//        }
+//    }
+//
+//    int lastStoneWeight2(vector<int>& stones) {
+////        priority_queue
+//        priority_queue<int> queue;
+//        for (int i = 0; i < stones.size(); i++) {
+//            queue.push(stones[i]);
+//        }
+//
+//        while (queue.size() > 1) {
+//            int y = queue.top();
+//            queue.pop();
+//
+//            int x = queue.top();
+//            queue.pop();
+//
+//            if (y != x) {
+//                queue.push(y - x);
+//            }
+//        }
+//
+//        if (queue.size() == 1) {
+//            return queue.top();
+//        }
+//        else {
+//            return 0;
+//        }
+//    }
+//
+//    void test() {
+//        vector<int> arr = {2,7,4,1,8,1};
+//        int result = lastStoneWeight2(arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 313
+class Solution {
+public:
+    int nthSuperUglyNumber(int n, vector<int>& primes) {
+
+    }
+};
 
 #pragma mark - 698
 //未完成
