@@ -2503,12 +2503,645 @@ Tool tool;
 //};
 
 #pragma mark - 313
+//class Solution {
+//public:
+//    int nthSuperUglyNumber(int n, vector<int>& primes) {
+//
+//        unordered_set<long long> set;
+//
+//        priority_queue<long long, vector<long long>, greater<long long>> queue;
+//        queue.push(1);
+//        set.insert(1);
+//        long long result = 0;
+//
+//        for (int i = 0; i < n; i++) {
+//            result = queue.top();
+//            queue.pop();
+//            for (int j = 0; j < primes.size(); j++) {
+//                long long temp = result * primes[j];
+//
+//                if (set.find(temp) == set.end()) {
+//                    set.insert(temp);
+//                    queue.push(temp);
+//                }
+//            }
+//        }
+//
+//        return (int)result;
+//    }
+//
+//    int nthSuperUglyNumber2(int n, vector<int>& primes) {
+//        vector<int> result(n, 0);
+//        result[0] = 1;
+//
+//        vector<int> ptr(primes.size(), 0);
+//
+//        vector<long long> temp(primes.size(), 0);
+//
+//        for (int i = 1; i < n; i++) {
+//
+//            for (int j = 0; j < primes.size(); j++) {
+//                temp[j] = result[ptr[j]] * primes[j];
+//            }
+//
+//            result[i] = (int)*min_element(temp.begin(), temp.end());
+//
+//            for (int k = 0; k < temp.size(); k++) {
+//                if (result[i] == temp[k]) {
+//                    ptr[k]++;
+//                }
+//            }
+//        }
+//
+//        return result[n - 1];
+//    }
+//
+//    void test() {
+//        vector<int> primes = {2,7,13,19};
+//
+//        int result = nthSuperUglyNumber2(12, primes);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1738
+//class Solution {
+//public:
+//    int kthLargestValue(vector<vector<int>>& matrix, int k) {
+//        //最小堆存k个数 当curr>top时push（curr），pop；最终小顶堆中为最大的K的数，top即为所求
+//
+////        priority_queue<int, vector<int>, greater<int>> queue;
+//
+//        vector<vector<int>> XorVal(matrix);
+//
+//        vector<int> result;
+//
+//        for (int i = 0; i < matrix.size(); i++) {
+//            for (int j = 0; j < matrix[i].size(); j++) {
+//                if (i > 0 && j >= 0) {
+//                    XorVal[i][j] ^= XorVal[i - 1][j];
+//                }
+//
+//                if (i >= 0 && j > 0) {
+//                    XorVal[i][j] ^= XorVal[i][j - 1];
+//                }
+//
+//                if (i > 0 && j > 0) {
+//                    XorVal[i][j] ^= XorVal[i - 1][j - 1];
+//                }
+//
+//                result.push_back(XorVal[i][j]);
+//
+//
+////                if (queue.size() >= k) {
+////                    if (queue.top() < XorVal[i][j]) {
+////                        queue.pop();
+////                        queue.push(XorVal[i][j]);
+////                    }
+////                }
+////                else {
+////                    queue.push(XorVal[i][j]);
+////                }
+//            }
+//        }
+//
+//        sort(result.begin(), result.end(), [](int a, int b){
+//            return  a > b;
+//        });
+//
+//        return result[k - 1];
+//
+////        return queue.top();
+//    }
+//
+//    void test() {
+//        vector<vector<int>> arr = {{5,2}, {1,6}};
+//
+//        int result = kthLargestValue(arr, 2);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark 295
+//class MedianFinder {
+//public:
+//    /** initialize your data structure here. */
+//    //数组排序 超时
+//
+//    //一个最大堆（size/2个最小数），一个最小堆（size/2个最大数），都向min加，minpop添加到max，使两边数量一样||max = min - 1
+//    priority_queue<int, vector<int>, greater<int>> minQueue;
+//    priority_queue<int, vector<int>, less<int>> maxQueue;
+//    MedianFinder() {
+//
+//    }
+//
+//    void addNum(int num) {
+//
+//        minQueue.push(num);
+//
+//        maxQueue.push(minQueue.top());
+//        minQueue.pop();
+//
+//        if (maxQueue.size() > minQueue.size()) {
+//            minQueue.push(maxQueue.top());
+//            maxQueue.pop();
+//        }
+//    }
+//
+//    double findMedian() {
+//        if (maxQueue.size() == minQueue.size()) {
+//            return (maxQueue.top() + minQueue.top()) / 2.f;
+//        }
+//        else {
+//            return minQueue.top();
+//        }
+//    }
+//};
+///**
+// * Your MedianFinder object will be instantiated and called as such:
+// * MedianFinder* obj = new MedianFinder();
+// * obj->addNum(num);
+// * double param_2 = obj->findMedian();
+// */
+//
+//class Solution {
+//public:
+//    void test() {
+//        /**
+//         ["MedianFinder","addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian","addNum","findMedian"]
+//         [[],[-1],[],[-2],[],[-3],[],[-4],[],[-5],[]]
+//         */
+//
+//        MedianFinder* obj = new MedianFinder();
+//        obj->addNum(-1);
+//        cout<<obj->findMedian()<<endl;
+//        obj->addNum(-2);
+//        cout<<obj->findMedian()<<endl;
+//        obj->addNum(-3);
+//        cout<<obj->findMedian()<<endl;
+//        obj->addNum(-4);
+//        cout<<obj->findMedian()<<endl;
+//        obj->addNum(-5);
+//        cout<<obj->findMedian()<<endl;
+//
+//    }
+//};
+
+#pragma mark - 857
+//class Solution {
+//public:
+//    //未完成
+//    struct cmp1{
+//        bool operator() (vector<double> a, vector<double> b) {
+//            if (a[0] == b[0]) {
+//                return a[1] > b[1];
+//            }
+//            else {
+//                return a[0] > b[0];
+//            }
+//        }
+//    };
+//
+//    struct cmp2 {
+//        bool operator() (vector<double> a, vector<double> b) {
+//            if (a[1] == b[1]) {
+//                return a[0] > b[0];
+//            }
+//            else {
+//                return a[1] < b[1];
+//            }
+//        }
+//    };
+//
+//    double mincostToHireWorkers(vector<int>& quality, vector<int>& wage, int K) {
+//        vector<vector<double>> QPW(wage.size(), vector<double>(2, 0));
+//
+//        priority_queue<vector<double>, vector<vector<double>>, cmp1> wageMinQueue;
+//
+//        priority_queue<vector<double>, vector<vector<double>>, cmp2> QPWMaxQueue;
+//
+//        for (int i = 0; i < wage.size(); i++) {
+//            QPW[i][0] = wage[i];
+//            QPW[i][1] = (wage[i] / (double)quality[i]);
+//
+//            wageMinQueue.push(QPW[i]);
+//        }
+//
+//        while (QPWMaxQueue.size() < K) {
+//            QPWMaxQueue.push(wageMinQueue.top());
+//            wageMinQueue.pop();
+//        }
+//
+//        double mincostQPW = QPWMaxQueue.top()[1];
+//        double result = 0;
+//        while (QPWMaxQueue.size() > 0) {
+//            vector<double> temp = QPWMaxQueue.top();
+//            QPWMaxQueue.pop();
+//            result += mincostQPW * (temp[0] / temp[1]);
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> quality = {10,20,5};
+//        vector<int> wage = {70,50,30};
+//
+//        double result = mincostToHireWorkers(quality, wage, 2);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1439
+
+//struct VectorHash {
+//    size_t operator()(const std::vector<int>& v) const {
+//        std::hash<int> hasher;
+//        size_t seed = 0;
+//        for (int i : v) {
+//            seed ^= hasher(i) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+//        }
+//        return seed;
+//    }
+//};
+//class Solution {
+//public:
+//    typedef pair<int, vector<int>> SumAndSort;
+//    struct cmp {
+//        bool operator()(SumAndSort a, SumAndSort b) {
+//            return a.first > b.first;
+//        }
+//    };
+//    struct VectorHash {
+//        size_t operator()(const vector<int>& v) const {
+//            std::hash<int> hasher;
+//            size_t seed = 0;
+//            for (int i : v) {
+//                seed ^= hasher(i) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+//            }
+//            return seed;
+//        }
+//    };
+//    int kthSmallest(vector<vector<int>>& mat, int k) {
+//        //小顶堆 记录数组和最小的k个数
+//        priority_queue<SumAndSort, vector<SumAndSort>, cmp> queue;
+//
+//        unordered_set<vector<int>, VectorHash> set;
+//
+//        int result = 0;
+//
+//        {//初始第一列和
+//            int initSum = 0;
+//            vector<int> temp(mat.size(), 0);
+//            for (int i = 0; i < mat.size(); i++) {
+//                initSum += mat[i][0];
+//            }
+//            set.insert(temp);
+//            queue.push(SumAndSort(initSum, temp));
+//        }
+//
+//        for (int t = 0; t < k; t++) {
+//            SumAndSort sumSort = queue.top();
+//            queue.pop();
+//
+//            vector<int> ptr = sumSort.second;
+//            result = sumSort.first;
+//
+//            for (int m = 0; m < ptr.size(); m++) {
+//                ptr[m]++;
+//                //求和
+//                if (ptr[m] < mat[0].size()) {//ptr[m]表示取mati中m行中的第ptr[m]元素
+//                    int sum = 0;
+//                    for (int i = 0; i < ptr.size(); i++) {
+//                        sum += mat[i][ptr[i]];
+//                    }
+//
+//                    if (set.find(ptr) == set.end()) {
+//                        vector<int> temp;
+//                        temp.assign(ptr.begin(), ptr.end());
+//                        set.insert(temp);
+//                        queue.push(SumAndSort(sum, temp));
+//                    }
+//                }
+//                ptr[m]--;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    int kthSmallest2(vector<vector<int>>& mat, int k) {
+//        //一层一层计算和，全部的数都要算一遍
+//        vector<int> result(mat[0]);
+//        for (int i = 1; i < mat.size(); i++) {
+//            vector<int> temp;
+//            if (result.size() > k) {//取前K个最小值用于下一层计算
+//                temp.assign(result.begin(), result.begin() + k);
+//            }
+//            else {
+//                temp.assign(result.begin(), result.end());
+//            }
+//            result.clear();
+//
+//            //遍历计算到这一层的和
+//            for (int j = 0; j < mat[i].size(); j++) {
+//                for (int m = 0; m < temp.size(); m++) {
+//                    result.push_back(temp[m] + mat[i][j]);
+//                }
+//            }
+//            sort(result.begin(), result.end());
+//        }
+//
+//        return result[k - 1];
+//    }
+//
+//    void test() {
+//        vector<vector<int>> mat = {{1,3,11},{2,4,6}};
+//
+//
+//        int result = kthSmallest(mat, 9);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 719
+//class Solution {
+//public:
+//    typedef pair<int, vector<int>> DistanceInfo;
+//    struct cmp {
+//        bool operator()(DistanceInfo a, DistanceInfo b) {
+//            return a.first > b.first;
+//        }
+//    };
+//    struct VectorHash {
+//        size_t operator()(const vector<int> v) const {
+//            std::hash<int> hasher;
+//            size_t seed = 0;
+//            for (int i : v) {
+//                seed ^= hasher(i) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+//            }
+//            return seed;
+//        }
+//    };
+//    int smallestDistancePair2(vector<int>& nums, int k) {
+//        //最小堆 超时
+//        priority_queue<DistanceInfo, vector<DistanceInfo>, cmp> queue;
+//
+//        unordered_set<vector<int>, VectorHash> set;
+//
+//        int result = 0;
+//
+//        sort(nums.begin(), nums.end());
+//
+//        for (int i = 0; i + 1 < nums.size(); i++) {
+//            set.insert({i, i + 1});
+//            queue.push(DistanceInfo(abs(nums[i] - nums[i + 1]), {i, i + 1}));
+//        }
+//
+//        while (k-- > 0) {
+//            DistanceInfo distanceInfo = queue.top();
+//            queue.pop();
+//
+//            vector<int> ptr = distanceInfo.second;
+//            result = distanceInfo.first;
+//
+//            for (int i = 0; i < ptr.size(); i++) {
+//                if (i == 0) {
+//                    ptr[i]--;
+//                }
+//                else {
+//                    ptr[i]++;
+//                }
+//                if (ptr[i] >= 0 && ptr[i] < nums.size()) {
+//                    vector<int> temp(ptr.begin(), ptr.end());
+//                    if (set.find(ptr) == set.end()) {
+//                        set.insert(temp);
+//                        queue.push(DistanceInfo(abs( nums[ptr[0]] - nums[ptr[1]] ), temp));
+//                    }
+//                }
+//                if (i == 0) {
+//                    ptr[i]++;
+//                }
+//                else {
+//                    ptr[i]--;
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//    int smallestDistancePair(vector<int>& nums, int k) {
+//        //暴力遍历，超时
+//        vector<int> result;
+//
+//        for (int j = 1; j < nums.size(); j++) {
+//            for (int i = 0; i + j < nums.size(); i++) {
+//                result.push_back(abs(nums[i] - nums[i + j]));
+//            }
+//        }
+//
+//        sort(result.begin(), result.end());
+//
+//        return result[k - 1];
+//    }
+//
+//    int smallestDistancePair3(vector<int>& nums, int k) {
+//        //双指针
+//        sort(nums.begin(), nums.end());
+//        int low = 0, high = nums[nums.size() - 1] - nums[0];
+//
+//        while (low < high) {
+//            int mid = low + ((high - low) >> 1);
+//            int left = 0, right = 0;
+//            int count = 0;
+//            for (; right < nums.size(); right++) {
+//                while (nums[right] - nums[left] > mid) {
+//                    left++;
+//                }
+//                count += right - left;//比如1，2，3，4，5，第一次遍历r = 1,l = 1,count = 0, 第二次r = 2,l = 1,count = 1即（1，2） 第三次 r = 3, l = 1,count = 1(1,2) + 2(1,3,2,3)即第一次结果的1，2分别和3配对
+//            }
+//
+//            if (count < k) {//mid需要扩大
+//                low = mid + 1;//k在mid + 1到high之间
+//            }
+//            else {//mid需要缩小
+//                high = mid;//k在0-mid直间
+//            }
+//        }
+//
+//        return low;
+//
+//        /**
+//         题目思路是来自官方题解，费了老大劲才想明白，这里加了一点自己的理解在上面。
+//
+//         首先转换一下思路，对于所有数对的第 k 个最小距离 x，那么 x 实际上是一个**阈值**，对于这个阈值，需要有 k 个小于等于它。 而所有数对的差值，是可以枚举出来的（实际上不需要全部枚举，因为使用二分查找方法每次都淘汰掉这次的遍历数组个数的一半）。
+//
+//         还依赖于一个现成的思路：对于按非递减排序好的数组 nums，那么对于差值不大于 mid 的 nums[i, j] 区间，就已经有 j - i 个了（一个数组的最大值和最小值的差都小于等于 mid，那么最大值和最小值之间的任意两个数字之间的差值都不会大于 mid。
+//
+//         那么有了上面的初步思路以后，就可以首先对数组进行排序，然后就使用二分查找来完成最小距离的查找。
+//
+//         class Solution {
+//             public int smallestDistancePair(int[] nums, int k) {
+//                 // 首先把数组进行排序，方便进行二分查找
+//                 Arrays.sort(nums);
+//                 // 这里的 low，指的是数组中两个数相差的最小值，high 是数组中两个值可能相差的最大值
+//                 int low = 0, high = nums[nums.length - 1] - nums[0];
+//                 while (low < high) {
+//                     // 找到差值的中间值，并尝试以 mid 来看是不是差值小于等于 mid 的数对个数符合要求 k
+//                     int mid = low + (high - low) / 2;
+//                     // count 用来统计所有的符合要求的情况，left 指针用来标记循环遍历整个数组的左边界
+//                     int count = 0, left = 0;
+//                     for (int right = 0; right < nums.length; ++right) {
+//                         // 在循环过程中，如果 nums[right] - nums[left] 大于了 mid，说明 left 太小了，这时候增大 left就可以使得数量减少
+//                         while (nums[right] - nums[left] > mid) ++left;
+//                         // 左右指针之间的数对都符合 nums[right] - nums[left] <= mid的要求
+//                         count += right - left;
+//                     }
+//                     // 如果符合差值小于等于 mid 的数对个数太多了（count >= k） 那么就减小最高值
+//                     if (count >= k) high = mid;
+//                     // 否则说明数对个数太少了，需要加大阈值 mid
+//                     else low = mid + 1;
+//                 }
+//                 // 到最后 low 就是最小的差值
+//                 return low;
+//             }
+//         }
+//         */
+//    }
+//
+//    void test() {
+//        vector<int> nums = {823749,957616,346989,690899,582404,280927,263646,608887,424697,523542,184877,843273,96281,834595,184400,461572,788797,459520,434292,602263,980989,3144,313765,861148,939354,49234,775316,9972,110071,223804,523168,464578,956003,494920,958742,84337,12313,796595,335569,912352,493985,747102,487641,606376,820958,767599,511095,683750,72851,108097,659954,258784,858265,567053,165002,953655,734343,833477,154407,492144,172226,146806,498600,844333,697876,74547,334941,227678,916108,500005,205526,40234,219544,137206,105326,86469,211297,808707,843056,210706,125946,268263,777885,984125,793203,756726,7396,923583,782785,884362,634936,694556,443899,193736,902029,251838,830832,942518,279834,265952,138483,981504,732173,149991,356889,451145,114222,728961,64035,318530,554085,804333,875101,248793,819374,756816,532606,220428,461954,99203,228569,859464,609314,877918,564173,350271,122044,494667,802484,334307,304463,560719,295588,771549,285995,996461,526397,374871,825559,208010,434720,628845,328222,26307,31097,540825,586125,102187,923533,703230,55128,682218,827782,868396,952317,60750,736032,925270,976152,77803,344685,58193,780271,573603,107403,701170,780395,922777,815967,940994,723695,627809,36967,942793,572716,291800,268168,486971,884368,746168,767577,755171,209234,941929,383225,874631,223791,125752,31187,128549,139156,582226,626572,434425,439989,745025,660365,990146,503086,882169,2677,778399,546571,739403,766905,531810,174791,54139,256014,420366,426703,958268,314968,324007,106447,542551,948919,24021,657335,388026,866264,704731,985732,311148,277099,841455,776458,782031,413874,40835,819858,325487,826540,927544,223238,490526,64589,217382,326506,84312,807210,675911,124019,274496,410817,162022,621836,124073,451613,276341,349585,398012,547200,371697,247759,906759,735499,547213,488895,857453,38698,673677,429038,526223,977130,188740,690553,261914,223306,803784,395020,111492,470557,606893,95741,587649,538388,97164,916702,70753,2191,298376,430226,555240,559732,430099,212471,137423,977762,45161,987056,601977,211275,781119,741585,154582,239381,747541,840333,577187,925469,651271,439636,144236,653300,3047,319970,967949,785804,220874,584833,921301,418395,546067,580819,237101,541165,705662,324990,347839,997187,300974,424611,650465,116743,659380,962658,651810,583131,829574,902344,377412,822475,281170,403134,188366,215860,578502,615844,734791,732519,961526,380465,929478,973669,917578,370152,976124,426323,103376,393732,877151,774612,189996,258166,998759,862957,678162,874807,338338,818091,108092,757096,702213,729658,654110,363947,442475,491502,486533,35945,500162,902062,950833,255006,887948,278251,863219,931594,904078,809378,264407,234030,678637,490982,130669,239316,53126,367422,68645,604475,866438,218177,207932,485269,934534,455979,436029,294910,870949,824678,661707,874298,622447,360194,621738,146335,241437,251522,33577,825815,781426,134328,597017,254053,759474,979004,87388,665363,392593,952969,242560,979438,287142,646498,991992,232447,489116,982496,785266,531242,42683,103559,198530,404030,280225,406666,230509,502665,902689,934817,460054,798867,650008,562015,470617,330594,894831,529333,356940,140643,321809,835984,912305,944138,487426,806298,959708,117600,693719,673643,725859,446678,840132,162352,911069,218240,318851,877907,884423,291516,829106,276124,969645,252087,348961,376856,847084,96949,380818,39372,135747,640731,160353,71033,304084,592831,828252,99963,114892,141095,243867,733486,312947,871423,210789,754904,549630,198065,70860};
+//
+//        int result = smallestDistancePair(nums, 62500);
+//
+//        int result2 = smallestDistancePair2(nums, 62500);
+//
+//        cout<<result<<" "<<result2<<endl;
+//    }
+//};
+
+#pragma mark - 632
 class Solution {
 public:
-    int nthSuperUglyNumber(int n, vector<int>& primes) {
+    typedef pair<int, int> Range;
+    typedef pair<Range, vector<int>> DistanceInfo;
+    struct cmp {
+        bool operator()(DistanceInfo a, DistanceInfo b) {
+            return a.first.second - a.first.first > b.first.second - b.first.first;
+        }
+    };
 
+    struct VectorHash {
+        size_t operator()(const vector<int> v) const {
+            size_t seed = 0;
+            hash<int> hasher;
+
+            for (int i : v) {
+                seed ^= hasher(i) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+            }
+            return seed;
+        }
+    };
+    vector<int> smallestRange(vector<vector<int>>& nums) {
+        //
+        vector<int> result;
+        int minDistance = INT_MAX;
+
+        priority_queue<DistanceInfo, vector<DistanceInfo>, cmp> queue;
+        unordered_set<vector<int>, VectorHash> set;
+
+        {
+            int min = INT_MAX, max = INT_MIN;
+            vector<int> temp(nums.size(), 0);
+            for (int p = 0; p < nums.size(); p++) {
+                int currNum = nums[p][0];
+                if (min > currNum) {
+                    min = currNum;
+                }
+
+                if (max < currNum) {
+                    max = currNum;
+                }
+
+            }
+            set.insert(temp);
+            queue.push(DistanceInfo(Range(min, max), temp));
+        }
+        while (1) {
+
+            DistanceInfo info = queue.top();
+            queue.pop();
+
+            Range range = info.first;
+            int distance = range.second - range.first;
+
+//            cout<<distance<<" "<<range.first<<","<<range.second<<endl;
+
+            if (distance == 0) {
+                return {range.first, range.second};
+            }
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                result = {range.first, range.second};
+            }
+
+            vector<int> ptr = info.second;//每行的位置
+
+            bool isFinish = true;
+            for (int p = 0; p < nums.size(); p++) {
+                ptr[p]++;
+                if (ptr[p] < nums[p].size()) {
+                    int min = INT_MAX, max = INT_MIN;
+                    for (int k = 0; k < nums.size(); k++) {
+                        int currNum = nums[k][ptr[k]];
+                        if (min > currNum) {
+                            min = currNum;
+                        }
+
+                        if (max < currNum) {
+                            max = currNum;
+                        }
+                        isFinish = false;
+                    }
+
+                    if (set.find(ptr) == set.end()) {
+                        vector<int> temp(ptr);
+                        set.insert(temp);
+                        queue.push(DistanceInfo(Range(min, max), temp));
+                    }
+
+                }
+
+                ptr[p]--;
+            }
+
+            if (isFinish == true) {
+                break;
+            }
+        }
+        return result;
     }
+
+    void test() {
+        vector<vector<int>> nums = {{4,10,15,24,26},{0,9,12,20},{5,18,22,30}};
+
+        vector<int> result = smallestRange(nums);
+
+        tool.printVector(result);
+    }
+    /**
+     x  10  15  24  26
+     x  x   12  20
+     x  18  22  30
+
+     0-5 {0-10,4-9,0-18} 4-9 {5-10,4-12,4-18} 5-10 {5-15,5-12,9-18} 5-12 {5-15,5-20,10-18} 10-18
+     */
 };
+
+#pragma mark - 1206
 
 #pragma mark - 698
 //未完成
@@ -2592,6 +3225,7 @@ int main(int argc, const char * argv[]) {
 //    int i = -8;
 //    i = i >> 5;
 //    cout<<i<<endl;
+
 
     Solution solution;
     solution.test();
