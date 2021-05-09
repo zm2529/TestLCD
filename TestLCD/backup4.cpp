@@ -1547,86 +1547,86 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
-public:
-    bool isSymmetric(TreeNode* root) {
-        //递归
-        if (root == nullptr) {
-            return true;
-        }
-        
-        return isSymmetricNode(root->left, root->right);
-    }
-    
-    bool isSymmetricNode(TreeNode *left, TreeNode *right) {
-        if (left == nullptr || right == nullptr) {
-            if (left != right) {
-                return false;
-            }
-            return true;
-        }
-        if (left->val != right->val) {
-            return false;
-        }
-        
-        bool leftSymmetric = isSymmetricNode(left->left, right->right);
-        bool rightSymmeric = isSymmetricNode(left->right, right->left);
-        
-        return leftSymmetric && rightSymmeric;
-    }
-    
-    bool isSymmetric2(TreeNode* root) {
-        //迭代
-        if (root == nullptr) {
-            return true;
-        }
-
-        deque<TreeNode *> dequeLeft, dequeRight;
-        dequeLeft.push_back(root->left);
-        dequeRight.push_back(root->right);
-
-        while (dequeLeft.empty() == false || dequeRight.empty() == false) {
-            int leftCount = (int)dequeLeft.size();
-            int rightCount = (int)dequeRight.size();
-
-            if (leftCount != rightCount) {
-                return false;
-            }
-            
-            for (int i = 0; i < leftCount; i++) {
-                TreeNode *left = dequeLeft.front();
-                dequeLeft.pop_front();
-                TreeNode *right = dequeRight.front();
-                dequeRight.pop_front();
-                
-                if (left == nullptr || right == nullptr) {
-                    if (left != right) {
-                        return false;
-                    }
-                }
-                else {
-                    if (left->val != right->val) {
-                        return false;
-                    }
-                    
-                    dequeLeft.push_back(left->left);
-                    dequeRight.push_back(right->right);
-                    dequeLeft.push_back(left->right);
-                    dequeRight.push_back(right->left);
-                }
-            }
-        }
-        
-        return true;
-    }
-
-    void test() {
-        vector<int> arr = {1,2,2,3,4,4};
-        TreeNode *root = tool.createBT(arr);
-        
-        bool result = isSymmetric2(root);
-        cout<<result<<endl;
-        
-    }
-    
-};
+//class Solution {
+//public:
+//    bool isSymmetric(TreeNode* root) {
+//        //递归
+//        if (root == nullptr) {
+//            return true;
+//        }
+//        
+//        return isSymmetricNode(root->left, root->right);
+//    }
+//    
+//    bool isSymmetricNode(TreeNode *left, TreeNode *right) {
+//        if (left == nullptr || right == nullptr) {
+//            if (left != right) {
+//                return false;
+//            }
+//            return true;
+//        }
+//        if (left->val != right->val) {
+//            return false;
+//        }
+//        
+//        bool leftSymmetric = isSymmetricNode(left->left, right->right);
+//        bool rightSymmeric = isSymmetricNode(left->right, right->left);
+//        
+//        return leftSymmetric && rightSymmeric;
+//    }
+//    
+//    bool isSymmetric2(TreeNode* root) {
+//        //迭代
+//        if (root == nullptr) {
+//            return true;
+//        }
+//
+//        deque<TreeNode *> dequeLeft, dequeRight;
+//        dequeLeft.push_back(root->left);
+//        dequeRight.push_back(root->right);
+//
+//        while (dequeLeft.empty() == false || dequeRight.empty() == false) {
+//            int leftCount = (int)dequeLeft.size();
+//            int rightCount = (int)dequeRight.size();
+//
+//            if (leftCount != rightCount) {
+//                return false;
+//            }
+//            
+//            for (int i = 0; i < leftCount; i++) {
+//                TreeNode *left = dequeLeft.front();
+//                dequeLeft.pop_front();
+//                TreeNode *right = dequeRight.front();
+//                dequeRight.pop_front();
+//                
+//                if (left == nullptr || right == nullptr) {
+//                    if (left != right) {
+//                        return false;
+//                    }
+//                }
+//                else {
+//                    if (left->val != right->val) {
+//                        return false;
+//                    }
+//                    
+//                    dequeLeft.push_back(left->left);
+//                    dequeRight.push_back(right->right);
+//                    dequeLeft.push_back(left->right);
+//                    dequeRight.push_back(right->left);
+//                }
+//            }
+//        }
+//        
+//        return true;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,2,2,3,4,4};
+//        TreeNode *root = tool.createBT(arr);
+//        
+//        bool result = isSymmetric2(root);
+//        cout<<result<<endl;
+//        
+//    }
+//    
+//};

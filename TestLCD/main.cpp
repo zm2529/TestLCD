@@ -3023,122 +3023,539 @@ Tool tool;
 //};
 
 #pragma mark - 632
+//class Solution {
+//public:
+////    typedef pair<int, int> Range;
+////    typedef pair<Range, vector<int>> DistanceInfo;
+////    struct cmp {
+////        bool operator()(DistanceInfo a, DistanceInfo b) {
+////            return a.first.second - a.first.first > b.first.second - b.first.first;
+////        }
+////    };
+////
+////    struct VectorHash {
+////        size_t operator()(const vector<int> v) const {
+////            size_t seed = 0;
+////            hash<int> hasher;
+////
+////            for (int i : v) {
+////                seed ^= hasher(i) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+////            }
+////            return seed;
+////        }
+////    };
+////    vector<int> smallestRange(vector<vector<int>>& nums) {
+////        //
+////        vector<int> result;
+////        int minDistance = INT_MAX;
+////
+////        priority_queue<DistanceInfo, vector<DistanceInfo>, cmp> queue;
+////        unordered_set<vector<int>, VectorHash> set;
+////
+////        {
+////            int min = INT_MAX, max = INT_MIN;
+////            vector<int> temp(nums.size(), 0);
+////            for (int p = 0; p < nums.size(); p++) {
+////                int currNum = nums[p][0];
+////                if (min > currNum) {
+////                    min = currNum;
+////                }
+////
+////                if (max < currNum) {
+////                    max = currNum;
+////                }
+////
+////            }
+////            set.insert(temp);
+////            queue.push(DistanceInfo(Range(min, max), temp));
+////        }
+////        while (1) {
+////
+////            DistanceInfo info = queue.top();
+////            queue.pop();
+////
+////            Range range = info.first;
+////            int distance = range.second - range.first;
+////
+//////            cout<<distance<<" "<<range.first<<","<<range.second<<endl;
+////
+////            if (distance == 0) {
+////                return {range.first, range.second};
+////            }
+////
+////            if (distance < minDistance) {
+////                minDistance = distance;
+////                result = {range.first, range.second};
+////            }
+////
+////            vector<int> ptr = info.second;//每行的位置
+////
+////            bool isFinish = false;
+////            for (int p = 0; p < nums.size(); p++) {
+////                ptr[p]++;
+////                if (ptr[p] < nums[p].size()) {
+////                    int min = INT_MAX, max = INT_MIN;
+////                    for (int k = 0; k < nums.size(); k++) {
+////                        int currNum = nums[k][ptr[k]];
+////                        if (min > currNum) {
+////                            min = currNum;
+////                        }
+////
+////                        if (max < currNum) {
+////                            max = currNum;
+////                        }
+//////                        isFinish = false;
+////                    }
+////
+////
+////                    if (set.find(ptr) == set.end()) {
+////                        vector<int> temp(ptr);
+////                        set.insert(temp);
+////                        queue.push(DistanceInfo(Range(min, max), temp));
+////                    }
+////
+////                }
+////                else {
+////                    isFinish = true;
+////                }
+////
+////                ptr[p]--;
+////            }
+////
+////            if (isFinish == true) {
+////                break;
+////            }
+////        }
+////        return result;
+////    }
+//
+//    vector<int> smallestRange(vector<vector<int>>& nums) {
+//
+//        int minDistance = INT_MAX;
+//        vector<int> result;
+//
+//
+//        vector<int> ptr(nums.size(), 0);
+//
+//        auto cmp = [&](int a, int b){
+//            return nums[a][ptr[a]] > nums[b][ptr[b]];
+//        };
+//
+//        priority_queue<int, vector<int>, decltype(cmp)> queue(cmp);
+//
+//        int maxValue = INT_MIN;
+//        for (int i = 0; i < nums.size(); i++) {
+//            queue.push(i);
+//            maxValue = max(maxValue, nums[i][0]);
+//        }
+//
+//        while (1) {
+//            int row = queue.top();
+//            queue.pop();
+//
+//            int minValue = nums[row][ptr[row]];
+//            if (maxValue - minValue < minDistance) {
+//                minDistance = maxValue - minValue;
+//                result = {minValue, maxValue};
+//            }
+//
+//            ptr[row]++;
+//            if (ptr[row] < nums[row].size()) {
+//                queue.push(row);
+//                maxValue = max(maxValue, nums[row][ptr[row]]);
+//            }
+//            else {
+//                break;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<vector<int>> nums = {{4,10,15,24,26},{0,9,12,20},{5,18,22,30}};
+//
+//        vector<int> result = smallestRange(nums);
+//
+//        tool.printVector(result);
+//    }
+//    /**
+//     x  10  15  24  26
+//     x  x   12  20
+//     x  18  22  30
+//
+//     0-5 {0-10,4-9,0-18} 4-9 {5-10,4-12,4-18} 5-10 {5-15,5-12,9-18} 5-12 {5-15,5-20,10-18} 10-18
+//     */
+//};
+
+#pragma mark - 1675
+//class Solution {
+//public:
+//    int minimumDeviation2(vector<int>& nums) {
+//        //一个大顶堆，一个小顶堆
+//
+//        int result = INT_MAX;
+//
+//        priority_queue<int, vector<int>, greater<int>> minQueue;
+//        priority_queue<int> maxQueue;
+//
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            minQueue.push(nums[i]);
+//            maxQueue.push(nums[i]);
+//        }
+//
+//        result = maxQueue.top() - minQueue.top();
+//
+//        while (1) {
+//            int minValue = minQueue.top();
+//            minQueue.pop();
+//
+//            int maxValue = maxQueue.top();
+//            maxQueue.pop();
+//
+//            if (minValue > maxValue) {
+//                break;
+//            }
+//
+//            int distance = abs(maxValue - minValue);
+//            if (distance > result) {
+//                break;
+//            }
+//            else {
+//                result = distance;
+//            }
+//
+//            bool isFinish = true;
+//            if (minValue % 2 == 1) {
+//                minValue *= 2;
+//                isFinish = false;
+//            }
+//            minQueue.push(minValue);
+//
+//            if (maxValue % 2 == 0) {
+//                maxValue /= 2;
+//                isFinish = false;
+//            }
+//            maxQueue.push(maxValue);
+//
+//            if (isFinish == true) {
+//                break;
+//            }
+//        }
+//
+//        return result;
+//    }
+//    int minimumDeviation(vector<int>& nums) {
+//        //一个大顶堆，一个小顶堆
+//
+//        int result = INT_MAX;
+//
+//        auto cmpMax = [&](int a, int b){
+//            if (nums[a] == nums[b]) {
+//                return a > b;
+//            }
+//            return nums[a] > nums[b];
+//        };
+//        priority_queue<int, vector<int>, decltype(cmpMax)> minQueue(cmpMax);
+//
+//        auto cmpMin = [&](int a, int b){
+//            if (nums[a] == nums[b]) {
+//                return a < b;
+//            }
+//            return nums[a] < nums[b];
+//        };
+//        priority_queue<int, vector<int>, decltype(cmpMin)> maxQueue(cmpMin);
+//
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            minQueue.push(i);
+//            maxQueue.push(i);
+//        }
+//
+//        result = nums[maxQueue.top()] - nums[minQueue.top()];
+//
+//        while (1) {
+//            int minIndex = minQueue.top();
+//            minQueue.pop();
+//
+//            int maxIndex = maxQueue.top();
+//            maxQueue.pop();
+//
+//            if (minIndex == maxIndex) {
+//                break;
+//            }
+//
+//            int distance = abs(nums[maxIndex] - nums[minIndex]);
+//            if (distance > result) {
+//                break;
+//            }
+//            else {
+//                result = distance;
+//            }
+//
+//            bool isFinish = true;
+//            if (nums[minIndex] % 2 == 1) {
+//                nums[minIndex] *= 2;
+//                isFinish = false;
+//            }
+//            minQueue.push(minIndex);
+//
+//            if (nums[maxIndex] % 2 == 0) {
+//                nums[maxIndex] /= 2;
+//                isFinish = false;
+//            }
+//            maxQueue.push(maxIndex);
+//
+//            if (isFinish == true) {
+//                break;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    int minimumDeviation3(vector<int>& nums) {
+//        //所有奇数x2,全为偶数，取最大数和最小数计算，最大数若为偶数则/2，否则已是最小值
+//
+//        int result = INT_MAX;
+//
+//        priority_queue<int, vector<int>, less<int>> queue;
+//
+//        int minValue = INT_MAX;
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (nums[i] % 2 == 1) {
+//                nums[i] *= 2;
+//            }
+//            queue.push(nums[i]);
+//            minValue = min(minValue, nums[i]);
+//        }
+//
+//        while (1) {
+//            int maxValue = queue.top();
+//            queue.pop();
+//
+//            result = min(result, maxValue - minValue);
+//
+//            if (maxValue % 2 == 0) {
+//                maxValue /= 2;
+//                minValue = min(minValue, maxValue);
+//                queue.push(maxValue);
+//            }
+//            else {
+//                break;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {1,2,3,4};
+//
+//        int result = minimumDeviation3(nums);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 871
+//class Solution {
+//public:
+////    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+////        //动态规划 f[i][0] 到达第i个加油站时不在此加油时剩余的（油量，加油次数）f[i][1]在i加油
+////        typedef pair<int, int> FuelAndTimes;
+////        vector<vector<FuelAndTimes>> result(stations.size() + 1, vector<FuelAndTimes>(2));
+////
+////        result[0][0] = FuelAndTimes(0, 0);
+////        result[0][1] = FuelAndTimes(startFuel, 0);
+////
+////        for (int i = 1; i < stations.size(); i++) {
+////            int usedFuel = stations[i][0] - stations[i - 1][0];
+////            if (result[i - 1][0].first >= usedFuel) {
+////                result[i][0] = FuelAndTimes(result[i - 1][0].first - usedFuel, result[i - 1][0].second);
+////            }
+////        }
+////    }
+//
+////    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+////        //大顶堆，到达的最远的车站，加油次数最少，油量最多
+////        auto cmp = [&](vector<int> a, vector<int> b) {
+////            if (a[0] == b[0]) {//同一个车站
+////                if (a[1] == b[1]) {//同样加油次数
+////                    return a[2] < b[2];//选油量最多的
+////                }
+////                else {
+////                    return a[1] > b[1];
+////                }
+////            }
+////            else {
+////                return a[0] < b[0];
+////            }
+////        };
+////
+////        //vector<int> 0车站，1加油次数，2油量
+////        priority_queue<vector<int>, vector<vector<int>>, decltype(cmp)> queue(cmp);
+////
+////        queue.push({-1, 0, startFuel});
+////
+////        while (1) {
+////            if (queue.size() == 0) {
+////                return -1;
+////            }
+////            vector<int> info = queue.top();
+////            queue.pop();
+////
+////            tool.printVector(info);
+////
+////            int station = info[0];
+////
+////            int lastPos = station == -1 ? 0 : stations[station][0];
+////            if (station == stations.size() - 1) {
+////
+////                cout<<"经过最后的加油站";
+////
+////                if (info[2] >= target - lastPos) {
+////                    return info[1];
+////                }
+////                else {
+////                    cout<<"到不了终点"<<endl;
+////                    continue;
+////                }
+////            }
+////
+////
+////            int usedFuel = stations[station + 1][0] - lastPos;
+////            cout<<"下一个站需要的油量"<<usedFuel;
+////            if (info[2] >= usedFuel) {
+////
+////                cout<<"可以到达下一个加油站"<<endl;
+////                //在当前站加油
+////                queue.push({station + 1, info[1] + 1, info[2] - usedFuel + stations[station + 1][1]});
+////                //不在当前站加油
+////                queue.push({station + 1, info[1], info[2] - usedFuel});
+////            }
+////            else {
+////                cout<<"到不了下一个加油站"<<endl;
+////            }
+////        }
+////
+////        return  -1;
+////    }
+//
+//    int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
+//        //f[i] 第i次加油能到达的最远位置
+//
+//        vector<int> result(stations.size() + 1);
+//        result[0] = startFuel;
+//
+//        int maxStation = -1;//最远到达的加油站
+//
+//        priority_queue<int, vector<int>, less<int>> queue;
+//
+//        for (int n = 0; n < result.size(); n++) {
+//            if (result[n] >= target) {
+//                return n;
+//            }
+//
+//            for (int i = maxStation + 1; i < stations.size() && stations[i][0] <= result[n]; i++) {
+//                queue.push(stations[i][1]);
+//                maxStation = i;
+//            }
+//
+//            if (queue.size() == 0) {
+//                break;
+//            }
+//            result[n + 1] = queue.top() + result[n];
+//            queue.pop();
+//        }
+//
+//        return -1;
+//    }
+//
+//    void test() {
+//        /**target = 1, startFuel = 1, stations = []
+//
+//         1000
+//         299
+//         [[13,21],[26,115],[100,47],[225,99],[299,141],[444,198],[608,190],[636,157],[647,255],[841,123]]*/
+////        int target = 1000;
+////        int startFuel = 299;
+////        vector<vector<int>> stations = {{13,21},{26,115},{100,47},{225,99},{299,141},{444,198},{608,190},{636,157},{647,255},{841,123}};
+//
+//        int target = 100;
+//        int startFuel = 50;
+//        vector<vector<int>> stations = {{25,30}};
+//
+//        int result = minRefuelStops(target, startFuel, stations);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1488
 class Solution {
 public:
-    typedef pair<int, int> Range;
-    typedef pair<Range, vector<int>> DistanceInfo;
-    struct cmp {
-        bool operator()(DistanceInfo a, DistanceInfo b) {
-            return a.first.second - a.first.first > b.first.second - b.first.first;
-        }
-    };
+    vector<int> avoidFlood(vector<int>& rains) {
 
-    struct VectorHash {
-        size_t operator()(const vector<int> v) const {
-            size_t seed = 0;
-            hash<int> hasher;
-
-            for (int i : v) {
-                seed ^= hasher(i) + 0x9e3779b9 + (seed<<6) + (seed>>2);
+        unordered_map<int, int> map;//记录目前那个湖是满水,和哪天下满的
+        set<int> set;//记录哪天没有下雨可以抽干湖水
+        
+        vector<int> result(rains.size(), 1);
+        
+        for (int i = 0; i < rains.size(); i++) {
+            if (rains[i] == 0) {
+                set.insert(i);
             }
-            return seed;
-        }
-    };
-    vector<int> smallestRange(vector<vector<int>>& nums) {
-        //
-        vector<int> result;
-        int minDistance = INT_MAX;
-
-        priority_queue<DistanceInfo, vector<DistanceInfo>, cmp> queue;
-        unordered_set<vector<int>, VectorHash> set;
-
-        {
-            int min = INT_MAX, max = INT_MIN;
-            vector<int> temp(nums.size(), 0);
-            for (int p = 0; p < nums.size(); p++) {
-                int currNum = nums[p][0];
-                if (min > currNum) {
-                    min = currNum;
+            else {
+                result[i] = -1;
+                if (map.count(rains[i]) == 0) {//rains[i]的湖是空的
+                    map[rains[i]] = i;
                 }
-
-                if (max < currNum) {
-                    max = currNum;
-                }
-
-            }
-            set.insert(temp);
-            queue.push(DistanceInfo(Range(min, max), temp));
-        }
-        while (1) {
-
-            DistanceInfo info = queue.top();
-            queue.pop();
-
-            Range range = info.first;
-            int distance = range.second - range.first;
-
-//            cout<<distance<<" "<<range.first<<","<<range.second<<endl;
-
-            if (distance == 0) {
-                return {range.first, range.second};
-            }
-
-            if (distance < minDistance) {
-                minDistance = distance;
-                result = {range.first, range.second};
-            }
-
-            vector<int> ptr = info.second;//每行的位置
-
-            bool isFinish = true;
-            for (int p = 0; p < nums.size(); p++) {
-                ptr[p]++;
-                if (ptr[p] < nums[p].size()) {
-                    int min = INT_MAX, max = INT_MIN;
-                    for (int k = 0; k < nums.size(); k++) {
-                        int currNum = nums[k][ptr[k]];
-                        if (min > currNum) {
-                            min = currNum;
-                        }
-
-                        if (max < currNum) {
-                            max = currNum;
-                        }
-                        isFinish = false;
+                else {//rains[i]的湖已经满了
+                    int time = map[rains[i]];
+                    auto sunny = set.lower_bound(time);
+                    if (sunny != set.end()) {//前面有空晴天可以抽水
+                        result[*sunny] = rains[i];
+                        set.erase(sunny);
+                        map[rains[i]] = i;
                     }
-
-                    if (set.find(ptr) == set.end()) {
-                        vector<int> temp(ptr);
-                        set.insert(temp);
-                        queue.push(DistanceInfo(Range(min, max), temp));
+                    else {//没有晴天可以抽水
+                        return {};
                     }
-
                 }
-
-                ptr[p]--;
-            }
-
-            if (isFinish == true) {
-                break;
             }
         }
+        
         return result;
     }
-
+    
+    int getLastTime(vector<int>& vec, int time) {
+        int s = 0, e = (int)vec.size() - 1;
+        
+        while (s > e) {
+            int mid = s + ((e - s) >> 1);
+            
+            if (vec[mid] < time) {
+                s = mid + 1;
+                
+            }
+            else if (vec[mid] > time) {
+                e = mid - 1;
+            }
+            else {
+                return mid;
+            }
+        }
+        
+        return -1;
+    }
+    
     void test() {
-        vector<vector<int>> nums = {{4,10,15,24,26},{0,9,12,20},{5,18,22,30}};
-
-        vector<int> result = smallestRange(nums);
-
+        vector<int> rains = {1,0,2,0,3,0,2,0,0,0,1,2,3};
+        
+        vector<int> result = avoidFlood(rains);
         tool.printVector(result);
     }
-    /**
-     x  10  15  24  26
-     x  x   12  20
-     x  18  22  30
-
-     0-5 {0-10,4-9,0-18} 4-9 {5-10,4-12,4-18} 5-10 {5-15,5-12,9-18} 5-12 {5-15,5-20,10-18} 10-18
-     */
 };
 
 #pragma mark - 1206
