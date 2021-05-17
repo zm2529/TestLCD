@@ -1511,49 +1511,803 @@ Tool tool;
 //};
 
 #pragma mark - 5
+//class Solution {
+//public:
+//    /**
+//     给你一个字符串 s，找到 s 中最长的回文子串。
+//
+//
+//
+//     示例 1：
+//
+//     输入：s = "babad"
+//     输出："bab"
+//     解释："aba" 同样是符合题意的答案。
+//     示例 2：
+//
+//     输入：s = "cbbd"
+//     输出："bb"
+//     示例 3：
+//
+//     输入：s = "a"
+//     输出："a"
+//     示例 4：
+//
+//     输入：s = "ac"
+//     输出："a"
+//
+//
+//     提示：
+//
+//     1 <= s.length <= 1000
+//     s 仅由数字和英文字母（大写和/或小写）组成
+//     */
+//    string longestPalindrome(string s) {
+///**
+//s[i - 1] == s[j + 1] f[i][j] = f[i + 1][j - 1];
+//    b a b a d
+// b  1 0 1 0 0
+// a    1 0 1 0
+// b      1 0 1
+// a        1 0
+// d          1
+// */
+//
+//        if (s.size() < 2) {
+//            return s;
+//        }
+//
+//        int start = 0, end = 0;
+//        int length = 0;
+//        vector<vector<int>> result(s.size(), vector<int>(s.size(), 0));
+//
+//        for (int i = 0; i < s.size(); i++) {
+//            result[i][i] = 1;
+//        }
+//
+//        for (int k = 1; k < s.size(); k++) {
+//            for (int i = 0; i + k < s.size(); i++) {
+//                int j = i + k;
+//                if (s[i] == s[j]) {
+//                    if (j - i == 1) {
+//                        result[i][j] = 1;
+//                    }
+//                    else {
+//                        result[i][j] = result[i + 1][j - 1];
+//                    }
+//                    if (result[i][j] == 1 && (j - i + 1 > length)) {
+//                        length = j - i + 1;
+//                        start = i;
+//                        end = j;
+//                    }
+//                }
+//                else {
+//                    result[i][j] = 0;
+//                }
+//            }
+//        }
+////        tool.printMatrix(result);
+//        return s.substr(start, end - start + 1);
+//    }
+//
+//    string longestPalindrome2(string s) {
+//
+//        /**
+//            a b a
+//         a
+//         b
+//         a      1
+//
+//         a b a
+//      a
+//      b    1 0
+//      a      1
+//
+//         a b a
+//      a  1
+//      b    1 0
+//      a      1
+//
+//         a b a
+//      a  1   1
+//      b    1 0
+//      a      1
+//
+//         a b a
+//      a  1 0 1
+//      b    1 0
+//      a      1
+//
+//         */
+//        if (s.size() < 2) {
+//            return s;
+//        }
+//
+//        int start = 0, end = 0;
+//        int length = 0;
+//
+//        vector<int> result(s.size(), 1);
+//
+//
+//        for (int i = (int)s.size() - 1; i >= 0 ; i--) {
+//            for (int k = (int)s.size() - 1 - i; k > 0 ; k--) {//从i 到 s.size() - 1开始对比，到i到i + 1
+//                int j = i + k;
+//                if (s[i] == s[j]) {
+//                    if (j - i == 1) {
+//                        result[j] = 1;
+//                    }
+//                    else {
+//                        result[j] = result[j - 1];//二维数组的result[i + 1][j - 1];
+//                    }
+//
+//                    if (result[j] == 1 && (j - i + 1 > length)) {
+//                        length = j - i + 1;
+//                        start = i;
+//                        end = j;
+//                    }
+//                }
+//                else{
+//                    result[j] = 0;
+//                }
+//            }
+//        }
+//
+//        return s.substr(start, end - start + 1);
+//    }
+//
+//    string longestPalindrome3(string s) {
+//
+//        if (s.size() < 2) {
+//            return s;
+//        }
+//
+//        int start = 0, end = 0;
+//        int length = 1;
+//        for (int i = 1; i < s.size(); i++) {
+//            pair<int, int> palindromeIndex1 = isPalindrome(s, i, i - 1);
+//            pair<int, int> palindromeIndex2 = isPalindrome(s, i, i);
+//
+//            pair<int, int> currMaxPalindrome = getMaxPair(palindromeIndex1, palindromeIndex2);
+//
+//            if (currMaxPalindrome.second - currMaxPalindrome.first + 1 > length) {
+//                length = currMaxPalindrome.second - currMaxPalindrome.first + 1;
+//                start = currMaxPalindrome.first;
+//                end = currMaxPalindrome.second;
+//            }
+//        }
+//
+//        return s.substr(start, end - start + 1);
+//    }
+//
+//    pair<int, int> getMaxPair(pair<int, int>& pair1, pair<int, int>& pair2){
+//
+//        int length1 = pair1.second - pair1.first;
+//        int length2 = pair2.second - pair2.first;
+//
+//        if (length1 > length2) {
+//            return pair1;
+//        }
+//        else {
+//            return pair2;
+//        }
+//    }
+//
+//    pair<int, int> isPalindrome(string& s, int center, int otherCenter) {
+//        int l = center, r = otherCenter;
+//
+//        while (l >= 0 && r < s.size() && s[l] == s[r]) {
+//            l--;
+//            r++;
+//        }
+//
+//        return pair<int, int>(l + 1, r - 1);
+//    }
+//
+//
+//    void test() {
+//        /**
+//         civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth
+//         */
+//        string result = longestPalindrome3("civilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth");
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 724
+//class Solution {
+//public:
+//    int pivotIndex(vector<int>& nums) {
+////        计算整体和，指针指向零，想右移动，直到两边和相同
+//
+//        int leftSum = 0, rightSum = 0;
+//        for (int i = 0; i < nums.size(); i++) {
+//            rightSum += nums[i];
+//        }
+//
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (i > 0) {
+//                leftSum += nums[i - 1];
+//            }
+//            rightSum -= nums[i];
+//
+//            if (leftSum == rightSum) {
+//                return i;
+//            }
+//        }
+//
+//        return -1;
+//    }
+//
+//    int pivotIndex2(vector<int>& nums) {
+////        计算整体和，指针指向零，想右移动，直到两边和相同
+//
+//        int leftSum = 0, allSum = 0;
+//        for (int i = 0; i < nums.size(); i++) {
+//            allSum += nums[i];
+//        }
+//
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (i > 0) {
+//                leftSum += nums[i - 1];
+//            }
+//
+//            if (leftSum == allSum - leftSum - nums[i]) {
+//                return i;
+//            }
+//        }
+//
+//        return -1;
+//    }
+//
+//
+//    void test() {
+//        vector<int> nums = {};
+//
+//        int result = pivotIndex(nums);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 19
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+//class Solution {
+//public:
+//    ListNode* removeNthFromEnd(ListNode* head, int n) {
+//        //一遍遍历，数组存储
+//        vector<ListNode *> arr;
+//
+//        ListNode *p = head;
+//        while (p != nullptr) {
+//            arr.push_back(p);
+//            p = p->next;
+//        }
+//
+//        if (arr.size() == n) {
+//            return head->next;
+//        }
+//
+//        p = arr[arr.size() - n - 1];
+//        p->next = p->next->next;
+//
+//        return head;
+//    }
+//
+//    ListNode* removeNthFromEnd2(ListNode* head, int n) {
+//        //一遍遍历 快慢指针
+//
+//
+//        ListNode *f = head;
+//        for (int i = 0; i < n && f != nullptr; i++) {
+//            f = f->next;
+//        }
+//
+//        ListNode *prePtr = nullptr;
+//        ListNode *s = head;
+//        while (f != nullptr) {
+//            prePtr = s;
+//            f = f->next;
+//            s = s->next;
+//        }
+//
+//        if (prePtr == nullptr) {
+//            return head->next;
+//        }
+//
+//        prePtr->next = s->next;
+//
+//        return head;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,2,3,4,5};
+//        int n = 3;
+//        ListNode *head = tool.createList(arr, -1);
+//        tool.printList(head);
+//
+//        ListNode *result = removeNthFromEnd2(head, n);
+//        tool.printList(result);
+//    }
+//};
+
+#pragma mark - 877
+//class Solution {
+//public:
+//    bool stoneGame(vector<int>& piles) {
+////https://leetcode-cn.com/problems/stone-game/solution/dong-tai-gui-hua-fang-shi-xiang-jie-java-by-yan-ta/
+//        //f[i][j] = max(p[i] - f[i + 1][j], p[j] - f[i][j - 1]);
+//
+//        vector<vector<int>> result(piles.size(), vector<int>(piles.size(), 0));
+//        for (int i = 0; i < piles.size(); i++) {
+//            result[i][i] = piles[i];
+//        }
+//
+//        for (int i = (int)piles.size() - 1; i >= 0; i--) {
+//            for (int j = i + 1; j < piles.size(); j++) {
+//                result[i][j] = max(piles[i] - result[i + 1][j], piles[j] - result[i][j - 1]);
+//            }
+//        }
+//
+//        return result[0][piles.size() - 1] > 0;
+//    }
+//
+//    bool stoneGame2(vector<int>& piles) {
+//        //优化一维数组
+//
+//        vector<int> result(piles);
+//
+//        for (int i = (int)piles.size(); i >= 0; i-- ) {
+//            for (int j = i + 1; j < piles.size(); j++) {
+//                result[j] = max(piles[i] - result[j], piles[j] - result[j - 1]);
+//            }
+//        }
+//
+//        return result[piles.size() - 1] > 0;
+//    }
+//
+//    void test() {
+//        vector<int> piles = {1,3,4,5};
+//
+//        bool result = stoneGame2(piles);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 91
+//class Solution {
+//public:
+//    int numDecodings(string s) {
+//        //f[i] = s[i] == true f[i] = f[i - 1]  s[i- 1]s[i] == true f[i] += f[i - 2]
+//
+//        if (s[0] == '0') {
+//            return 0;
+//        }
+//
+//        vector<int> result(s.size(), 0);
+//        result[0] = 1;
+//
+//        for (int i = 1; i < s.size(); i++) {
+//            if (s[i] != '0') {
+//                result[i] = result[i - 1];
+//            }
+//
+//            if (s[i - 1] != 0 && ((s[i - 1] == '1') || (s[i - 1] == '2' && s[i] <= '6'))) {
+//                if (i >= 2) {
+//                    result[i] += result[i - 2];
+//                }
+//                else {
+//                    result[i] += 1;
+//                }
+//            }
+//
+//
+//        }
+//
+//        return result[s.size() - 1];
+//    }
+//
+//    void test() {
+//        int result = numDecodings("11006");
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 322
+//class Solution {
+//public:
+//    int coinChange(vector<int>& coins, int amount) {
+//        //f[i] 第i个数最少需要多少个硬币 f[i] = min(f[i - coin[0]], f[i - coin[1]]... f[i - coin[n]]);
+//
+//        sort(coins.begin(), coins.end());
+//
+//        vector<int> result(amount + 1, INT_MAX);
+//        result[0] = 0;
+//        for (int i = 1; i < result.size(); i++) {
+//            for (int j = 0; j < coins.size(); j++) {
+//                if (coins[j] <= i ) {
+//                    result[i] = min(result[i], result[i - coins[j]]);
+//                }
+//                else {
+//                    break;
+//                }
+//            }
+//            if (result[i] != INT_MAX) {
+//                result[i]++;
+//            }
+//        }
+//
+//        return result[amount] == INT_MAX ? -1 : result[amount];
+//    }
+//
+//    int coinChange2(vector<int>& coins, int amount) {
+//        //优化
+//
+//        vector<int> result(amount + 1, amount + 1);
+//        result[0] = 0;
+//        for (int i = 1; i < result.size(); i++) {
+//            for (int j = 0; j < coins.size(); j++) {
+//                if (coins[j] <= i ) {
+//                    result[i] = min(result[i], result[i - coins[j]] + 1);
+//                }
+//            }
+//        }
+//
+//        return result[amount] > amount ? -1 : result[amount];
+//
+//    }
+//
+//    void test() {
+//        vector<int> coins = {2};
+//        int result = coinChange(coins, 0);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 139
+//class Solution {
+//public:
+//    bool wordBreak(string s, vector<string>& wordDict) {
+//        //f[i] 从0 - i的字符串能否用wordDict组成 f[i] = f[i = wordDict[j].size] == ture 有 s[i到 i + wordDict[j].size] == wordDirct[j] 则为true
+//
+//        vector<bool> result(s.size() + 1, false);
+//        result[0] = true;
+//
+//        for (int i = 0; i < result.size(); i++) {
+//            for (int j = 0; j < wordDict.size(); j++) {
+//                string temp = wordDict[j];
+//                if (i >= temp.size() && result[i - temp.size()]) {
+//                    if (temp== s.substr(i - temp.size(), temp.size())) {
+//                        result[i] = true;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//
+//        return result[s.size()];
+//    }
+//
+//    void test() {
+//        vector<string> arr = {"cats", "dog", "sand", "and", "cat"};
+//
+//        bool result = wordBreak("catsandog", arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 198
+//class Solution {
+//public:
+//    int rob(vector<int>& nums) {
+//// f[i] 从0 - i家最大的金额，f[i] = max(max(f[i - 2]...f[0]) + nums[i], f[i - 1]);
+//
+//        if (nums.size() == 0) {
+//            return 0;
+//        }
+//        if (nums.size() == 1) {
+//            return nums[0];
+//        }
+//
+//        int last1 = nums[1];
+//        int last2 = nums[0];
+//
+//        int result = max(last1, last2);
+//
+//        for (int i = 2; i < nums.size(); i++) {
+//            result = max(last2 + nums[i], last1);
+//            last2 = max(last2, last1);
+//            last1 = result;
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {2,1,1,2};
+//
+//        int result = rob(nums);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 309
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices) {
+//        //f[i][0] i天买入的现金 f[i][0] = f[i - 2][1] - p[i]和 昨天买入f[i - 1][0] 最大值
+//        //f[i][1] i天卖出的现金 f[i][1] = f[i - 1][0] + p[i] 和 昨天卖出f[i - 1][1] 最大值
+//
+//        if (prices.size() < 2) {
+//            return 0;
+//        }
+//
+//        vector<vector<int>> result(prices.size(), vector<int>(2, 0));
+//
+//        result[0][0] = -prices[0];
+//        result[1][0] = max(-prices[1], result[0][0]);
+//        result[1][1] = max(prices[1] + result[0][0], 0);
+//
+//        for (int i = 2; i < prices.size(); i++) {
+//            result[i][0] = max(result[i - 2][1] - prices[i], result[i - 1][0]);
+//            result[i][1] = max(result[i - 1][0] + prices[i], result[i - 1][1]);
+//        }
+//
+//        return result[prices.size() - 1][1];
+//    }
+//
+//    void test() {
+//        vector<int> arr = {2,1,4};
+//
+//        int result = maxProfit(arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 121
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices) {
+//        //只能买卖一次，最小值买入，最大值卖出
+//
+//        int result = 0;
+//        int inPrices = INT_MAX;
+//        int outPrices = 0;
+//        for (int i = 0; i < prices.size(); i++) {
+//            if (inPrices > prices[i]) {
+//                inPrices = prices[i];
+//                outPrices = INT_MIN;
+//            }
+//            else {
+//                outPrices = max(outPrices, prices[i]);
+//
+//                result = max(result, outPrices - inPrices);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    int maxProfit2(vector<int>& prices) {
+//
+//        //f[i][0] 买入价格 f[i][0] = min(f[i - 1][0], prices[i])
+//        //f[i][1] 卖出价格 f[i][1] = max(f[i - 1][1], prices[i] - f[i - 1][0])
+//
+//        if (prices.size() < 2) {
+//            return 0;
+//        }
+//
+//        vector<vector<int>> result(prices.size(), vector<int>(2, 0));
+//
+//        result[0][0] = prices[0];
+//        result[0][1] = 0;
+//
+//        for (int i = 1; i < prices.size(); i++) {
+//            result[i][0] = min(result[i - 1][0], prices[i]);
+//            result[i][1] = max(result[i - 1][1], prices[i] - result[i - 1][0]);
+//        }
+//
+//        return result[prices.size() - 1][1];
+//    }
+//
+//    int maxProfit3(vector<int>& prices) {
+//
+//        //f[i][0] 买入价格 f[i][0] = min(f[i - 1][0], prices[i])
+//        //f[i][1] 卖出价格 f[i][1] = max(f[i - 1][1], prices[i] - f[i - 1][0])
+//
+//        //优化 不用数组
+//
+//        if (prices.size() < 2) {
+//            return 0;
+//        }
+//
+//        int lastInPrices = prices[0];
+//        int lastOutPrices = 0;
+//
+//        for (int i = 1; i < prices.size(); i++) {
+//            lastOutPrices = max(lastOutPrices, prices[i] - lastInPrices);
+//            lastInPrices = min(lastInPrices, prices[i]);
+//        }
+//
+//        return lastOutPrices;
+//    }
+//
+//
+//    void test() {
+//        vector<int> arr = {7,1,5,3,6,4};
+//
+//        int result = maxProfit2(arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 122
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices) {
+//        //每天都交易，正收益就记录
+//        int result = 0;
+//        for (int i = 1; i < prices.size(); i++) {
+//            if (prices[i] > prices[i - 1]) {
+//                result += (prices[i] - prices[i - 1]);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    int maxProfit2(vector<int>& prices) {
+//        //f[i][0] 第i天持有的现金 f[i][0] = max(f[i - 1][0], f[i - 1][1] - prices[i])
+//        //f[i][1] 第i天不持有的现金 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
+//
+//        vector<vector<int>> result(prices.size(), vector<int>(2, 0));
+//        result[0][0] = -prices[0];
+//
+//        for (int i = 1; i < prices.size(); i++) {
+//            result[i][0] = max(result[i - 1][0], result[i - 1][1] - prices[i]);
+//            result[i][1] = max(result[i - 1][1], prices[i] + result[i - 1][0]);
+//        }
+//
+//        return result[prices.size() - 1][1];
+//    }
+//
+//    int maxProfit3(vector<int>& prices) {
+//        //f[i][0] 第i天持有的现金 f[i][0] = max(f[i - 1][0], f[i - 1][1] - prices[i])
+//        //f[i][1] 第i天不持有的现金 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
+//
+//        //优化 不使用数组
+//
+//        int lastInCash = -prices[0];
+//        int lastOutCash = 0;
+//
+//        for (int i = 1; i < prices.size(); i++) {
+//            int tempInCash = max(lastInCash, lastOutCash - prices[i]);
+//            int tempOutCash = max(lastOutCash, prices[i] + lastInCash);
+//
+//            lastInCash = tempInCash;
+//            lastOutCash = tempOutCash;
+//        }
+//
+//        return lastOutCash;
+//    }
+//
+//
+//    void test() {
+//        vector<int> arr = {7,1,5,3,6,4};
+//
+//        int result = maxProfit3(arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 123
 class Solution {
 public:
-    /**
-     给你一个字符串 s，找到 s 中最长的回文子串。
+    int maxProfit(vector<int>& prices) {
+        //贪心 统计盈利区间最大值
+        priority_queue<int, vector<int>, less<int>> resultQueue;
+        
+        int count = 0;
+        int currMaxProfit = 0;
+        for (int i = 1; i < prices.size(); i++) {
+            int temp = prices[i] - prices[i - 1];
+            
+            count += temp;
 
-
-
-     示例 1：
-
-     输入：s = "babad"
-     输出："bab"
-     解释："aba" 同样是符合题意的答案。
-     示例 2：
-
-     输入：s = "cbbd"
-     输出："bb"
-     示例 3：
-
-     输入：s = "a"
-     输出："a"
-     示例 4：
-
-     输入：s = "ac"
-     输出："a"
-
-
-     提示：
-
-     1 <= s.length <= 1000
-     s 仅由数字和英文字母（大写和/或小写）组成
-     */
-    string longestPalindrome(string s) {
-/**
-s[i - 1] == s[j + 1] f[i][j] = f[i + 1][j - 1];
-    b a b a d
- b  1 0 0 0 0
- a  0 1 0 0 0
- b  1 0 1 0 0
- a        1
- d          1
- */
+            
+            if (count > 0) {
+                currMaxProfit = max(currMaxProfit, count);
+            }
+            else {
+                if (currMaxProfit != 0) {
+                    resultQueue.push(currMaxProfit);
+                }
+                count = 0;
+                currMaxProfit = 0;
+            }
+        }
+        
+        if (currMaxProfit > 0) {
+            resultQueue.push(currMaxProfit);
+        }
+            
+            
+        int result = 0;
+        int size = (int)resultQueue.size();
+        for (int i = 0 ; i < 2 && i < size; i++) {
+            result += resultQueue.top();
+            resultQueue.pop();
+        }
+        return result;
     }
+    
+    int maxProfit2(vector<int>& prices) {
+        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
+        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
+        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
+        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
+
+        vector<vector<int>> result(prices.size(), vector<int>(4, 0));
+        result[0][0] = -prices[0];
+        result[0][2] = -prices[0];
+        
+        for (int i = 1; i < prices.size(); i++ ){
+            int p = prices[i];
+            result[i][0] = max(result[i - 1][0], -p);
+            result[i][1] = max(result[i - 1][1], p + result[i - 1][0]);
+            result[i][2] = max(result[i - 1][2], result[i][1] - p);
+            result[i][3] = max(result[i - 1][3], p + result[i - 1][2]);
+        }
+        
+        return result[prices.size() - 1][3];
+    }
+    
+    int maxProfit3(vector<int>& prices) {
+        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
+        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
+        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
+        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
+
+        vector<int> result(4,0);
+
+        result[0] = -prices[0];
+        result[2] = -prices[0];
+        
+        for (int i = 1; i < prices.size(); i++ ){
+            int p = prices[i];
+            result[3] = max(result[3], p + result[2]);
+            result[2] = max(result[2], result[1] - p);
+            result[1] = max(result[1], p + result[0]);
+            result[0] = max(result[0], -p);
+        }
+        
+        return result[3];
+    }
+
+    
+    void test() {
+        vector<int> arr = {1,2,3,4,5};
+        
+        int result = maxProfit3(arr);
+        
+        cout<<result<<endl;
+    }
+    
 };
+
+#pragma mark - 464
+
 
 #pragma mark - 1206
 
