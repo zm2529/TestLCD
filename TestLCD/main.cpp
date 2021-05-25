@@ -2212,98 +2212,1139 @@ Tool tool;
 //};
 
 #pragma mark - 123
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices) {
+//        //贪心 统计盈利区间最大值
+//        priority_queue<int, vector<int>, less<int>> resultQueue;
+//
+//        int count = 0;
+//        int currMaxProfit = 0;
+//        for (int i = 1; i < prices.size(); i++) {
+//            int temp = prices[i] - prices[i - 1];
+//
+//            count += temp;
+//
+//
+//            if (count > 0) {
+//                currMaxProfit = max(currMaxProfit, count);
+//            }
+//            else {
+//                if (currMaxProfit != 0) {
+//                    resultQueue.push(currMaxProfit);
+//                }
+//                count = 0;
+//                currMaxProfit = 0;
+//            }
+//        }
+//
+//        if (currMaxProfit > 0) {
+//            resultQueue.push(currMaxProfit);
+//        }
+//
+//
+//        int result = 0;
+//        int size = (int)resultQueue.size();
+//        for (int i = 0 ; i < 2 && i < size; i++) {
+//            result += resultQueue.top();
+//            resultQueue.pop();
+//        }
+//        return result;
+//    }
+//
+//    int maxProfit2(vector<int>& prices) {
+//        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
+//        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
+//        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
+//        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
+//
+//        vector<vector<int>> result(prices.size(), vector<int>(4, 0));
+//        result[0][0] = -prices[0];
+//        result[0][2] = -prices[0];
+//
+//        for (int i = 1; i < prices.size(); i++ ){
+//            int p = prices[i];
+//            result[i][0] = max(result[i - 1][0], -p);
+//            result[i][1] = max(result[i - 1][1], p + result[i - 1][0]);
+//            result[i][2] = max(result[i - 1][2], result[i][1] - p);
+//            result[i][3] = max(result[i - 1][3], p + result[i - 1][2]);
+//        }
+//
+//        return result[prices.size() - 1][3];
+//    }
+//
+//    int maxProfit3(vector<int>& prices) {
+//        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
+//        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
+//        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
+//        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
+//
+//        vector<int> result(4,0);
+//
+//        result[0] = -prices[0];
+//        result[2] = -prices[0];
+//
+//        for (int i = 1; i < prices.size(); i++ ){
+//            int p = prices[i];
+//            result[3] = max(result[3], p + result[2]);
+//            result[2] = max(result[2], result[1] - p);
+//            result[1] = max(result[1], p + result[0]);
+//            result[0] = max(result[0], -p);
+//        }
+//
+//        return result[3];
+//    }
+//
+//
+//    void test() {
+//        vector<int> arr = {1,2,3,4,5};
+//
+//        int result = maxProfit3(arr);
+//
+//        cout<<result<<endl;
+//    }
+//
+//};
+
+#pragma mark - 188
+//class Solution {
+//public:
+//    int maxProfit(int k, vector<int>& prices) {
+//        //最多2次时类似
+//
+//        if (prices.size() < 2 || k == 0) {
+//            return 0;
+//        }
+//
+//        vector<vector<int>> result(prices.size(), vector<int>(2 * k, 0));
+//        for (int i = 0; i * 2 < result[0].size(); i++) {
+//            result[0][i * 2] = -prices[0];
+//        }
+//
+//        for (int i = 1; i < prices.size(); i++) {
+//            for (int j = 0; j < result[0].size(); j += 2) {
+//                if (j == 0) {
+//                    result[i][j] = max(result[i - 1][j], -prices[i]);
+//                    result[i][j + 1] = max(result[i - 1][j + 1], prices[i] + result[i - 1][j]);
+//                }
+//                else {
+//                    result[i][j] = max(result[i - 1][j], result[i - 1][j - 1] - prices[i]);
+//                    result[i][j + 1] = max(result[i - 1][j + 1], prices[i] + result[i - 1][j]);
+//                }
+//            }
+//        }
+//
+//        return result[prices.size() - 1][2 * k - 1];
+//    }
+//
+//    int maxProfit2(int k, vector<int>& prices) {
+//        //优化 滚动数组
+//
+//        if (prices.size() < 2 || k == 0) {
+//            return 0;
+//        }
+//
+//        vector<int> result(2 * k, 0);
+//
+//        for (int i = 0; i < result.size(); i += 2) {
+//            result[i] = -prices[0];
+//        }
+//
+//        for (int i = 0; i < prices.size(); i++) {
+//            for (int j = 0; j < result.size(); j += 2) {
+//                result[j + 1] = max(result[j + 1], prices[i] + result[j]);
+//                if (j == 0) {
+//                    result[j] = max(result[j], -prices[i]);
+//                }
+//                else {
+//                    result[j] = max(result[j], result[j - 1] - prices[i]);
+//                }
+//            }
+//        }
+//
+//        return result[2 * k - 1];
+//    }
+//
+//    void test() {
+//        vector<int> prices = {3,2,6,5,0,3};
+//        int k = 2;
+//
+//        int result = maxProfit2(k, prices);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 714
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices, int fee) {
+//        //f[i][0] 持有股票后的现金，f[i][0] = max(f[i - 1][0], f[i][1] - prices[i])
+//        //f[i][1] 卖出股票后的现金，f[i][0] = max(f[i - 1][1], prices[i] + f[i - 1][0] - fee)
+//
+//        if (prices.size() < 2) {
+//            return 0;
+//        }
+//
+//        vector<vector<int>> result(prices.size(), vector<int>(2, 0));
+//        result[0][0] = -prices[0];
+//
+//        for (int i = 1; i < prices.size(); i++) {
+//            result[i][0] = max(result[i - 1][0], result[i - 1][1] - prices[i]);
+//            result[i][1] = max(result[i - 1][1], prices[i] + result[i - 1][0] - fee);
+//        }
+//
+//        return result[prices.size() - 1][1];
+//    }
+//
+//    int maxProfit2(vector<int>& prices, int fee) {
+//        //f[i][0] 持有股票后的现金，f[i][0] = max(f[i - 1][0], f[i][1] - prices[i])
+//        //f[i][1] 卖出股票后的现金，f[i][0] = max(f[i - 1][1], prices[i] + f[i - 1][0] - fee)
+//
+//        //优化 一维数组
+//        if (prices.size() < 2) {
+//            return 0;
+//        }
+//
+//        vector<int> result(2,0);
+//        result[0] = -prices[0];
+//
+//        for (int i = 1; i < prices.size(); i++) {
+//            int temp0 = result[0];
+//            result[0] = max(result[0], result[1] - prices[i]);
+//            result[1] = max(result[1], prices[i] + temp0 - fee);
+//        }
+//
+//        return result[1];
+//    }
+//
+//    int maxProfit3(vector<int>& prices, int fee) {
+//        if (prices.size() < 2) {
+//            return 0;
+//        }
+//
+//        int result = 0;
+//        int buyPrice = prices[0];
+//        int maxPrice = 0;
+//        for (int i = 1; i < prices.size(); i++) {
+//
+//            if (prices[i] - prices[i - 1] >= 0) {//增长的
+//                buyPrice = min(buyPrice, prices[i - 1]);
+//                maxPrice = max(maxPrice, prices[i]);
+//            }
+//
+//            if (maxPrice - prices[i] > fee) {//下降幅度大于手续费
+//                result += maxPrice - buyPrice - fee;
+//                buyPrice = prices[i];
+//                maxPrice = 0;
+//            }
+//        }
+//
+//        if (maxPrice - buyPrice > fee) {
+//            result += maxPrice - buyPrice - fee;
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1, 3, 2, 8, 4, 9};
+//        int fee = 2;
+//
+//        int result = maxProfit3(arr, fee);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - jianzhi63
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices) {
+//        //f[i][0] 持有的现金 f[i][0] = max(f[i][0], -prices[i])
+//        //f[i][1] 未持有的现金 f[i][1] = max(f[i][1], prices[i] + f[i][0])
+//
+//        if (prices.size() < 2) {
+//            return 0;
+//        }
+//
+//        vector<int> result(2, 0);
+//        result[0] = -prices[0];
+//
+//        for (int i = 1; i < prices.size(); i++) {
+//            result[1] = max(result[1], prices[i] + result[0]);
+//            result[0] = max(result[0], -prices[i]);
+//        }
+//
+//        return result[1];
+//    }
+//
+//    int maxProfit2(vector<int>& prices) {
+//        //f[i][0] 持有的现金 f[i][0] = max(f[i][0], -prices[i])
+//        //f[i][1] 未持有的现金 f[i][1] = max(f[i][1], prices[i] + f[i][0])
+//
+//        if (prices.size() < 2) {
+//            return 0;
+//        }
+//
+//        int buyPrice = -prices[0];
+//        int profit = 0;
+//
+//        for (int i = 1; i < prices.size(); i++) {
+//            profit = max(profit, prices[i] + buyPrice);
+//            buyPrice = max(buyPrice, -prices[i]);
+//        }
+//
+//        return profit;
+//    }
+//};
+
+#pragma mark - 322
+//class Solution {
+//public:
+//    int coinChange(vector<int>& coins, int amount) {
+//        //f[i] i的金额可以由最少多少硬币组成 f[i] = min(f[i - coins[0]], f[i - coins[1]]...f[i - coins[n]]) + 1
+//
+//        vector<int> result(amount + 1, INT_MAX);
+//        result[0] = 0;
+//
+//        sort(coins.begin(), coins.end());
+//
+//        for (int i = 0; i < result.size(); i++) {
+//            for (int j = 0; j < coins.size(); j++) {
+//                if (coins[j] <= i) {
+//
+//                    if (result[i - coins[j]] != INT_MAX) {
+//                        result[i] = min(result[i - coins[j]] + 1, result[i]);
+//                    }
+//                }
+//                else {
+//                    break;
+//                }
+//            }
+//        }
+//
+//        return result[amount] == INT_MAX ? -1 : result[amount];
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,2,5};
+//
+//        int result = coinChange(arr, 11);
+//        cout<<result<<endl;
+//
+//    }
+//};
+
+#pragma mark - 416
+//class Solution {
+//public:
+//    bool canPartition(vector<int>& nums) {
+//        //01背包
+//
+//        //f[i][j] = min(abs(f[i - 1][j] - j), abs(f[i - 1][j - nums[i]] + nums[i] - j))
+//        //f[i] = min(abs(f[i] - j), abs(f[i - nums[i]] + nums[i] - j))
+//
+//        int sum = accumulate(nums.begin(), nums.end(), 0);
+//        if (sum % 2 == 1) {
+//            return false;
+//        }
+//        int target = sum / 2;
+//
+//        vector<int> result(target + 1, 0);
+//        result[0] = 0;
+//
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            for (int j = target; j >= 0; j--) {
+//                if (nums[i] <= j) {
+//
+//                    int temp1 = abs(result[j] - j);
+//                    int temp2 = abs(result[j - nums[i]] + nums[i] - j);
+//                    result[j] = temp1 > temp2 ? (result[j - nums[i]] + nums[i]) : result[j];
+//                }
+//            }
+//        }
+//
+//        return result[target] == target;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {2,3,4,8,9,14};//{14,9,8,4,3,2};
+//
+//        bool result = canPartition(arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 518
+//class Solution {
+//public:
+//    int change(int amount, vector<int>& coins) {
+//        //完全背包的转移方程 f[i][j] = max(f[i - 1][j], f[i - 1][j - coins[i]] + coins[i])
+//        //f[i][j] = f[i - 1][j - coins[i]] + 1;
+//
+//        vector<int> result(amount + 1, 0);
+//        result[0] = 1;
+//
+//        for (int i = 0; i < coins.size(); i++) {
+//            for (int j = coins[i]; j <= amount; j++) {
+//                result[j] += result[j - coins[i]];
+//            }
+//        }
+//
+//        return result[amount];
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,2,5};
+//
+//        int result = change(5, arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 494
+//class Solution {
+//public:
+//    int findTargetSumWays(vector<int>& nums, int target) {
+////f[i] 正数x, 负数y x + y = sum, x - y = target //0-i个nums中的数组成(sum + t) / 2的数量 f[i] = f[i] + f[i - nums[i]] 倒叙遍历
+//
+//        int sum = accumulate(nums.begin(), nums.end(), 0);
+//
+//
+//        if ( (target + sum) % 2 != 0  || target > sum) {
+//            return 0;
+//        }
+//
+//        if (target == sum) {
+//            return 1;
+//        }
+//
+//        int t = (target + sum) / 2;
+//
+//        vector<int> result(t + 1, 0);
+//        result[0] = 1;
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            for (int j = t; j >= nums[i]; j--) {
+//                result[j] += result[j - nums[i]];
+//            }
+//        }
+//
+//        return result[t];
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,1,1,1,1};
+//
+//        int result = findTargetSumWays(arr, 3);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 144
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     TreeNode *left;
+// *     TreeNode *right;
+// *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+// * };
+// */
+//class Solution {
+//public:
+//    vector<int> preorderTraversal(TreeNode* root) {
+//        vector<int> result;
+//
+//        DLRTraversal(root, result);
+//
+//        return result;
+//    }
+//
+//    void  DLRTraversal(TreeNode *root, vector<int>& result) {
+//        if (root == nullptr) {
+//            return;
+//        }
+//
+//        result.push_back(root->val);
+//
+//        DLRTraversal(root->left, result);
+//        DLRTraversal(root->right, result);
+//    }
+//
+//    vector<int> preorderTraversal2(TreeNode* root) {
+//
+//        vector<int> result;
+//        stack<TreeNode *> stack;
+//
+//        if (root != nullptr) {
+//            stack.push(root);
+//        }
+//
+//        while (stack.size() > 0) {
+//            TreeNode *node = stack.top();
+//            stack.pop();
+//
+//            result.push_back(node->val);
+//
+//            if (node->right != nullptr) {
+//                stack.push(node->right);
+//            }
+//
+//            if (node->left != nullptr) {
+//                stack.push(node->left);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,-1,2,3};
+//        TreeNode *root = tool.createBT(arr);
+//
+//        vector<int> result = preorderTraversal2(root);
+//        tool.printVector(result);
+//
+//    }
+//};
+
+#pragma mark - 94
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    vector<int> preorderTraversal(TreeNode* root) {
+//        vector<int> result;
+//
+//        stack<TreeNode *> stack;
+//
+//        TreeNode *node = root;
+//        while (node != nullptr) {
+//            stack.push(node);
+//            node = node->left;
+//        }
+//
+//        while (stack.size() > 0) {
+//            TreeNode *tempNode = stack.top();
+//            stack.pop();
+//
+//            result.push_back(tempNode->val);
+//
+//            if (tempNode->right != nullptr) {
+//                stack.push(tempNode->right);
+//            }
+//
+//            tempNode = tempNode->right;
+//
+//            while (tempNode != nullptr && tempNode->left != nullptr) {
+//                stack.push(tempNode->left);
+//                tempNode = tempNode->left;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,4,2,3};
+//        TreeNode *root = tool.createBT(arr);
+//
+//        vector<int> result = preorderTraversal(root);
+//        tool.printVector(result);
+//
+//    }
+//};
+
+#pragma mark - 230
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    int kthSmallest(TreeNode* root, int k) {
+//
+//        return LDRTraveral(root, k);
+//    }
+//
+//    int LDRTraveral(TreeNode *root, int& count) {
+//        if (root == nullptr) {
+//            return -1;
+//        }
+//
+//        int left = LDRTraveral(root->left, count);
+//        if (left != -1) {
+//            return left;
+//        }
+//        count--;
+//        if (count == 0) {
+//            return root->val;
+//        }
+//        int right = LDRTraveral(root->right, count);
+//
+//        if (right != -1) {
+//            return right;
+//        }
+//
+//        return -1;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {3,1,4,-1,2};
+//        TreeNode *root = tool.createBT(arr);
+//
+//        int result = kthSmallest(root, 2);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 98
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//
+//    bool isValidBST(TreeNode* root) {
+//
+//        return LDRTraveral(root, nullptr);
+//    }
+//
+//    bool LDRTraveral(TreeNode *root, TreeNode* lastNode) {
+//        if (root == nullptr) {
+//            return true;
+//        }
+//
+//        bool left = LDRTraveral(root->left, lastNode);
+//        if (left == false || (lastNode != nullptr && lastNode->val >= root->val)) {
+//            return false;
+//        }
+//        lastNode = root;
+//
+//        bool right = LDRTraveral(root->right, lastNode);
+//        return right;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {};
+//        TreeNode *root = tool.createBT(arr);
+//
+//        bool result = isValidBST(root);
+//        cout<<result<<endl;
+//    }
+//
+//};
+
+#pragma mark - 145
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    vector<int> preorderTraversal(TreeNode* root) {
+//
+//        vector<int> result;
+//
+//        stack<TreeNode *>stack;
+//
+//        if (root != nullptr) {
+//            stack.push(root);
+//        }
+//
+//        while (stack.size() > 0) {
+//            TreeNode *node = stack.top();
+//            stack.pop();
+//            if (node == nullptr) {
+//                node = stack.top();
+//                stack.pop();
+//                result.push_back(node->val);
+//            }
+//            else {
+//                stack.push(node);
+//                stack.push(nullptr);
+//
+//                if (node->right != nullptr) {
+//                    stack.push(node->right);
+//                }
+//
+//                if (node->left != nullptr) {
+//                    stack.push(node->left);
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,4,2,3};
+//        TreeNode *root = tool.createBT(arr);
+//
+//        vector<int> result = preorderTraversal(root);
+//        tool.printVector(result);
+//
+//    }
+//};
+
+#pragma mark - 816
+//class Solution {
+//public:
+//    vector<string> ambiguousCoordinates(string s) {
+//
+//        vector<string> result;
+//
+//        for (int i = 1; i < s.size() - 1; i++) {
+//            unordered_set<string> xSet;
+//            getXorY(s, 1, i, true, xSet);
+//            unordered_set<string> ySet;
+//            getXorY(s, 1 + i, (int)s.size() - i - 2, false, ySet);
+//
+//
+//            for (auto x : xSet) {
+//                for (auto y : ySet) {
+//                    string point = "(" + x + ", " + y + ")";
+//                    result.push_back(point);
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void getXorY(string s, int start, int length, bool isX, unordered_set<string>& set) {
+//        if (start + length >=  s.size()) {
+//            return;
+//        }
+//
+//        for (int i = 1; i <= length; i++) {
+//
+//            string p = s.substr(start, i);
+//            if (i > 1 && p[0] == '0') {
+//                break;
+//            }
+//
+//            string d = "";
+//            string num = "";
+//            if (length > i) {
+//                d = s.substr(start + i, length - i);
+//                if (d[d.size() - 1] == '0') {
+//                    continue;
+//                }
+//
+//                num = p + "." + d;
+//            }
+//            else {
+//                num = p;
+//            }
+//
+//            set.insert(num);
+//        }
+//    }
+//
+//    void test() {
+//        vector<string> result = ambiguousCoordinates("(0123)");
+//        for_each(result.begin(), result.end(), [](string str){
+//            cout<<str<<endl;
+//        });
+//    }
+//};
+
+#pragma mark - 39
+//class Solution {
+//public:
+//    vector<vector<int>> result;
+//    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+//        vector<int> path;
+//        backtrack(path, 0, target, 0, candidates);
+//
+//        return result;
+//    }
+//
+//    void backtrack(vector<int>& path, int start, int target, int sum, vector<int>& candidates) {
+//        if (sum == target) {
+//            result.push_back(path);
+//            return;
+//        }
+//
+//        if (sum > target) {
+//            return;
+//        }
+//
+//        if (start >= candidates.size()) {
+//            return;
+//        }
+//
+//        for (int i = start; i < candidates.size(); i++) {
+//            path.push_back(candidates[i]);
+//            backtrack(path, i, target, sum + candidates[i], candidates);
+//            path.pop_back();
+//        }
+//    }
+//
+//    void test() {
+//        vector<int> candidates = {2,3,5};
+//        int target = 8;
+//
+//        vector<vector<int>> result = combinationSum(candidates, target);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 40
+//class Solution {
+//public:
+//    vector<vector<int>> result;
+//    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+//        vector<int> path;
+//
+//        sort(candidates.begin(), candidates.end());
+//        backtrack(path, 0, target, 0, candidates);
+//
+//        return result;
+//    }
+//
+//    void backtrack(vector<int>& path, int start, int target, int sum, vector<int>& candidates) {
+//        if (sum == target) {
+//            result.push_back(path);
+//            return;
+//        }
+//
+//        if (sum > target) {
+//            return;
+//        }
+//
+//        for (int i = start; i < candidates.size(); i++) {
+//            path.push_back(candidates[i]);
+//            backtrack(path, i + 1, target, sum + candidates[i], candidates);
+//            path.pop_back();
+//            while (i + 1 < candidates.size() && candidates[i] == candidates[i + 1]) {
+//                i++;
+//            }
+//        }
+//    }
+//
+//    void test() {
+//        vector<int> arr = {10,1,2,7,6,1,5};
+//        int target = 8;
+//
+//        vector<vector<int>> result = combinationSum2(arr, target);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 46
+//class Solution {
+//public:
+//    vector<vector<int>> result;
+//    vector<vector<int>> permute(vector<int>& nums) {
+//
+//        vector<int> path;
+//        unordered_set<int> set;
+//        backtrack(path, set, nums);
+//
+//        return result;
+//    }
+//
+//    void backtrack(vector<int>& path, unordered_set<int>& set, vector<int>& nums) {
+//        if (path.size() == nums.size()) {
+//            result.push_back(path);
+//            return;
+//        }
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (set.find(i) == set.end()) {
+//                set.insert(i);
+//                path.push_back(nums[i]);
+//                backtrack(path, set, nums);
+//                path.pop_back();
+//                set.erase(i);
+//            }
+//        }
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1};
+///**
+// [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+// */
+//        vector<vector<int>> result = permute(arr);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 47
+//class Solution {
+//public:
+//    vector<vector<int>> result;
+//    vector<vector<int>> permuteUnique(vector<int>& nums) {
+//        vector<int> path;
+//        vector<bool> used(nums.size(), false);
+//
+//        sort(nums.begin(), nums.end());
+//
+//        backtrack(path, nums, used);
+//
+//        return result;
+//    }
+//
+//    void backtrack(vector<int>& path, vector<int>& nums, vector<bool>& used) {
+//        if (path.size() == nums.size()) {
+//            result.push_back(path);
+//            return;
+//        }
+//
+//
+//        int last = -99;
+//        for (int i = 0; i < nums.size(); i++) {
+//
+//            if (last == nums[i]) {
+//                continue;
+//            }
+//
+//            if (used[i] == false) {
+//                used[i] = true;
+//                path.push_back(nums[i]);
+//                backtrack(path, nums, used);
+//                path.pop_back();
+//                used[i] = false;
+//
+//                last = nums[i];
+//            }
+//        }
+//    }
+//
+//    void test() {
+//        vector<int> arr = {3,3,0,3};
+//
+//        vector<vector<int>> result = permuteUnique(arr);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 78
+//class Solution {
+//public:
+//    vector<vector<int>> result;
+//    vector<vector<int>> subsets(vector<int>& nums) {
+//
+//        vector<int> path;
+//        result.push_back({});
+//        backtrack(path, nums, 0);
+//
+//        return result;
+//    }
+//
+//    void backtrack(vector<int>& path, vector<int>& nums, int start) {
+//        if (start >= nums.size()) {
+//            return;
+//        }
+//
+//        for (int i = start; i < nums.size(); i++) {
+//            path.push_back(nums[i]);
+//            result.push_back(path);
+//            backtrack(path, nums, i + 1);
+//            path.pop_back();
+//        }
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,2,3};
+///**
+// [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+// */
+//        vector<vector<int>> result = subsets(arr);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 90
+//class Solution {
+//public:
+//    vector<vector<int>> result;
+//    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+//        vector<int> path;
+//
+//        vector<bool> used(nums.size(), false);
+//
+//        sort(nums.begin(), nums.end());
+//
+//        result.push_back({});
+//        backtrack(path, nums, 0, used);
+//
+//        return result;
+//    }
+//
+//    void backtrack(vector<int>& path, vector<int>& nums, int start, vector<bool>& used) {
+//        if (start >= nums.size()) {
+//            return;
+//        }
+//
+//        for (int i = start; i < nums.size(); i++) {
+//
+//            if (i > 0 && nums[i] == nums[i - 1] && used[i - 1] == false) {
+//                continue;
+//            }
+//            used[i] = true;
+//            path.push_back(nums[i]);
+//            result.push_back(path);
+//            backtrack(path, nums, i + 1, used);
+//            path.pop_back();
+//            used[i] = false;
+//        }
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,2,2};
+///**
+// [[],[1],[1,2],[1,2,2],[2],[2,2]]
+// */
+//        vector<vector<int>> result = subsetsWithDup(arr);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 113
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    vector<vector<int>> result;
+//    vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+//        vector<int> path;
+//
+//        if (root == nullptr) {
+//            return result;
+//        }
+//
+//        traversal(path, root, targetSum);
+//
+//        return result;
+//    }
+//
+//    void traversal(vector<int>& path, TreeNode *root, int targetSum) {
+//        path.push_back(root->val);
+//        if (targetSum - root->val == 0 && root->left == nullptr && root->right == nullptr) {
+//            result.push_back(path);
+//        }
+//        else {
+//            if (root->left != nullptr) {
+//                traversal(path, root->left, targetSum - root->val);
+//            }
+//
+//            if (root->right != nullptr) {
+//                traversal(path, root->right, targetSum - root->val);
+//            }
+//        }
+//        path.pop_back();
+//    }
+//
+//    void test() {
+//        /**
+//         [-2,null,-3]
+//         -5
+//         */
+//        vector<int> arr = {-2,-1,-3};
+//        int targetSum = -5;
+//
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        vector<vector<int>> result = pathSum(nullptr, 0);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 131
 class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
-        //贪心 统计盈利区间最大值
-        priority_queue<int, vector<int>, less<int>> resultQueue;
-        
-        int count = 0;
-        int currMaxProfit = 0;
-        for (int i = 1; i < prices.size(); i++) {
-            int temp = prices[i] - prices[i - 1];
-            
-            count += temp;
+    vector<vector<string>> result;
+    vector<vector<string>> partition(string s) {
+        vector<string> path;
 
-            
-            if (count > 0) {
-                currMaxProfit = max(currMaxProfit, count);
-            }
-            else {
-                if (currMaxProfit != 0) {
-                    resultQueue.push(currMaxProfit);
-                }
-                count = 0;
-                currMaxProfit = 0;
-            }
-        }
-        
-        if (currMaxProfit > 0) {
-            resultQueue.push(currMaxProfit);
-        }
-            
-            
-        int result = 0;
-        int size = (int)resultQueue.size();
-        for (int i = 0 ; i < 2 && i < size; i++) {
-            result += resultQueue.top();
-            resultQueue.pop();
-        }
+        backtrack(path, s, 0);
+
         return result;
     }
-    
-    int maxProfit2(vector<int>& prices) {
-        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
-        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
-        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
-        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
 
-        vector<vector<int>> result(prices.size(), vector<int>(4, 0));
-        result[0][0] = -prices[0];
-        result[0][2] = -prices[0];
-        
-        for (int i = 1; i < prices.size(); i++ ){
-            int p = prices[i];
-            result[i][0] = max(result[i - 1][0], -p);
-            result[i][1] = max(result[i - 1][1], p + result[i - 1][0]);
-            result[i][2] = max(result[i - 1][2], result[i][1] - p);
-            result[i][3] = max(result[i - 1][3], p + result[i - 1][2]);
+    void backtrack(vector<string>& path, string& s, int start) {
+        if (start >= s.size()) {
+            result.push_back(path);
+            return;
         }
-        
-        return result[prices.size() - 1][3];
-    }
-    
-    int maxProfit3(vector<int>& prices) {
-        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
-        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
-        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
-        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
 
-        vector<int> result(4,0);
-
-        result[0] = -prices[0];
-        result[2] = -prices[0];
-        
-        for (int i = 1; i < prices.size(); i++ ){
-            int p = prices[i];
-            result[3] = max(result[3], p + result[2]);
-            result[2] = max(result[2], result[1] - p);
-            result[1] = max(result[1], p + result[0]);
-            result[0] = max(result[0], -p);
+        for (int i = 1; start + i <= s.size(); i++) {
+            if (checkPartition(s, start, start + i - 1)) {
+                path.push_back(s.substr(start, i));
+                backtrack(path, s, start + i);
+                path.pop_back();
+            }
         }
-        
-        return result[3];
     }
 
-    
+    bool checkPartition(string& s, int start, int end) {
+        while (start < end) {
+            if (s[start++] != s[end--]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     void test() {
-        vector<int> arr = {1,2,3,4,5};
-        
-        int result = maxProfit3(arr);
-        
-        cout<<result<<endl;
+        vector<vector<string>> result = partition("efe");
+        for_each(result.begin(), result.end(), [](vector<string>& arr){
+            cout<<"[";
+            for_each(arr.begin(), arr.end(), [](string& str){
+                cout<<str<<",";
+            });
+            cout<<"]"<<endl;
+        });
     }
-    
 };
 
 #pragma mark - 464
