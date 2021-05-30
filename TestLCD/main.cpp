@@ -2212,98 +2212,850 @@ Tool tool;
 //};
 
 #pragma mark - 123
+//class Solution {
+//public:
+//    int maxProfit(vector<int>& prices) {
+//        //贪心 统计盈利区间最大值
+//        priority_queue<int, vector<int>, less<int>> resultQueue;
+//
+//        int count = 0;
+//        int currMaxProfit = 0;
+//        for (int i = 1; i < prices.size(); i++) {
+//            int temp = prices[i] - prices[i - 1];
+//
+//            count += temp;
+//
+//
+//            if (count > 0) {
+//                currMaxProfit = max(currMaxProfit, count);
+//            }
+//            else {
+//                if (currMaxProfit != 0) {
+//                    resultQueue.push(currMaxProfit);
+//                }
+//                count = 0;
+//                currMaxProfit = 0;
+//            }
+//        }
+//
+//        if (currMaxProfit > 0) {
+//            resultQueue.push(currMaxProfit);
+//        }
+//
+//
+//        int result = 0;
+//        int size = (int)resultQueue.size();
+//        for (int i = 0 ; i < 2 && i < size; i++) {
+//            result += resultQueue.top();
+//            resultQueue.pop();
+//        }
+//        return result;
+//    }
+//
+//    int maxProfit2(vector<int>& prices) {
+//        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
+//        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
+//        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
+//        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
+//
+//        vector<vector<int>> result(prices.size(), vector<int>(4, 0));
+//        result[0][0] = -prices[0];
+//        result[0][2] = -prices[0];
+//
+//        for (int i = 1; i < prices.size(); i++ ){
+//            int p = prices[i];
+//            result[i][0] = max(result[i - 1][0], -p);
+//            result[i][1] = max(result[i - 1][1], p + result[i - 1][0]);
+//            result[i][2] = max(result[i - 1][2], result[i][1] - p);
+//            result[i][3] = max(result[i - 1][3], p + result[i - 1][2]);
+//        }
+//
+//        return result[prices.size() - 1][3];
+//    }
+//
+//    int maxProfit3(vector<int>& prices) {
+//        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
+//        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
+//        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
+//        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
+//
+//        vector<int> result(4,0);
+//
+//        result[0] = -prices[0];
+//        result[2] = -prices[0];
+//
+//        for (int i = 1; i < prices.size(); i++ ){
+//            int p = prices[i];
+//            result[3] = max(result[3], p + result[2]);
+//            result[2] = max(result[2], result[1] - p);
+//            result[1] = max(result[1], p + result[0]);
+//            result[0] = max(result[0], -p);
+//        }
+//
+//        return result[3];
+//    }
+//
+//
+//    void test() {
+//        vector<int> arr = {1,2,3,4,5};
+//
+//        int result = maxProfit3(arr);
+//
+//        cout<<result<<endl;
+//    }
+//
+//};
+
+#pragma mark - 102
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    vector<vector<int>> levelOrder(TreeNode* root) {
+//
+//        vector<vector<int>> result;
+//
+//        deque<TreeNode *> deque;
+//        if (root != nullptr) {
+//            deque.push_back(root);
+//        }
+//
+//        while (deque.empty() == false) {
+//            int size = (int)deque.size();
+//            vector<int> levelArr;
+//            for (int i = 0; i < size; i++) {
+//                TreeNode *node = deque.front();
+//                deque.pop_front();
+//
+//                levelArr.push_back(node->val);
+//
+//                if (node->left != nullptr) {
+//                    deque.push_back(node->left);
+//                }
+//
+//                if (node->right != nullptr) {
+//                    deque.push_back(node->right);
+//                }
+//            }
+//
+//            if (levelArr.size() > 0) {
+//                result.push_back(levelArr);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {3,9,20,-1,-1,15,7};
+//        TreeNode *root = tool.createBT(arr);
+//
+//        vector<vector<int>> result = levelOrder(root);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 145
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    vector<int> postorderTraversal(TreeNode* root) {
+//
+//        vector<int> result;
+//
+//        stack<TreeNode *> stack;
+//
+//        if (root != nullptr) {
+//            stack.push(root);
+//        }
+//
+//        while (stack.empty() == false) {
+//            TreeNode *node = stack.top();
+//            if (node == nullptr) {
+//                stack.pop();
+//                result.push_back(stack.top()->val);
+//                stack.pop();
+//            }
+//            else {
+//                stack.push(nullptr);
+//
+//                if (node->right != nullptr) {
+//                    stack.push(node->right);
+//                }
+//
+//                if (node->left != nullptr) {
+//                    stack.push(node->left);
+//                }
+//
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    vector<int> postorderTraversal2(TreeNode* root) {
+//
+//        vector<int> result;
+//
+//        typedef pair<int, TreeNode*> NodeTraversalInfo;
+//        stack<NodeTraversalInfo> stack;
+//        if (root != nullptr) {
+//            stack.push(NodeTraversalInfo(0, root));
+//        }
+//
+//        while (stack.empty() == false) {
+//            NodeTraversalInfo traversalInfo = stack.top();
+//            stack.pop();
+//
+//            TreeNode *node = traversalInfo.second;
+//            int count = traversalInfo.first;
+//
+//            if (node == nullptr) {
+//                continue;
+//            }
+//
+//            if (count == 1) {
+//                result.push_back(node->val);
+//            }
+//            else {
+//                stack.push(NodeTraversalInfo(0, node->right));
+//                stack.push(NodeTraversalInfo(0, node->left));
+//                stack.push(NodeTraversalInfo(count + 1, node));
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {3,9,20,-1,-1,15,7};
+//        TreeNode *root = tool.createBT(arr);
+//
+//        vector<int> result = postorderTraversal2(root);
+//        tool.printVector(result);
+//    }
+//};
+
+#pragma mark - 117
+
+// Definition for a Node.
+//class Node {
+//public:
+//    int val;
+//    Node* left;
+//    Node* right;
+//    Node* next;
+//
+//    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+//
+//    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+//
+//    Node(int _val, Node* _left, Node* _right, Node* _next)
+//        : val(_val), left(_left), right(_right), next(_next) {}
+//};
+//
+//class Solution {
+//public:
+//    TreeNode* connect(TreeNode* root) {
+//        if (root == nullptr) {
+//            return nullptr;
+//        }
+//
+//        TreeNode *startNode = root;
+//        while (startNode != nullptr) {
+//            TreeNode *node = startNode;
+//            TreeNode *last = nullptr;
+//            TreeNode *nextFirstNode = nullptr;
+//            while (node != nullptr) {
+//                if (node->left != nullptr) {
+//                    connectNextNode(last, node->left, nextFirstNode);
+//                }
+//
+//                if (node->right != nullptr) {
+//                    connectNextNode(last, node->right, nextFirstNode);
+//                }
+//
+//                node = node->next;
+//            }
+//
+//            startNode = nextFirstNode;
+//        }
+//
+//        return root;
+//    }
+//
+//    void connectNextNode(TreeNode* &lastNode, TreeNode* &nextNode, TreeNode* &nextLevelNode) {
+//        if (lastNode != nullptr) {
+//            lastNode->next = nextNode;
+//        }
+//
+//        if (nextLevelNode == nullptr) {
+//            nextLevelNode = nextNode;
+//        }
+//
+//        lastNode = nextNode;
+//    }
+//
+//    Node* connect2(Node* root) {
+//        deque<Node *> deque;
+//
+//        if (root != nullptr) {
+//            deque.push_back(root);
+//        }
+//
+//        while (deque.empty() == false) {
+//            int size = (int)deque.size();
+//
+//            Node *lastNode = nullptr;
+//            for (int i = 0; i < size; i++) {
+//                Node *node = deque.front();
+//                deque.pop_front();
+//                if (lastNode != nullptr) {
+//                    lastNode->next = node;
+//                }
+//
+//                lastNode = node;
+//
+//                if (node->left != nullptr) {
+//                    deque.push_back(node->left);
+//                }
+//
+//                if (node->right != nullptr) {
+//                    deque.push_back(node->right);
+//                }
+//            }
+//        }
+//
+//        return root;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {4,-4,8,1,-1,-1,-1,-4,-9,-1,-1,8,-9,7,-9,-6,6,-1,-1,-1,-1,-1,-1,-7,-1,-1,1};
+//
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        TreeNode *result = connect(root);
+//    }
+//};
+
+#pragma mark - 236
+//class Solution {
+//public:
+//    TreeNode *ancestor = nullptr;
+//    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//        traversal(root, p, q);
+//        
+//        return ancestor;
+//    }
+//    
+//    bool traversal(TreeNode *node, TreeNode *p, TreeNode *q) {
+//        if (node == nullptr) {
+//            return false;
+//        }
+//        
+//        if (ancestor != nullptr) {
+//            return true;
+//        }
+//        
+//        bool left = traversal(node->left, p, q);
+//        bool right = traversal(node->right, p, q);
+//        
+//        if (ancestor != nullptr) {
+//            return true;
+//        }
+//        
+//        if (node->val == q->val || node->val == p->val) {
+//            if (left || right) {
+//                ancestor = node;
+//            }
+//            return true;
+//        }
+//        
+//        if (left && right) {
+//            ancestor = node;
+//        }
+//            
+//        return left || right;
+//    }
+//    
+//    void test() {
+//        vector<int> arr = {3,5,1,6,2,0,8,-1,-1,7,4};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//        
+//        TreeNode *p = new TreeNode(5);
+//        TreeNode *q = new TreeNode(4);
+//        TreeNode *result = lowestCommonAncestor(root, p, q);
+//        if (result != nullptr) {
+//            cout<<result->val;
+//        }
+//    }
+//};
+
+#pragma mark - 103
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+//
+//        vector<vector<int>> result;
+//
+//        deque<TreeNode *> deque;
+//
+//        if (root != nullptr) {
+//            deque.push_back(root);
+//        }
+//
+//        bool isStartLeft = true;
+//
+//        while (deque.empty() == false) {
+//            int size = (int)deque.size();
+//
+//            vector<int> levelNodeVal;
+//
+//            for (int i = 0; i < size; i++) {
+//
+//                if (isStartLeft) {
+//                    TreeNode *node = deque.front();
+//                    deque.pop_front();
+//
+//                    levelNodeVal.push_back(node->val);
+//
+//                    if (node->left != nullptr) {
+//                        deque.push_back(node->left);
+//                    }
+//
+//                    if (node->right != nullptr) {
+//                        deque.push_back(node->right);
+//                    }
+//                }
+//                else {
+//                    TreeNode *node = deque.back();
+//                    deque.pop_back();
+//
+//                    levelNodeVal.push_back(node->val);
+//
+//                    if (node->right != nullptr) {
+//                        deque.push_front(node->right);
+//                    }
+//
+//                    if (node->left != nullptr) {
+//                        deque.push_front(node->left);
+//                    }
+//                }
+//            }
+//
+//            isStartLeft = !isStartLeft;
+//
+//            if (levelNodeVal.size() > 0) {
+//                result.push_back(levelNodeVal);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    vector<vector<int>> zigzagLevelOrder2(TreeNode* root) {
+//
+//        vector<vector<int>> result;
+//
+//        queue<TreeNode *> queue;
+//
+//        if (root != nullptr) {
+//            queue.push(root);
+//        }
+//
+//        bool isLeft = true;
+//
+//        while (queue.empty() == false) {
+//            int size = (int)queue.size();
+//
+//            vector<int> levelNodeVal;
+//
+//            for (int i = 0; i < size; i++) {
+//                TreeNode *node = queue.front();
+//                queue.pop();
+//
+//                levelNodeVal.push_back(node->val);
+//
+//                if (node->left != nullptr) {
+//                    queue.push(node->left);
+//                }
+//
+//                if (node->right != nullptr) {
+//                    queue.push(node->right);
+//                }
+//            }
+//
+//            if (isLeft) {
+//                if (levelNodeVal.size() > 0) {
+//                    result.push_back(levelNodeVal);
+//                }
+//            }
+//            else {
+//                vector<int> tempNodeVal;
+//                for (int i = (int)levelNodeVal.size() - 1; i >= 0; i--) {
+//                    tempNodeVal.push_back(levelNodeVal[i]);
+//                }
+//                result.push_back(tempNodeVal);
+//            }
+//
+//            isLeft = !isLeft;
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {3,9,20,-1,-1,15,7};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        vector<vector<int>> result = zigzagLevelOrder2(root);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 104
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     TreeNode *left;
+// *     TreeNode *right;
+// *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+// * };
+// */
+//class Solution {
+//public:
+//    int maxDepth(TreeNode* root) {
+//        if (root == nullptr) {
+//            return 0;
+//        }
+//
+//        return max(maxDepth(root->left), maxDepth(root->right)) + 1;
+//    }
+//};
+
+#pragma mark - 110
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    bool isBalanced(TreeNode* root) {
+//
+//        int result = heightTreeTraversal(root);
+//
+//        if (result == -1) {
+//            return false;
+//        }
+//
+//        return true;
+//
+//    }
+//
+//    int heightTreeTraversal(TreeNode *root) {
+//        if (root == nullptr) {
+//            return 0;
+//        }
+//
+//        int left = heightTreeTraversal(root->left);
+//        int right = heightTreeTraversal(root->right);
+//
+//        if (left == -1 || right == -1) {
+//            return -1;
+//        }
+//
+//        if (abs(right - left) > 1) {
+//            return -1;
+//        }
+//
+//        return max(right, left) + 1;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,2,2,3,-1,-1,3,4,-1,-1,4};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        bool result = isBalanced(root);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 107
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    vector<vector<int>> levelOrderBottom(TreeNode* root) {
+//
+//        vector<vector<int>> result;
+//
+//        queue<TreeNode *>queue;
+//
+//        stack<vector<int>> stack;
+//
+//        if (root != nullptr) {
+//            queue.push(root);
+//        }
+//
+//        while (queue.empty() == false) {
+//            int size = (int)queue.size();
+//
+//            vector<int> levelNodeVal;
+//            for (int i = 0; i < size; i++) {
+//                TreeNode *node = queue.front();
+//                queue.pop();
+//
+//                levelNodeVal.push_back(node->val);
+//
+//                if (node->left != nullptr) {
+//                    queue.push(node->left);
+//                }
+//
+//                if (node->right != nullptr) {
+//                    queue.push(node->right);
+//                }
+//            }
+//
+//            if (levelNodeVal.size() > 0) {
+//                stack.push(levelNodeVal);
+//            }
+//        }
+//
+//        while (stack.empty() == false) {
+//            result.push_back(stack.top());
+//            stack.pop();
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {3,9,20,-1,-1,15,7};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        vector<vector<int>> result = levelOrderBottom(root);
+//        tool.printMatrix(result);
+//    }
+//};
+
+#pragma mark - 701
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+//class Solution {
+//public:
+//    TreeNode* insertIntoBST(TreeNode* root, int val) {
+//
+//        TreeNode *node = root;
+//        TreeNode *lastNode = nullptr;
+//        while (node != nullptr) {
+//            lastNode = node;
+//            if (node->val > val) {
+//                node = node->left;
+//            }
+//            else {
+//                node = node->right;
+//            }
+//        }
+//
+//        if (lastNode == nullptr) {
+//            return new TreeNode(val);
+//        }
+//
+//        if (lastNode->val > val) {
+//            lastNode->left = new TreeNode(val);
+//        }
+//        else {
+//            lastNode->right = new TreeNode(val);
+//        }
+//
+//        return root;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {40,20,60,10,30,50,70};
+//        int val = 25;
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        TreeNode *result = insertIntoBST(root, val);
+//        tool.printBT(result);
+//    }
+//};
+
+#pragma mark - 140
+//class Solution {
+//public:
+//    vector<string> result;
+//    vector<string> wordBreak(string s, vector<string>& wordDict) {
+//        backtrack(0, s, wordDict, "");
+//
+//        return result;
+//    }
+//
+//    void backtrack(int start, string& s, vector<string>& wordDict, string sentence) {
+//        if (start >= s.size()) {
+//            result.push_back(sentence);
+//            return;
+//        }
+//
+//        for (int i = 1; start + i <= s.size(); i++) {
+//            string word = s.substr(start, i);
+//            for (auto dict : wordDict) {
+//                if (dict == word) {
+//
+//                    string temp = sentence.size() > 0 ? sentence + " " : sentence;
+//                    backtrack(start + i, s, wordDict, temp + word);
+//
+//                }
+//            }
+//        }
+//    }
+//
+//    void test() {
+//        vector<string> wordDict = {"cat", "cats", "and", "sand", "dog"};
+//        string s = "catsanddog";
+//
+//        vector<string> result = wordBreak(s, wordDict);
+//        vector<string>::iterator it = result.begin();
+//        while (it != result.end()) {
+//            cout<<*it<<endl;
+//            it++;
+//        }
+//    }
+//};
+
+#pragma mark 401
 class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
-        //贪心 统计盈利区间最大值
-        priority_queue<int, vector<int>, less<int>> resultQueue;
+    vector<string> result;
+    vector<int> hourVec;
+    vector<int> minVec;
+    vector<string> readBinaryWatch(int turnedOn) {
+        hourVec = {1,2,4,8};
+        minVec = {1,2,4,8,16,32};
         
-        int count = 0;
-        int currMaxProfit = 0;
-        for (int i = 1; i < prices.size(); i++) {
-            int temp = prices[i] - prices[i - 1];
+        for (int i = 0; i <= turnedOn; i++) {
+            unordered_set<int> allHour;
+            getHourOrMin(i, allHour, 0, 0, true);
+            unordered_set<int> allMin;
+            getHourOrMin(turnedOn - i, allMin, 0, 0, false);
             
-            count += temp;
-
-            
-            if (count > 0) {
-                currMaxProfit = max(currMaxProfit, count);
-            }
-            else {
-                if (currMaxProfit != 0) {
-                    resultQueue.push(currMaxProfit);
+            for (auto h : allHour) {
+                for (auto m : allMin) {
+                    joinResult(h, m);
                 }
-                count = 0;
-                currMaxProfit = 0;
             }
         }
-        
-        if (currMaxProfit > 0) {
-            resultQueue.push(currMaxProfit);
-        }
-            
-            
-        int result = 0;
-        int size = (int)resultQueue.size();
-        for (int i = 0 ; i < 2 && i < size; i++) {
-            result += resultQueue.top();
-            resultQueue.pop();
-        }
+
         return result;
     }
     
-    int maxProfit2(vector<int>& prices) {
-        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
-        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
-        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
-        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
-
-        vector<vector<int>> result(prices.size(), vector<int>(4, 0));
-        result[0][0] = -prices[0];
-        result[0][2] = -prices[0];
-        
-        for (int i = 1; i < prices.size(); i++ ){
-            int p = prices[i];
-            result[i][0] = max(result[i - 1][0], -p);
-            result[i][1] = max(result[i - 1][1], p + result[i - 1][0]);
-            result[i][2] = max(result[i - 1][2], result[i][1] - p);
-            result[i][3] = max(result[i - 1][3], p + result[i - 1][2]);
-        }
-        
-        return result[prices.size() - 1][3];
+    void joinResult(int hour, int min) {
+        string houtStr = to_string(hour);
+        string minStr = min > 9 ? to_string(min) : "0" + to_string(min);
+        result.push_back(houtStr + ":" + minStr);
     }
     
-    int maxProfit3(vector<int>& prices) {
-        //0 第一次持有 f[i][0] = max(f[i - 1][0], -prices[i])
-        //1 第一次未持有 f[i][1] = max(f[i - 1][1], prices[i] + f[i - 1][0])
-        //2 第二次持有 f[i][2] = max(f[i - 1][2], f[i][1] - prices[i])
-        //3 第二次未持有 f[i][3] = max(f[i - 1][3], prices[i] + f[i - 1][2])
-
-        vector<int> result(4,0);
-
-        result[0] = -prices[0];
-        result[2] = -prices[0];
-        
-        for (int i = 1; i < prices.size(); i++ ){
-            int p = prices[i];
-            result[3] = max(result[3], p + result[2]);
-            result[2] = max(result[2], result[1] - p);
-            result[1] = max(result[1], p + result[0]);
-            result[0] = max(result[0], -p);
+    void getHourOrMin(int turnedON, unordered_set<int>& vec, int lastVal, int start, bool isHour) {
+        if (isHour && turnedON > 3 ) {
+            return;
         }
         
-        return result[3];
+        if (isHour == false && turnedON > 5) {
+            return;
+        }
+        
+        if (turnedON == 0) {
+            vec.insert(lastVal);
+            return ;
+        }
+        
+        if (isHour) {
+            for (int i = start; i < hourVec.size(); i++) {
+                if (lastVal + hourVec[i] < 12) {
+                    getHourOrMin(turnedON - 1, vec, lastVal + hourVec[i], i + 1, isHour);
+                }
+            }
+        }
+        else {
+            for (int i = start; i < minVec.size(); i++) {
+                if (lastVal + minVec[i] < 60) {
+                    getHourOrMin(turnedON - 1, vec, lastVal + minVec[i], i + 1, isHour);
+                }
+            }
+        }
     }
-
     
     void test() {
-        vector<int> arr = {1,2,3,4,5};
+        vector<string> result = readBinaryWatch(2);
         
-        int result = maxProfit3(arr);
-        
-        cout<<result<<endl;
+        for_each(result.begin(), result.end(), [](string str){
+            cout<<str<<endl;
+        });
     }
-    
 };
 
 #pragma mark - 464
