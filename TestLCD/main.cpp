@@ -3299,53 +3299,893 @@ Tool tool;
 //};
 
 #pragma mark - 131
-class Solution {
-public:
-    vector<vector<string>> result;
-    vector<vector<string>> partition(string s) {
-        vector<string> path;
+//class Solution {
+//public:
+//    vector<vector<string>> result;
+//    vector<vector<string>> partition(string s) {
+//        vector<string> path;
+//
+//        backtrack(path, s, 0);
+//
+//        return result;
+//    }
+//
+//    void backtrack(vector<string>& path, string& s, int start) {
+//        if (start >= s.size()) {
+//            result.push_back(path);
+//            return;
+//        }
+//
+//        for (int i = 1; start + i <= s.size(); i++) {
+//            if (checkPartition(s, start, start + i - 1)) {
+//                path.push_back(s.substr(start, i));
+//                backtrack(path, s, start + i);
+//                path.pop_back();
+//            }
+//        }
+//    }
+//
+//    bool checkPartition(string& s, int start, int end) {
+//        while (start < end) {
+//            if (s[start++] != s[end--]) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    void test() {
+//        vector<vector<string>> result = partition("efe");
+//        for_each(result.begin(), result.end(), [](vector<string>& arr){
+//            cout<<"[";
+//            for_each(arr.begin(), arr.end(), [](string& str){
+//                cout<<str<<",";
+//            });
+//            cout<<"]"<<endl;
+//        });
+//    }
+//};
 
-        backtrack(path, s, 0);
+#pragma mark - 3
+//class Solution {
+//public:
+//    int lengthOfLongestSubstring(string s) {
+//        unordered_set<char> set;
+//        int result = 0;
+//
+//        int l = 0, r = 0;
+//        while (r < s.size()) {
+//            if (set.find(s[r]) == set.end()) {
+//                set.insert(s[r]);
+//
+//                r++;
+//            }
+//            else {
+//                result = max(result, (int)set.size());
+//                while (s[l] != s[r]) {//把l到重复字符之间的都删除
+//                    set.erase(s[l]);
+//                    l++;
+//                }
+//                //找到相同字符，开始下一次遍历
+//                r++;
+//                l++;
+//            }
+//        }
+//        result = max(result, (int)set.size());
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        int result = lengthOfLongestSubstring("pwwkew");
+//
+//        cout<<result<<endl;
+//    }
+//};
 
-        return result;
-    }
+#pragma mark - 76
+//class Solution {
+//public:
+//    string minWindow(string S, string T) {
+//
+//        if (S.size() < T.size()) {
+//            return "";
+//        }
+//
+//        unordered_map<char, int> map;
+//
+//        int minL = 0;
+//        int minR = (int)S.size() + 1;
+//
+//        int findC = 0;
+//        for (int i = 0; i < T.size(); i++) {
+//            map[T[i]]++;
+//        }
+//
+//        int l = 0, r = 0;
+//        while (r < S.size()) {
+//            if (map.count(S[r]) != 0) {
+//                map[S[r]]--;
+//                if (map[S[r]] == 0) {
+//                    findC++;
+//                }
+//
+//            }
+//
+//            while (findC == (int)map.size() && l <= r) {
+//                if (minR - minL > r - l) {
+//                    minR = r;
+//                    minL = l;
+//                }
+//
+//                if (map.count(S[l]) != 0) {
+//                    if (map[S[l]] == 0) {
+//                        findC--;
+//                    }
+//                    map[S[l]]++;
+//                }
+//
+//                l++;
+//            }
+//            r++;
+//        }
+//
+//        if (minR - minL < S.size()) {
+//            return S.substr(minL, minR - minL + 1);
+//        }
+//
+//        return "";
+//    }
+//
+//    void test() {
+//        string result = minWindow("a", "a");
+//
+//        cout<<result<<endl;
+//    }
+//};
 
-    void backtrack(vector<string>& path, string& s, int start) {
-        if (start >= s.size()) {
-            result.push_back(path);
-            return;
-        }
+#pragma mark - 209
+//class Solution {
+//public:
+//    int minSubArrayLen(int target, vector<int>& nums) {
+//        int result = INT_MAX;
+//        int sum = 0;
+//
+//        int l = 0, r = 0;
+//        while (r < nums.size()) {
+//            sum += nums[r];
+//            while (sum >= target) {
+//                result = min(result, r - l + 1);
+//                if (result == 1) {
+//                    return 1;
+//                }
+//
+//                sum -= nums[l];
+//                l++;
+//            }
+//
+//            r++;
+//        }
+//
+//        return result > nums.size() ? 0 : result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,1,1,1,1,1,1,1};
+//        int target = 11;
+//
+//        int result = minSubArrayLen(target, arr);
+//        cout<<result<<endl;
+//    }
+//};
 
-        for (int i = 1; start + i <= s.size(); i++) {
-            if (checkPartition(s, start, start + i - 1)) {
-                path.push_back(s.substr(start, i));
-                backtrack(path, s, start + i);
-                path.pop_back();
-            }
-        }
-    }
+#pragma mark - 438
+//class Solution {
+//public:
+//    vector<int> findAnagrams(string s, string p) {
+//
+//        vector<int> result;
+//        if (s.size() < p.size()) {
+//            return result;
+//        }
+//
+//        unordered_map<char, int> map;
+//
+//        for (int i = 0; i < p.size(); i++) {
+//            map[p[i]]++;
+//        }
+//
+//        int find = 0;
+//
+//        int l = 0, r = 0;
+//        while (r < s.size()) {
+//            if (map.count(s[r]) != 0) {//字符在p中
+//                map[s[r]]--;
+//                if (map[s[r]] == 0) {
+//                    find++;
+//                }
+//
+//                while (map[s[r]] < 0 && l <= r) {//如果当前候选部分l到r中包含了s[r]字符超过p，则l右移减少
+//                    if (map.count(s[l]) != 0) {
+//                        if (map[s[l]] == 0) {
+//                            find--;
+//                        }
+//                        map[s[l]]++;
+//                    }
+//
+//
+//                    l++;
+//                }
+//
+//                if (find == (int)map.size()) {//找到了p中的所有字符，记录
+//                    result.push_back(l);
+//                    map[s[l]]++;
+//                    l++;
+//                    find--;
+//                }
+//
+//
+//            }
+//            else {//当前字符不在p中，则恢复map的记录，从下一个字符重新开始计算
+//                while (l <= r ) {
+//                    if (map.count(s[l]) != 0) {
+//                        map[s[l]]++;
+//                    }
+//                    l++;
+//                }
+//                find = 0;
+//            }
+//
+//            r++;
+//
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        /**
+//         "abaacbabc"
+//         "abc"
+//
+//         "vwwvv"
+//         "vwv"
+//         */
+//        vector<int> result = findAnagrams("vwwvv", "vwv");
+//        tool.printVector(result);
+//    }
+//};
 
-    bool checkPartition(string& s, int start, int end) {
-        while (start < end) {
-            if (s[start++] != s[end--]) {
-                return false;
-            }
-        }
+#pragma mark - 904
+//class Solution {
+//public:
+//    int totalFruit(vector<int>& tree) {
+//
+//        typedef pair<int, int> FruitAndCount;
+//
+//        int result = 0;
+//
+//        FruitAndCount basket1(-1,0), basket2(-1, 0);
+//
+//        int l = 0, r = 0;
+//        while (r < tree.size()) {
+//
+//            //第一个篮子
+//            if (basket1.first == -1) {
+//                basket1.first = tree[r];
+//                basket1.second = 1;
+//                r++;
+//                continue;
+//            }
+//            else if (basket1.first == tree[r]) {
+//                basket1.second++;
+//                r++;
+//                continue;
+//            }
+//
+//            //第二个篮子
+//            if (basket2.first == -1) {
+//                basket2.first = tree[r];
+//                basket2.second = 1;
+//                r++;
+//                continue;
+//            }
+//            else if (basket2.first == tree[r]) {
+//                basket2.second++;
+//                r++;
+//                continue;
+//            }
+//
+//            //两个篮子都没有装下
+//            result = max(result, basket1.second + basket2.second); //先记录当前装的数量
+//            //清空一个篮子
+//            while (l <= r && basket1.second > 0 && basket2.second > 0) {
+//                if (tree[l] == basket1.first) {
+//                    basket1.second--;
+//                }
+//                else {
+//                    basket2.second--;
+//                }
+//                l++;
+//            }
+//
+//            if (basket1.second == 0) {
+//                basket1.first = tree[r];
+//                basket1.second = 1;
+//            }
+//            else {
+//                basket2.first = tree[r];
+//                basket2.second = 1;
+//            }
+//            r++;
+//        }
+//        result = max(result, basket1.second + basket2.second);
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {3,3,3,1,2,1,1,2,3,3,4};
+//
+//        int result = totalFruit(arr);
+//        cout<<result<<endl;
+//    }
+//};
 
-        return true;
-    }
+#pragma mark - 930
+//class Solution {
+//public:
+//    int numSubarraysWithSum(vector<int>& nums, int goal) {
+//        int result = 0;
+//
+//        nums.push_back(1);//最后多加一个1方便处理
+//
+//        deque<int> dueue;
+//
+//        int l = 0, r = 0;
+//        int sum = 0;
+//        while (r < nums.size()) {
+//
+//            sum += nums[r];
+//
+//            if (sum > goal) {
+//                if (dueue.size() > 0) {//队列中的1个数大于1，即goal>0
+//
+//                    int leftZero = dueue.front() - l + 1;//左边第一个1前0的个数
+//                    int rightZero = r - dueue.back();//右边第一个1后0的个数
+//
+//                    result += leftZero * rightZero;
+//
+//                    l = dueue.front() + 1;//修改l到第一个1之后
+//                    dueue.pop_front();//去除第一个1
+//                    sum--;
+//                }
+//                else {
+//                    //goal == 0
+//                    for (int i = l; i < r; i++) {//0000 组合总数为1 + 2 + 3 + 4；
+//                        result += r - i;
+//                    }
+//                    sum--;
+//                    l = r + 1;
+//                }
+//            }
+//
+//            if (nums[r] == 1 && goal != 0) {//记录1的位置
+//                dueue.push_back(r);
+//            }
+//
+//            r++;
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        /**
+//         [0,0,1,0,1]
+//         0
+//         */
+//        vector<int> arr = {0,0,1,0,0};
+//        int goal = 0;
+//        int result = numSubarraysWithSum(arr, goal);
+//        cout<<result<<endl;
+//    }
+//};
 
-    void test() {
-        vector<vector<string>> result = partition("efe");
-        for_each(result.begin(), result.end(), [](vector<string>& arr){
-            cout<<"[";
-            for_each(arr.begin(), arr.end(), [](string& str){
-                cout<<str<<",";
-            });
-            cout<<"]"<<endl;
-        });
-    }
-};
+#pragma mark - 978
+//class Solution {
+//public:
+//    int maxTurbulenceSize(vector<int>& arr) {
+//        if (arr.size() < 2) {
+//            return (int)arr.size();
+//        }
+//
+//        int l = 0, r = 1;
+//        int result = 1;
+//        while (r < arr.size() && arr[r] == arr[r - 1]) {//
+//            result = 1;
+//            l = r;
+//            r++;
+//        }
+//        bool lastDY = false;
+//        if (r < arr.size()) {
+//            lastDY = arr[r] > arr[r - 1];
+//        }
+//        else {
+//            return result;
+//        }
+//
+//
+//        while (r < arr.size()) {
+//            if (arr[r] > arr[r - 1]) {//这次是大于
+//                if (lastDY == false) {//上一次是小于
+//                    r++;
+//                    lastDY = true;
+//                }
+//                else {
+//                    result = max(result, r - l);
+//                    l = r - 1;
+//                    r++;
+//                }
+//            }
+//            else if (arr[r] < arr[r - 1]) {//这次是小于
+//                if (lastDY == true) {//上一次是大于
+//                    r++;
+//                    lastDY = false;
+//                }
+//                else {
+//                    result = max(result, r - l);
+//                    l = r - 1;
+//                    r++;
+//                }
+//            }
+//            else {//这次是等于
+//                result = max(result, r - l);
+//                l = r;
+//                r++;
+//            }
+//        }
+//
+//        result = max(result, r - l);
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {9,9};
+//
+//        int result = maxTurbulenceSize(arr);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1004
+//class Solution {
+//public:
+//    int longestOnes(vector<int>& nums, int k) {
+//
+//        int result = 0;
+//        int l = 0, r = 0;
+//
+//        while (r < nums.size()) {
+//            if (nums[r] == 0) {//碰到0
+//                if (k > 0) {//有k时，先转换
+//                    r++;
+//                    k--;
+//                }
+//                else {//没有k时
+//                    if (l < r) {//l和r之间有间隔，从中找0，恢复k
+//                        result = max(r - l, result);
+//                        if (nums[l] == 0) {
+//                            k++;
+//                        }
+//                        l++;
+//                    }
+//                    else {//l和r之间没有间隔，重置位置重新计数
+//                        r++;
+//                        l = r;
+//                    }
+//                }
+//            }
+//            else {//不是0直接计数
+//                r++;
+//            }
+//        }
+//        result = max(r - l, result);
+//
+//        return result;
+//    }
+//
+//    int longestOnes2(vector<int>& nums, int k) {
+//        int result = 0;
+//        int l = 0, r = 0;
+//
+//        while (r < nums.size()) {
+//            if (nums[r] == 0) {//碰到0
+//                if (k > 0) {//有k时，先转换
+//                    r++;
+//                    k--;
+//                }
+//                else {//没有k时
+//                    result = max(r - l, result);
+//                    if (l < r) {//l和r之间有间隔，从中找0，恢复k
+//                        while (l < r && k <= 0) {
+//                            if (nums[l] == 0) {
+//                                k++;
+//                            }
+//                            l++;
+//                        }
+//                    }
+//                    else {//l和r之间没有间隔，重置位置重新计数
+//                        r++;
+//                        l = r;
+//                    }
+//                }
+//            }
+//            else {//不是0直接计数
+//                r++;
+//            }
+//        }
+//        result = max(r - l, result);
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1};
+//        int k = 3;
+//
+//        int result = longestOnes(nums, k);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1234
+//class Solution {
+//public:
+//    int balancedString(string s) {
+//        int kCount = (int)s.length() / 4;
+//        int result = 0;
+//
+//        unordered_map<char, int> map;
+//        map['Q'] = 0;
+//        map['W'] = 0;
+//        map['E'] = 0;
+//        map['R'] = 0;
+//
+//        for (int i = 0; i < s.size(); i++) {
+//            map[s[i]]++;
+//        }
+//
+//        while (1) {
+//            char maxChar, minChar;
+//            int maxCount = -1, minCount = (int)s.size();
+//            for (auto m : map) {
+//                if (maxCount < m.second) {
+//                    maxCount = m.second;
+//                    maxChar = m.first;
+//                }
+//
+//                if (minCount > m.second) {
+//                    minCount = m.second;
+//                    minChar = m.first;
+//                }
+//            }
+//
+//            if (minCount >= maxCount) {
+//                return result;
+//            }
+//
+//            if (abs(minCount - kCount) > abs(maxCount - kCount)) {
+//                map[maxChar] = kCount;
+//                map[minChar] += abs(maxCount - kCount);
+//                result += abs(maxCount - kCount);
+//            }
+//            else {
+//                map[minChar] = kCount;
+//                map[maxChar] -= abs(minCount - kCount);
+//                result += abs(minCount - kCount);
+//            }
+//        }
+//        return result;
+//    }
+//
+//    void test() {
+//        int result = balancedString("WWEQERQWQWWRWWERQWEQ");
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1248
+//class Solution {
+//public:
+//    int numberOfSubarrays(vector<int>& nums, int k) {
+//        int result = 0;
+//
+//        nums.push_back(1);
+//
+//        deque<int> deque;
+//
+//        int l = 0, r = 0;
+//        int sum = 0;
+//        while (r < nums.size()) {
+//
+//            if (nums[r] % 2 == 1) {
+//                sum++;
+//            }
+//
+//            if (sum > k) {
+//                if (deque.size() == 0) {
+//                    for (int i = l; i < r; i++) {
+//                        result += (r - l);
+//                    }
+//                    l = r + 1;
+//                }
+//                else {
+//                    int leftCount = deque.front() - l + 1;
+//                    int rightCount = r - deque.back();
+//
+//                    result += (leftCount * rightCount);
+//
+//                    l = deque.front();
+//                    deque.pop_front();
+//                    l++;
+//                    sum--;
+//                }
+//            }
+//
+//            if (nums[r] % 2 == 1) {
+//                deque.push_back(r);
+//            }
+//
+//            r++;
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> nums = {1,1,1,1,1};
+//        int k = 1;
+//
+//        int result = numberOfSubarrays(nums, k);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1658
+//class Solution {
+//public:
+//    int minOperations(vector<int>& nums, int x) {
+//
+//        int sum = 0;
+//        for (int i = 0; i < nums.size(); i++) {
+//            sum += nums[i];
+//        }
+//
+//        if (sum < x) {
+//            return -1;
+//        }
+//
+//        if (sum == x) {
+//            return (int)nums.size();
+//        }
+//
+//        int length = sum - x;
+//
+//        int result = 0;
+//        int l = 0, r = 0;
+//        int currentSum = 0;
+//        while (r < nums.size() && result != (int)nums.size() - 1) {
+//
+//            currentSum += nums[r];
+//
+//            while (currentSum > length) {
+//                currentSum -= nums[l];
+//                l++;
+//            }
+//
+//            if (currentSum == length) {
+//                result = max(result, r - l + 1);
+//            }
+//
+//            r++;
+//        }
+//
+//        return result == 0 ? -1 : (int)nums.size() - result;
+//    }
+//
+//    void test() {
+//        /**
+//         []
+//         134365
+//         */
+//        vector<int> nums = {8828,9581,49,9818,9974,9869,9991,10000,10000,10000,9999,9993,9904,8819,1231,6309};
+//        int x = 134365;
+//
+//        int result = minOperations(nums, x);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 470
+// The rand7() API is already defined for you.
+// int rand7();
+// @return a random integer in the range 1 to 7
+
+//class Solution {
+//public:
+//    int rand7(){
+//        return 0;
+//    }
+//
+//    int rand10() {
+//
+//        vector<int> arr = {1,2,4,8};
+//        int result = 1;
+//        for (int i = 0; i < 4; i++) {
+//            if (getRandBinary() == 1) {
+//                result += arr[i];
+//            }
+//        }
+//
+//        if (result > 10) {
+//            return rand10();
+//        }
+//
+//        return result;
+//    }
+//
+//    int getRandBinary()
+//    {
+//        int rand = rand7();
+//        if (rand < 4) {
+//            return 0;
+//        }
+//
+//        if (rand > 4) {
+//            return 1;
+//        }
+//        return getRandBinary();
+//    }
+//
+//    void test() {
+//        vector<int> arr = {1,1,3,8,1,7,5,9,10,6,3,5,4,2,8,2,6,6,8,9,6,5,1,5,10,1,10,9,8,3,2,10,2,4,1,1,1,1,6,8,7,9,9,2,10,10,3,10,4,3,9,4,2,6,1,2,10,2,8,10,5,6,6,7,6,1,7,4,4,7,7,6,7,2,8,10,10,9,9,8,8,7,6,10,10,8,4,1,3,5,3,8,10,3,2,2,9,3,2,8,10,8,6,7,3,7,8,3,2,8,3,5,2,8,2,5,6,2,6,9,4,7,9,8,2,1,3,7,5,9,10,9,6,1,5,7,6,9,5,4,10,8,8,4,10,6,10,5,2,3,1,4,4,3,2,9,5,9,7,9,6,6,6,6,8,1,1,6,8,6,5,7,4,1,3,7,2,8,3,4,4,1,4,9,1,9,4,5,5,5,3,10,3,1,1,4,2,3,8,7,7,3,6,6,6,1,5,10,6,7,1,8,4,4,1,2,1,4,7,8,6,1,10,2,5,1,1,2,7,1,8,6,5,5,6,6,10,5,10,7,3,4,6,4,3,8,5,8,1,7,2,5,1,8,4,1,10,3,3,8,1,4,7,5,7,9,3,6,6,5,6,7,6,8,9,8,3,5,8,4,10,6,1,8,3,8,2,9,6,9,3,9,1,2,8,10,8,2,6,5,2,1,7,1,3,1,8,5,6,4,2,3,7,9,3,7,10,9,6,6,1,6,4,3,7,4,7,8,1,5,7,2,1,3,6,4,5,4,2,1,10,7,1,3,5,1,2,5,2,5,2,10,7,4,8,7,6,9,10,6,2,4,8,8,10,9,6,10,8,9,4,10,2,9,9,2,8,10,1,4,7,8,9,4,2,10,8,1,8,8,4,1,4,7,3,3,4,2,10,3,9,7,1,9,3,5,7,3,2,9,8,8,6,7,7,7,1,9,9,7,8,3,8,4,9,7,2,7,6,8,5,4,9,3,4,4,10,3,8,8,7,8,6,7,3,1,1,3,6,9,1,1,8,5,1,9,5,8,6,9,6,9,7,3,9,7,8,7,10,3,10,10,7,7,5,7,4,7,10};
+//
+//        vector<int> nums(11, 0);
+//        for (int i = 0; i < arr.size(); i++) {
+//            nums[arr[i]]++;
+//        }
+//
+//        tool.printVector(nums);
+//    }
+//};
+
+#pragma mark - 136
+//class Solution {
+//public:
+//    int singleNumber(vector<int>& nums) {
+//        int result = 0;
+//        for (int i = 0; i < nums.size(); i++) {
+//            result ^= nums[i];
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//
+//    }
+//};
+
+#pragma mark - 200
+//class Solution {
+//public:
+//
+//    int numIslands(vector<vector<char>>& grid) {
+//        int result = 0;
+//        for (int i = 0; i < grid.size(); i++) {
+//            for (int j = 0; j < grid[i].size(); j++) {
+//                if (grid[i][j] == '1') {
+//                    result++;
+//                    isLand(grid, i, j);
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void isLand(vector<vector<char>>& grid, int i, int j) {
+//        if (i < 0 || i >= grid.size() || j < 0 || j >= grid[0].size()) {
+//            return;
+//        }
+//
+//        if (grid[i][j] == '1') {
+//            grid[i][j] = 2;
+//
+//            isLand(grid, i, j - 1);
+//            isLand(grid, i - 1, j);
+//            isLand(grid, i, j + 1);
+//            isLand(grid, i + 1, j);
+//        }
+//    }
+//
+//    void test() {
+//        vector<vector<char>> grid = {
+//            {'1','1','0','0','0'},
+//            {'1','1','0','0','0'},
+//            {'0','0','1','0','0'},
+//            {'0','0','0','1','1'}
+//          };
+//
+//        int result = numIslands(grid);
+//        cout<<result<<endl;
+//    }
+//
+//};
+
+#pragma mark - 695
+//class Solution {
+//public:
+//    int maxAreaOfIsland(vector<vector<int>>& grid) {
+//        int result = 0;
+//
+//        for (int i = 0; i < grid.size(); i++) {
+//            for (int j = 0; j < grid[i].size(); j++) {
+//                if (grid[i][j] == 1) {
+//                    result = max(result, landArea(grid, i, j));
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    int landArea(vector<vector<int>>& grid, int i, int j) {
+//
+//        if (i < 0 || i >= grid.size() ||
+//            j < 0 || j >= grid[0].size()) {
+//            return 0;
+//        }
+//
+//        if (grid[i][j] == 2) {
+//            return 0;
+//        }
+//
+//        if (grid[i][j] == 1) {
+//            grid[i][j] = 2;
+//
+//            int top = landArea(grid, i, j - 1);
+//            int left = landArea(grid, i - 1, j);
+//            int bottom = landArea(grid, i, j + 1);
+//            int right = landArea(grid, i + 1, j);
+//
+//            return top + left + bottom + right + 1;
+//        }
+//
+//        return 0;
+//    }
+//
+//    void test() {
+//        vector<vector<int>> grid =  {{0,0,1,0,0,0,0,1,0,0,0,0,0},
+//            {0,0,0,0,0,0,0,1,1,1,0,0,0},
+//            {0,1,1,0,1,0,0,0,0,0,0,0,0},
+//            {0,1,0,0,1,1,0,0,1,0,1,0,0},
+//            {0,1,0,0,1,1,0,0,1,1,1,0,0},
+//            {0,0,0,0,0,0,0,0,0,0,1,0,0},
+//            {0,0,0,0,0,0,0,1,1,1,0,0,0},
+//            {0,0,0,0,0,0,0,1,1,0,0,0,0}};
+//
+//        int result = maxAreaOfIsland(grid);
+//        cout<<result<<endl;
+//
+//    }
+//
+//};
+
 
 #pragma mark - 464
 
@@ -3396,7 +4236,7 @@ public:
 //        for (int i = 0; i < nums.size(); i++) {
 //            bool isUsed = false;
 //            for (int j = 0; j < used.size(); j++) {
-//                if (i == used[j]) {
+//                if (i == used[j]) {liuyifei
 //                    isUsed = true;
 //                    break;
 //                }
