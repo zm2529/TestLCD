@@ -17,6 +17,7 @@
 		98CA9854260C23B900734915 /* Tools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA9852260C23B900734915 /* Tools.cpp */; };
 		98CA98602612FDE300734915 /* backup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CA985F2612FDE200734915 /* backup.cpp */; };
 		98CF28DE2632C33C00EE82EC /* backup3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98CF28DD2632C33C00EE82EC /* backup3.cpp */; };
+		98E099C526647ABB0021A5AC /* backup6.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98E099C426647ABB0021A5AC /* backup6.cpp */; };
 		98F6EDD52648C2240044B366 /* FormatTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 98F6EDD42648C2240044B366 /* FormatTools.cpp */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		98CA9853260C23B900734915 /* Tools.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tools.hpp; sourceTree = "<group>"; };
 		98CA985F2612FDE200734915 /* backup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = backup.cpp; sourceTree = "<group>"; };
 		98CF28DD2632C33C00EE82EC /* backup3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = backup3.cpp; sourceTree = "<group>"; };
+		98E099C426647ABB0021A5AC /* backup6.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = backup6.cpp; sourceTree = "<group>"; };
 		98F6EDD42648C2240044B366 /* FormatTools.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FormatTools.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,8 +84,9 @@
 			isa = PBXGroup;
 			children = (
 				98CA98122600806B00734915 /* main.cpp */,
-				98836C292663CB77005FA22D /* backup5.cpp */,
 				98F6EDD42648C2240044B366 /* FormatTools.cpp */,
+				98E099C426647ABB0021A5AC /* backup6.cpp */,
+				98836C292663CB77005FA22D /* backup5.cpp */,
 				9820913E2642E2E800E439DD /* backup4.cpp */,
 				98CF28DD2632C33C00EE82EC /* backup3.cpp */,
 				98BD0735261C323900D14D64 /* backup2.cpp */,
@@ -156,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98E099C526647ABB0021A5AC /* backup6.cpp in Sources */,
 				98BD0736261C323900D14D64 /* backup2.cpp in Sources */,
 				98CA984D260B120100734915 /* LeaSTT.cpp in Sources */,
 				98CA9854260C23B900734915 /* Tools.cpp in Sources */,
