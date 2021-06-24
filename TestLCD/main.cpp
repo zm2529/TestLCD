@@ -1960,88 +1960,807 @@ Tool tool;
 //};
 
 #pragma mark - 1124
+//class Solution {
+//public:
+//    int longestWPI(vector<int>& hours) {
+//        int ans = 0;
+//        vector<int> result(hours.size(), 0);
+//
+//        for (int i = 0; i < hours.size(); i++) {
+//            int lastBigIndex = i - 1;
+//            for (int j = i; j < hours.size(); j++) {
+//                if (i == j) {
+//                    if (hours[j] > 8) {
+//                        result[j] = 1;
+//                    }
+//                    else {
+//                        result[j] = -1;
+//                    }
+//                }
+//                else {
+//                    if (hours[j] > 8) {
+//                        result[j] = result[j - 1] + 1;
+//                    }
+//                    else {
+//                        result[j] = result[j - 1] - 1;
+//                    }
+//                }
+//
+//                if (result[j] > 0) {
+//                    lastBigIndex = j;
+//                }
+//            }
+//
+//            ans = max(lastBigIndex - i + 1, ans);
+//
+//            if (lastBigIndex == hours.size() - 1) {
+//                return ans;
+//            }
+//        }
+//
+//        return ans;
+//    }
+//
+//    int longestWPI2(vector<int>& hours) {
+//        vector<int> prefixSum(hours.size() + 1, 0);
+//
+//        stack<int> stack;
+//        stack.push(0);
+//        for (int i = 0; i < hours.size(); i++) {
+//            if (hours[i] > 8) {
+//                prefixSum[i + 1] = prefixSum[i] + 1;
+//            }
+//            else {
+//                prefixSum[i + 1] = prefixSum[i] - 1;
+//            }
+//
+//            if (prefixSum[stack.top()] > prefixSum[i + 1]) {
+//                stack.push(i + 1);
+//            }
+//        }
+//
+//        int result = 0;
+//        for (int i = (int)prefixSum.size() - 1; i >= 0; i--) {
+//
+//            while (stack.size() > 0 && stack.top() >= i) {
+//                stack.pop();
+//            }
+//
+//            while (stack.size() > 0 && prefixSum[i] > prefixSum[stack.top()]) {
+//                result = max(i - stack.top(), result);
+//                stack.pop();
+//            }
+//
+//            if (stack.size() == 0) {
+//                break;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<int> hours = {6,0,6,6,9};
+//        int result = longestWPI2(hours);
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - jianzhi_04
+//class Solution {
+//public:
+//    bool findNumberIn2DArray(vector<vector<int>>& matrix, int target) {
+//
+//        if (matrix.size() == 0) {
+//            return false;
+//        }
+//
+//        if (matrix[0].size() == 0) {
+//            return false;
+//        }
+//
+//        int m = (int)matrix.size() - 1;
+//        int n = (int)matrix[0].size() - 1;
+//
+//        int minI = 0, minJ = 0, maxI = m, maxJ = n;
+//        for (int i = 0; i <= m; i++) {
+//            if (matrix[i][0] == target) {
+//                return true;
+//            }
+//            if (matrix[i][0] > target) {
+//                maxI = i - 1;
+//                break;
+//            }
+//
+//            if (matrix[i][n] == target) {
+//                return true;
+//            }
+//            if (matrix[i][n] < target) {
+//                minI = i + 1;
+//            }
+//        }
+//
+//        for (int j = 0; j <= n; j++) {
+//            if (matrix[0][j] == target) {
+//                return true;
+//            }
+//            if (matrix[0][j] > target) {
+//                maxJ = j - 1;
+//                break;
+//            }
+//
+//            if (matrix[m][j] == target) {
+//                return true;
+//            }
+//            if (matrix[m][j] < target) {
+//                minJ = j + 1;
+//            }
+//        }
+//        for (int i = minI; i <= maxI; i++) {
+//            if (findNumberInRange(matrix[i], target, minJ, maxJ)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    bool findNumberInRange(vector<int>& vec, int target, int minI, int maxI) {
+//
+//        if (minI > maxI) {
+//            return false;
+//        }
+//
+//        if (vec[minI] > target) {
+//            return false;
+//        }
+//
+//        if (vec[minI] == target) {
+//            return true;
+//        }
+//
+//        if (vec[maxI] < target) {
+//            return false;
+//        }
+//
+//        if (vec[maxI] == target) {
+//            return true;
+//        }
+//
+//        int mid = ((maxI - minI) >> 2) + minI;
+//        if (vec[mid] == target) {
+//            return true;
+//        }
+//
+//        if (vec[mid] > target) {
+//            return findNumberInRange(vec, target, minI, mid - 1);
+//        }
+//
+//        if (vec[mid] < target) {
+//            return findNumberInRange(vec, target, mid + 1, maxI);
+//        }
+//
+//        return false;
+//    }
+//
+//    bool findNumberIn2DArray2(vector<vector<int>>& matrix, int target) {
+//
+//        if (matrix.size() == 0) {
+//            return false;
+//        }
+//
+//        if (matrix[0].size() == 0) {
+//            return false;
+//        }
+//
+//        int m = (int)matrix.size() - 1;
+//        int n = (int)matrix[0].size() - 1;
+//        int i = 0, j = n;
+//        while (i <= m && i >= 0 && j <= n && j >= 0) {
+//            if (matrix[i][j] == target) {
+//                return true;
+//            }
+//
+//            if (matrix[i][j] > target) {
+//                j--;
+//                continue;
+//            }
+//
+//            if (matrix[i][j] < target) {
+//                i++;
+//                continue;
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    void test() {
+//        vector<vector<int>> matrix = {
+//            {1,   4,  7, 11, 15},
+//            {2,   5,  8, 12, 19},
+//            {3,   6,  9, 16, 22},
+//            {10, 13, 14, 17, 24},
+//            {18, 21, 23, 26, 30},
+//        };
+//
+//        int target = 20;
+//
+//        bool result = findNumberIn2DArray2(matrix, target);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 706
+//struct MapNode {
+//    MapNode *next;
+//    int key;
+//    int val;
+//};
+//class MyHashMap {
+//public:
+//
+//    MapNode *head;
+//    MapNode *tail;
+//
+//    /** Initialize your data structure here. */
+//    MyHashMap() {
+//        head = new MapNode();
+//        tail = head;
+//    }
+//
+//    /** value will always be non-negative. */
+//    void put(int key, int value) {
+//        MapNode *node = getNode(key);
+//        if (node == nullptr) {
+//            node = new MapNode();
+//            node->key = key;
+//            node->val = value;
+//            tail->next = node;
+//            tail = node;
+//        }
+//        else {
+//            node->val = value;
+//        }
+//    }
+//
+//    /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+//    int get(int key) {
+//        MapNode *node = getNode(key);
+//        if (node == nullptr) {
+//            return -1;
+//        }
+//        else {
+//            return node->val;
+//        }
+//    }
+//
+//    MapNode *getNode(int key) {
+//        MapNode *temp = head->next;
+//        while (temp != nullptr) {
+//            if (temp->key == key) {
+//                return temp;
+//            }
+//            temp = temp->next;
+//        }
+//
+//        return nullptr;
+//    }
+//
+//    /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+//    void remove(int key) {
+//        MapNode *p = head->next;
+//        MapNode *pre = head;
+//        while (p != nullptr) {
+//            if (p->key == key) {
+//                pre->next = p->next;
+//                if (p == tail) {
+//                    tail = pre;
+//                }
+//                return;
+//            }
+//            pre = p;
+//            p = p->next;
+//        }
+//    }
+//};
+//
+//class MyHashMap {
+//public:
+//
+//    typedef pair<int, int> KVPair;
+//    static const int base = 769;
+//    vector<list<KVPair>> mapVec;
+//    static int hash(int key) {
+//        return key % base;
+//    }
+//    /** Initialize your data structure here. */
+//    MyHashMap() {
+//        mapVec.resize(base);
+//    }
+//
+//    /** value will always be non-negative. */
+//    void put(int key, int value) {
+//        for (list<KVPair>::iterator i = mapVec[hash(key)].begin(); i != mapVec[hash(key)].end(); i++) {
+//            if (i->first == key) {
+//                i->second = value;
+//                return;
+//            }
+//        }
+//
+//        mapVec[hash(key)].push_back(KVPair(key, value));
+//    }
+//
+//    /** Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key */
+//    int get(int key) {
+//        for (list<KVPair>::iterator i = mapVec[hash(key)].begin(); i != mapVec[hash(key)].end(); i++) {
+//            if (i->first == key) {
+//                return i->second;
+//            }
+//        }
+//
+//        return -1;
+//    }
+//
+//    /** Removes the mapping of the specified value key if this map contains a mapping for the key */
+//    void remove(int key) {
+//        for (list<KVPair>::iterator i = mapVec[hash(key)].begin(); i != mapVec[hash(key)].end(); i++) {
+//            if (i->first == key) {
+//                mapVec[hash(key)].erase(i);
+//                return;
+//            }
+//        }
+//    }
+//};
+//
+//class Solution {
+//public:
+//    void test() {
+//        MyHashMap hashMap;
+//
+//        hashMap.put(2, 3);
+//        cout<<hashMap.get(2)<<endl;
+//    }
+//};
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * MyHashMap* obj = new MyHashMap();
+ * obj->put(key,value);
+ * int param_2 = obj->get(key);
+ * obj->remove(key);
+ */
+
+#pragma mark - 1871
+//class Solution {
+//public:
+//    bool canReach(string s, int minJump, int maxJump) {
+//        if (s[s.size() - 1] == '1') {
+//            return false;
+//        }
+//
+//        int lenght = (int)s.size();
+//        deque<int> deque;
+//        deque.push_back(0);
+//
+//        int lastPos = 0;
+//        while (deque.size() > 0) {
+//            int start = deque.front();
+//            deque.pop_front();
+//
+//            for (int j = max((start + minJump), lastPos); j <= min(start + maxJump, lenght - 1); j++) {
+//                if (s[j] == '0') {
+//                    deque.push_back(j);
+//
+//                    if (j == lenght - 1) {
+//                        return true;
+//                    }
+//                }
+//                lastPos = max(lastPos, j);
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    bool canReach2(string s, int minJump, int maxJump) {
+//        //f[i] 能否到达i s[i] == '0' f[i - max] - f[i - min]中有ture
+//        //pre[i] = f[0] + f[1]...f[i]; f[i - max] - f[i - min]中有ture 即为 pre[i - min + 1] - pre[i - max - 1] > 0即min到max之间至少有一个true;
+//
+//        if (s[s.size() - 1] == '1') {
+//            return false;
+//        }
+//
+//        vector<int> result(s.size(), false);
+//        result[0] = true;
+//
+//        vector<int> preSum(s.size(), false);
+//        preSum[0] = 1;
+//
+//        for (int i = 1; i < s.size(); i++) {
+//            if (s[i] == '0') {
+//                int preMax = i - minJump;
+//                int preMin = i - maxJump - 1;
+//
+//                if (preMax >= 0) {
+//                    if (preMin < 0) {
+//                        if (preSum[preMax] > 0) {
+//                            result[i] = true;
+//                        }
+//                    }
+//                    else {
+//                        if (preSum[preMax] - preSum[preMin] > 0) {
+//                            result[i] = true;
+//                        }
+//                    }
+//                }
+//            }
+//
+//            preSum[i] = preSum[i - 1] + (result[i] ? 1 : 0);
+//        }
+//
+//        return result[s.size() - 1];
+//    }
+//
+//    void test() {
+//        /**
+//         "011010"
+//         2
+//         3
+//         ""
+//         5
+//         99998
+//         */
+//        bool result = canReach2("00", 1, 1);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - LCP 12
+//class Solution {
+//public:
+//    int minTime(vector<int>& time, int m) {
+//        int l = 0;
+//        int r = accumulate(time.begin(), time.end(), 0);
+//
+//        while (l < r) {
+//            int mid = ((r - l) >> 1) + l;
+//            if (checkIsCanFinish(time, mid, m)) {
+//                r = mid;
+//            }
+//            else {
+//                l = mid + 1;
+//            }
+//        }
+//
+//        return r;
+//    }
+//
+//    bool checkIsCanFinish(vector<int>& time, int t, int m) {
+//
+//        int maxTime = 0;
+//        int day = 1;
+//        int i = 0;
+//        bool isUseHelp = false;
+//        int currTime = t;
+//        while (i < time.size()) {
+//            maxTime = max(maxTime, time[i]);
+//            if (currTime >= time[i]) {
+//                currTime -= time[i];
+//                i++;
+//            }
+//            else {
+//                if (isUseHelp == false) {
+//                    currTime += maxTime;
+//                    isUseHelp = true;
+//                }
+//                else {
+//                    currTime = t;
+//                    isUseHelp = false;
+//                    day++;
+//                    maxTime = 0;
+//                }
+//
+//                if (day > m) {
+//                    return false;
+//                }
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    void test() {
+//        vector<int> time = {1,2,3,3};
+//
+//        int result = minTime(time, 2);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1131
+//class Solution {
+//public:
+//    int maxAbsValExpr(vector<int>& arr1, vector<int>& arr2) {
+//        int result = INT_MIN;
+//        for (int i = 0; i < arr1.size(); i++) {
+//            for (int j = 0; j < arr1.size(); j++) {
+//                int val = abs(arr1[i] - arr1[j]) + abs(arr2[i] - arr2[j]) + abs(i - j);
+//                result = max(result, val);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    int maxAbsValExpr2(vector<int>& arr1, vector<int>& arr2) {
+//
+//        /**
+//         |a[i] - a[j]| + |b[i] - b[j]| + |i - j| =
+//
+//         a[i] - a[j] < 0 && b[i] - b[j] < 0 : a[j] - a[i] + b[j] - b[i] + j - 1;
+//         a[i] - a[j] < 0 && b[i] - b[j] > 0 : a[j] - a[i] + b[i] - b[j]
+//
+//         */
+//        vector<int> sortArr1(arr1.size()), sortArr2(arr2.size());
+//
+//        for (int i = 0; i < arr1.size(); i++) {
+//            sortArr1[i] = i;
+//            sortArr2[i] = i;
+//        }
+//
+//        sort(sortArr1.begin(), sortArr1.end(), [&](int a, int b){
+//            return arr1[a] < arr1[b];
+//        });
+//
+//        sort(sortArr2.begin(), sortArr2.end(), [&](int a, int b){
+//            return arr2[a] < arr2[b];
+//        });
+//
+//        int indexI = 0, indexJ = arr1.size();
+//
+//    }
+//
+//    void test() {
+//        vector<int> arr1 = {1,-2,-5,0,10};
+//        vector<int> arr2 = {0,-2,-1,-7,-4};
+//        int result = maxAbsValExpr2(arr1, arr2);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1016
+//class Solution {
+//public:
+//    bool queryString(string s, int n) {
+//        unordered_set<int> set;
+//
+//        int l = 0, r = 0;
+//        int val = 0;
+//        while (l < s.size()) {
+//            if (s[l] == '0') {//去除前部的0
+//                l++;
+//                continue;
+//            }
+//
+//            if (l > r) {
+//                r = l;
+//            }
+//
+//            //计算l到r的值
+//            if (r < s.size()) {
+//                if (s[r] == '1') {
+//                    val = val * 2 + 1;
+//                }
+//                else {
+//                    val = val * 2;
+//                }
+//            }
+//
+//            //如果值过大，或者r到头，移动l
+//            if (val > n || r >= s.size()) {
+//                int e = min(r, (int)s.size() - 1);
+//                val -= getVal(e - l + 1);
+//                l++;
+//            }
+//
+//            //val符合要求加入统计
+//            if (val <= n && val > 0) {
+//                set.insert(val);
+//            }
+//
+//            r++;
+//        }
+//
+//        return set.size() == n;
+//    }
+//
+//    int getVal(int bitCount) {
+//        int val = 1;
+//        while (--bitCount > 0) {
+//            val *= 2;
+//        }
+//
+//        return val;
+//    }
+//
+//    bool queryString2(string s, int n) {
+//        for (int i = 1; i <= n; i++) {
+//            string subString;
+//            int temp = i;
+//            while (temp > 0) {
+//                if (temp % 2 == 0) {
+//                    subString.push_back('0');
+//                }
+//                else {
+//                    subString.push_back('1');
+//                }
+//                temp = temp / 2;
+//            }
+//
+//            reverse(subString.begin(), subString.end());
+//
+//            if (s.find(subString) == s.npos) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    void test() {
+//        /**
+//         "1111000101"
+//         5
+//         */
+//        string s = "11110001001";
+//        int n = 5;
+//
+//        bool result = queryString2(s, n);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - mianshi_04.05
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+//class Solution {
+//public:
+//    bool isValidBST(TreeNode* root) {
+//        int min, max;
+//        return traveral(root, min, max);
+//    }
+//
+//    bool traveral(TreeNode *root, int &min, int &max) {
+//        if (root == nullptr) {
+//            return true;
+//        }
+//
+//        min = root->val;
+//        max = root->val;
+//
+//        if (root->left != nullptr) {
+//            int lMin, lMax;
+//            bool left = traveral(root->left, lMin, lMax);
+//
+//            if (lMax >= root->val || left == false) {
+//                return false;
+//            }
+//
+//            min = lMin;
+//        }
+//
+//        if (root->right != nullptr) {
+//            int rMin, rMax;
+//            bool right = traveral(root->right, rMin, rMax);
+//
+//            if (rMin <= root->val || right == false) {
+//                return false;
+//            }
+//
+//            max = rMax;
+//        }
+//
+//        return true;
+//    }
+//    long lastVal = LONG_MIN;
+//    bool isValidBST(TreeNode* root) {
+//        if (root == nullptr) {
+//            return true;
+//        }
+//
+//        bool left = isValidBST(root->left);
+//
+//        if (left == false) {
+//            return false;
+//        }
+//
+//        if (lastVal < root->val) {
+//            lastVal = root->val;
+//        }
+//        else {
+//            return false;
+//        }
+//
+//        bool right = isValidBST(root->right);
+//
+//        return right;
+//    }
+//
+//    long lastVal = LONG_MIN;
+//    bool isValidBST(TreeNode* root) {
+//        if (root == nullptr) {
+//            return true;
+//        }
+//        stack<TreeNode *> stack;
+//        TreeNode *node = root;
+//        while (node != nullptr) {
+//            stack.push(node);
+//            node = node->left;
+//        }
+//
+//
+//        while (stack.size() > 0) {
+//            TreeNode *node = stack.top();
+//            stack.pop();
+//            if (lastVal >= node->val) {
+//                return false;
+//            }
+//            lastVal = node->val;
+//
+//            node = node->right;
+//            while (node != nullptr) {
+//                stack.push(node);
+//                node = node->left;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {3,2,5,1,-1,2,6};
+//        TreeNode *root = tool.createBT(arr);
+//        tool.printBT(root);
+//
+//        bool result = isValidBST(root);
+//        cout<<result<<endl;
+//
+//    }
+//};
+
+#pragma mark - 1413
 class Solution {
 public:
-    int longestWPI(vector<int>& hours) {
-        int ans = 0;
-        vector<int> result(hours.size(), 0);
+    int minStartValue(vector<int>& nums) {
+        int preSum = 0;
 
-        for (int i = 0; i < hours.size(); i++) {
-            int lastBigIndex = i - 1;
-            for (int j = i; j < hours.size(); j++) {
-                if (i == j) {
-                    if (hours[j] > 8) {
-                        result[j] = 1;
-                    }
-                    else {
-                        result[j] = -1;
-                    }
-                }
-                else {
-                    if (hours[j] > 8) {
-                        result[j] = result[j - 1] + 1;
-                    }
-                    else {
-                        result[j] = result[j - 1] - 1;
-                    }
-                }
-
-                if (result[j] > 0) {
-                    lastBigIndex = j;
-                }
-            }
-
-            ans = max(lastBigIndex - i + 1, ans);
-
-            if (lastBigIndex == hours.size() - 1) {
-                return ans;
-            }
+        int result = INT_MAX;
+        for (int i = 0; i < nums.size(); i++) {
+            preSum += nums[i];
+            result = min(result, preSum);
         }
 
-        return ans;
-    }
-
-    int longestWPI2(vector<int>& hours) {
-        vector<int> prefixSum(hours.size() + 1, 0);
-
-        stack<int> stack;
-        stack.push(0);
-        for (int i = 0; i < hours.size(); i++) {
-            if (hours[i] > 8) {
-                prefixSum[i + 1] = prefixSum[i] + 1;
-            }
-            else {
-                prefixSum[i + 1] = prefixSum[i] - 1;
-            }
-
-            if (prefixSum[stack.top()] > prefixSum[i + 1]) {
-                stack.push(i + 1);
-            }
-        }
-
-        int result = 0;
-        for (int i = (int)prefixSum.size() - 1; i >= 0; i--) {
-
-            while (stack.size() > 0 && stack.top() >= i) {
-                stack.pop();
-            }
-
-            while (stack.size() > 0 && prefixSum[i] > prefixSum[stack.top()]) {
-                result = max(i - stack.top(), result);
-                stack.pop();
-            }
-
-            if (stack.size() == 0) {
-                break;
-            }
-        }
-
-        return result;
+        return max(1 - result, 1);
     }
 
     void test() {
-        vector<int> hours = {6,0,6,6,9};
-        int result = longestWPI2(hours);
+        vector<int> nums = {-3,2,-3,4,2};
+
+        int result = minStartValue(nums);
+
         cout<<result<<endl;
     }
 };
