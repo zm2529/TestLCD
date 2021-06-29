@@ -737,120 +737,320 @@ Tool tool;
 //};
 
 #pragma mark - 934
+//class Solution {
+//public:
+//    typedef pair<int, int> point;
+//    deque<point> deque;
+//    vector<int> dx = {-1, 0, 1, 0};
+//    vector<int> dy = {0, -1, 0, 1};
+//    int shortestBridge(vector<vector<int>>& grid) {
+//        int result = 0;
+//        //
+//        bool findAIsland = false;
+//        for (int i = 0; i < grid.size(); i++) {
+//            for (int j = 0; j < grid[i].size(); j++) {
+//                if (grid[i][j] == 1) {
+//                    backtracking(grid, i, j);
+//                    findAIsland = true;
+//                }
+//
+//                if (findAIsland) {
+//                    break;
+//                }
+//            }
+//
+//            if (findAIsland) {
+//                break;
+//            }
+//        }
+//
+//        while (deque.size() != 0) {
+//            int size = (int)deque.size();
+//            for (int i = 0; i < size; i++) {
+//                point p = deque.front();
+//                deque.pop_front();
+//
+//                int a = p.first;
+//                int b = p.second;
+//
+//                for (int k = 0 ; k < 4; k++) {
+//
+//                    switch (checkIsSea(grid, a + dx[k], b + dy[k])) {
+//                        case 1:
+//                            return result;
+//                        case 0:
+//                            deque.push_back(point(a + dx[k], b + dy[k]));
+//                    } ;
+//
+//                }
+//            }
+//
+//            result++;
+//        }
+//
+//        return result;
+//    }
+//
+//    int checkIsSea(vector<vector<int>>& grid, int i, int j) {
+//        if (i < 0 || i >= grid.size() ||
+//            j < 0 || j >= grid[0].size()) {
+//            return 2;
+//        }
+//
+//        if (grid[i][j] == 2) {
+//            return 2;
+//        }
+//
+//        if (grid[i][j] == 0 ) {
+//            grid[i][j] = 2;
+//            return 0;
+//        }
+//
+//        if (grid[i][j] == 1) {
+//            return 1;
+//        }
+//
+//        return 2;
+//    }
+//
+//    bool backtracking(vector<vector<int>>& grid, int i, int j) {
+//        if (i < 0 || i >= grid.size() ||
+//            j < 0 || j >= grid[0].size()) {
+//            return false;
+//        }
+//
+//        if (grid[i][j] == 0 ) {
+//            return true;
+//        }
+//
+//        if (grid[i][j] == 2) {
+//            return false;
+//        }
+//
+//        grid[i][j] = 2;
+//        bool top = backtracking(grid, i - 1, j);//top
+//        bool left = backtracking(grid, i, j - 1);//left
+//        bool bottom = backtracking(grid, i + 1, j);//bottom
+//        bool right = backtracking(grid, i, j + 1);//right;
+//
+//        if (top || left || bottom || right) {
+//            deque.push_back(point(i,j));
+//        }
+//
+//        return false;
+//    }
+//
+//    void test() {
+////        vector<vector<int>> grid = {{1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1}};
+//
+//        vector<vector<int>> grid = {{0,1}, {1,0}};
+//
+//        tool.printMatrix(grid);
+//
+//        int result = shortestBridge(grid);
+//
+//        tool.printMatrix(grid);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 368
+//class Solution {
+//public:
+//    vector<int> largestDivisibleSubset(vector<int>& nums) {
+//
+//        sort(nums.begin(), nums.end());
+//        vector<vector<int>> dp(nums.size(), vector<int>(0));
+//
+//        vector<int> result;
+//        for (int i = 0; i < nums.size(); i++) {
+//            dp[i].push_back(nums[i]);
+//            vector<int> temp;
+//            for (int j = i - 1; j >= 0; j--) {
+//                if (nums[i] % nums[j] == 0) {
+//                    if (temp.size() < dp[j].size()) {
+//                        temp = dp[j];
+//                    }
+//                }
+//            }
+//
+//            if (temp.size() > 0) {
+//                dp[i].insert(dp[i].end(), temp.begin(), temp.end());
+//            }
+//
+//            if (result.size() < dp[i].size()) {
+//                result = dp[i];
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    vector<int> largestDivisibleSubset2(vector<int>& nums) {
+//
+//        sort(nums.begin(), nums.end());
+//
+//        vector<int> dp(nums.size());
+//
+//        int maxCount = 0;
+//        int lastVal = 0;
+//        for (int i = 0; i < nums.size(); i++) {
+//            int temp = 0;
+//            for (int j = i - 1; j >= 0; j--) {
+//                if (nums[i] % nums[j] == 0) {
+//                    if (temp < dp[j]) {
+//                        temp = dp[j];
+//                    }
+//                }
+//            }
+//            dp[i] = temp + 1;
+//            if (maxCount < dp[i]) {
+//                maxCount = dp[i];
+//                lastVal = nums[i];
+//            }
+//        }
+//
+//        vector<int> result;
+//        for (int i = (int)dp.size() - 1; i >= 0 && maxCount >= 0; i--) {
+//            if (maxCount == dp[i] && lastVal % nums[i] == 0) {
+//                result.push_back(nums[i]);
+//                lastVal = nums[i];
+//                maxCount--;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        //[4,8,10,240]
+//        vector<int> nums = {4,8,10,240};
+//
+//        vector<int> result = largestDivisibleSubset2(nums);
+//
+//        tool.printVector(result);
+//    }
+//};
+
+#pragma mark - 740
+//class Solution {
+//public:
+//    int deleteAndEarn(vector<int>& nums) {
+//        //dp[i] 0-i删除i赚的最多的分数，nums[i] * count + max(dp[0]..dp[i - 2])
+//
+//        sort(nums.begin(), nums.end());
+//        vector<int> dp(nums.size(), 0);
+//
+//        int lastMaxEarn = 0;
+//        int maxEarn = 0;
+//        int maxIndex = 0;
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            dp[i] = nums[i];
+//
+//            if (i > 0 && nums[i] == nums[i - 1]) {
+//                dp[i] += dp[i - 1];
+//            }
+//            else {
+//
+//                if (nums[maxIndex] != nums[i] - 1) {//如果最大值不是数值差一的直接使用
+//                    dp[i] += maxEarn;
+//                }
+//                else {//否则只用上一次的最大值
+//                    dp[i] += lastMaxEarn;
+//                }
+//
+//                //更新上一次最大值
+//                lastMaxEarn = maxEarn;
+//            }
+//
+//            if (maxEarn < dp[i]) {
+//                maxEarn = dp[i];
+//                maxIndex = i;
+//            }
+//        }
+//
+//        return maxEarn;
+//    }
+//
+//    void test() {
+//        //[1,1,1,2,4,5,5,5,6]
+//        vector<int> nums = {3,4,2};
+//
+//        int result = deleteAndEarn(nums);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1838
 class Solution {
 public:
-    typedef pair<int, int> point;
-    deque<point> deque;
-    vector<int> dx = {-1, 0, 1, 0};
-    vector<int> dy = {0, -1, 0, 1};
-    int shortestBridge(vector<vector<int>>& grid) {
-        int result = 0;
-        //
-        bool findAIsland = false;
-        for (int i = 0; i < grid.size(); i++) {
-            for (int j = 0; j < grid[i].size(); j++) {
-                if (grid[i][j] == 1) {
-                    backtracking(grid, i, j);
-                    findAIsland = true;
-                }
-                
-                if (findAIsland) {
-                    break;
-                }
+    int maxFrequency(vector<int>& nums, int k) {
+
+        sort(nums.begin(), nums.end());
+
+        int maxCount = 1;
+        int tempK = k;
+        int currentCount = 1;
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] == nums[i - 1]) {
+                currentCount++;
             }
-            
-            if (findAIsland) {
-                break;
+            else {
+                maxCount = max(maxCount, currentCount);
+                currentCount = 1;
+                tempK = k;
+
+                for (int j = i - 1; j >= 0 && tempK > 0; j--) {
+                    tempK -= (nums[i] - nums[j]);
+                    if (tempK >= 0) {
+                        currentCount++;
+                    }
+                }
             }
         }
-        
-        while (deque.size() != 0) {
-            int size = (int)deque.size();
-            for (int i = 0; i < size; i++) {
-                point p = deque.front();
-                deque.pop_front();
-                
-                int a = p.first;
-                int b = p.second;
 
-                for (int k = 0 ; k < 4; k++) {
+        maxCount = max(maxCount, currentCount);
 
-                    switch (checkIsSea(grid, a + dx[k], b + dy[k])) {
-                        case 1:
-                            return result;
-                        case 0:
-                            deque.push_back(point(a + dx[k], b + dy[k]));
-                    } ;
+        return maxCount;
+    }
 
-                }
+    int maxFrequency2(vector<int>& nums, int k) {
+
+        sort(nums.begin(), nums.end());
+
+        int result = 1;
+
+        int l = 0, r = 0;
+        long long sum = 0;
+        while (r < nums.size() - 1) {
+            r++;
+            sum += (long long)(r - l) * (nums[r] - nums[r - 1]);
+
+            while (sum > k) {
+                sum -= (nums[r] - nums[l]);
+                l++;
             }
-            
-            result++;
+
+            result = max(result, r - l + 1);
         }
-        
+
         return result;
     }
-    
-    int checkIsSea(vector<vector<int>>& grid, int i, int j) {
-        if (i < 0 || i >= grid.size() ||
-            j < 0 || j >= grid[0].size()) {
-            return 2;
-        }
-        
-        if (grid[i][j] == 2) {
-            return 2;
-        }
-        
-        if (grid[i][j] == 0 ) {
-            grid[i][j] = 2;
-            return 0;
-        }
-        
-        if (grid[i][j] == 1) {
-            return 1;
-        }
-        
-        return 2;
-    }
-    
-    bool backtracking(vector<vector<int>>& grid, int i, int j) {
-        if (i < 0 || i >= grid.size() ||
-            j < 0 || j >= grid[0].size()) {
-            return false;
-        }
-        
-        if (grid[i][j] == 0 ) {
-            return true;
-        }
-        
-        if (grid[i][j] == 2) {
-            return false;
-        }
-        
-        grid[i][j] = 2;
-        bool top = backtracking(grid, i - 1, j);//top
-        bool left = backtracking(grid, i, j - 1);//left
-        bool bottom = backtracking(grid, i + 1, j);//bottom
-        bool right = backtracking(grid, i, j + 1);//right;
-        
-        if (top || left || bottom || right) {
-            deque.push_back(point(i,j));
-        }
-        
-        return false;
-    }
-    
+
     void test() {
-//        vector<vector<int>> grid = {{1,1,1,1,1},{1,0,0,0,1},{1,0,1,0,1},{1,0,0,0,1},{1,1,1,1,1}};
-        
-        vector<vector<int>> grid = {{0,1}, {1,0}};
-        
-        tool.printMatrix(grid);
-        
-        int result = shortestBridge(grid);
-        
-        tool.printMatrix(grid);
-        
+        /**
+         [100000]
+         100000
+         */
+        vector<int> nums = {100000};
+
+        int k = 100000;
+
+        int result = maxFrequency2(nums, k);
+
         cout<<result<<endl;
     }
 };
