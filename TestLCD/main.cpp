@@ -985,71 +985,119 @@ Tool tool;
 //};
 
 #pragma mark - 1838
+//class Solution {
+//public:
+//    int maxFrequency(vector<int>& nums, int k) {
+//
+//        sort(nums.begin(), nums.end());
+//
+//        int maxCount = 1;
+//        int tempK = k;
+//        int currentCount = 1;
+//        for (int i = 1; i < nums.size(); i++) {
+//            if (nums[i] == nums[i - 1]) {
+//                currentCount++;
+//            }
+//            else {
+//                maxCount = max(maxCount, currentCount);
+//                currentCount = 1;
+//                tempK = k;
+//
+//                for (int j = i - 1; j >= 0 && tempK > 0; j--) {
+//                    tempK -= (nums[i] - nums[j]);
+//                    if (tempK >= 0) {
+//                        currentCount++;
+//                    }
+//                }
+//            }
+//        }
+//
+//        maxCount = max(maxCount, currentCount);
+//
+//        return maxCount;
+//    }
+//
+//    int maxFrequency2(vector<int>& nums, int k) {
+//
+//        sort(nums.begin(), nums.end());
+//
+//        int result = 1;
+//
+//        int l = 0, r = 0;
+//        long long sum = 0;
+//        while (r < nums.size() - 1) {
+//            r++;
+//            sum += (long long)(r - l) * (nums[r] - nums[r - 1]);
+//
+//            while (sum > k) {
+//                sum -= (nums[r] - nums[l]);
+//                l++;
+//            }
+//
+//            result = max(result, r - l + 1);
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        /**
+//         [100000]
+//         100000
+//         */
+//        vector<int> nums = {100000};
+//
+//        int k = 100000;
+//
+//        int result = maxFrequency2(nums, k);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1684
 class Solution {
 public:
-    int maxFrequency(vector<int>& nums, int k) {
+    int countConsistentStrings(string allowed, vector<string>& words) {
+        unordered_set<char> set;
+        for (int i = 0; i < allowed.size(); i++) {
+            set.insert(allowed[i]);
+        }
 
-        sort(nums.begin(), nums.end());
-
-        int maxCount = 1;
-        int tempK = k;
-        int currentCount = 1;
-        for (int i = 1; i < nums.size(); i++) {
-            if (nums[i] == nums[i - 1]) {
-                currentCount++;
-            }
-            else {
-                maxCount = max(maxCount, currentCount);
-                currentCount = 1;
-                tempK = k;
-
-                for (int j = i - 1; j >= 0 && tempK > 0; j--) {
-                    tempK -= (nums[i] - nums[j]);
-                    if (tempK >= 0) {
-                        currentCount++;
-                    }
+        int result = 0;
+        for (int i = 0; i < words.size(); i++) {
+            result++;
+            for (int j = 0; j < words[i].size(); j++) {
+                if (set.find(words[i][j]) == set.end()) {
+                    result--;
+                    break;
                 }
             }
         }
 
-        maxCount = max(maxCount, currentCount);
-
-        return maxCount;
+        return result;
     }
 
-    int maxFrequency2(vector<int>& nums, int k) {
+    int countConsistentStrings2(string allowed, vector<string>& words) {
+        int result = 0;
 
-        sort(nums.begin(), nums.end());
-
-        int result = 1;
-
-        int l = 0, r = 0;
-        long long sum = 0;
-        while (r < nums.size() - 1) {
-            r++;
-            sum += (long long)(r - l) * (nums[r] - nums[r - 1]);
-
-            while (sum > k) {
-                sum -= (nums[r] - nums[l]);
-                l++;
+        for (int i = 0; i < words.size(); i++) {
+            result++;
+            for (int j = 0; j < words[i].size(); j++) {
+                if (allowed.find(words[i][j]) == allowed.npos) {
+                    result--;
+                    break;
+                }
             }
-
-            result = max(result, r - l + 1);
         }
 
         return result;
     }
 
     void test() {
-        /**
-         [100000]
-         100000
-         */
-        vector<int> nums = {100000};
-
-        int k = 100000;
-
-        int result = maxFrequency2(nums, k);
+        vector<string> words = {"cc","acd","b","ba","bac","bad","ac","d"};
+        string allowed = "cad";
+        int result = countConsistentStrings2(allowed, words);
 
         cout<<result<<endl;
     }
