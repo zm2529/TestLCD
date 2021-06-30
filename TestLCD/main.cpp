@@ -1056,38 +1056,270 @@ Tool tool;
 //};
 
 #pragma mark - 1684
+//class Solution {
+//public:
+//    int countConsistentStrings(string allowed, vector<string>& words) {
+//        unordered_set<char> set;
+//        for (int i = 0; i < allowed.size(); i++) {
+//            set.insert(allowed[i]);
+//        }
+//
+//        int result = 0;
+//        for (int i = 0; i < words.size(); i++) {
+//            result++;
+//            for (int j = 0; j < words[i].size(); j++) {
+//                if (set.find(words[i][j]) == set.end()) {
+//                    result--;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    int countConsistentStrings2(string allowed, vector<string>& words) {
+//        int result = 0;
+//
+//        for (int i = 0; i < words.size(); i++) {
+//            result++;
+//            for (int j = 0; j < words[i].size(); j++) {
+//                if (allowed.find(words[i][j]) == allowed.npos) {
+//                    result--;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<string> words = {"cc","acd","b","ba","bac","bad","ac","d"};
+//        string allowed = "cad";
+//        int result = countConsistentStrings2(allowed, words);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1375
+//class Solution {
+//public:
+//    int numTimesAllBlue(vector<int>& light) {
+//        //f[i] i之前是不是都是蓝色
+//
+//        int result = 0;
+//        vector<bool> vec(light.size() + 1, false);
+//        vec[0] = true;
+//        int lastPos = -1;
+//        int lastBluePos = 0;
+//
+//        for (int i = 0; i < light.size(); i++) {
+//            lastPos = max(light[i], lastPos);
+//
+//            vec[light[i]] = true;
+//
+//            for (int j = lastBluePos + 1; j <= lastPos; j++) {
+//                if (vec[j] == true) {
+//                    lastBluePos++;
+//                }
+//                else {
+//                    break;
+//                }
+//            }
+//
+//
+//            if (lastBluePos == lastPos) {
+//                result++;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    int numTimesAllBlue2(vector<int>& light) {
+//        int result = 0;
+//
+//        int lastPos = -1;
+//
+//        for (int i = 0; i < light.size(); i++) {
+//            lastPos = max(light[i], lastPos);
+//
+//            if (lastPos == i + 1) {
+//                result++;
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//
+//    void test() {
+//        vector<int> light = {2,1,4,3,6,5};
+//
+//        int result = numTimesAllBlue2(light);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 50
+//class Solution {
+//public:
+////    double myPow(double x, int n) {
+////        if (n == 0) {
+////            return 1;
+////        }
+////
+////        if (n < 0) {
+////            return 1 / x * myPow(x, n + 1);
+////        }
+////        else {
+////            return x * myPow(x, n - 1);
+////        }
+////    }
+//
+////    double myPow(double x, int n) {
+////        if (n == 0) {
+////            return 1;
+////        }
+////
+////        double tempVal = x;
+////
+////        if (n < 0) {
+////            tempVal = 1 / x;
+////        }
+////        else {
+////            tempVal = x;
+////        }
+////
+////        if (abs(n) % 2 == 1) {
+////            return tempVal * myPow(x, n / 2) * myPow(x, n / 2);
+////        }
+////        else {
+////            return myPow(x, n / 2) * myPow(x, n / 2);
+////        }
+////    }
+//
+////    double myPow(double x, int n) {
+////        if (n == 0) {
+////            return 1;
+////        }
+////
+////        double tempVal = x;
+////
+////        if (n < 0) {
+////            tempVal = 1 / x;
+////        }
+////        else {
+////            tempVal = x;
+////        }
+////
+////        double res = myPow(x, n / 2);
+////
+////        if (n % 2 == 0) {
+////            return res * res;
+////        }
+////        else {
+////            return tempVal * res * res;
+////        }
+////    }
+//
+//    double myPow(double x, int n) {
+//        if (n == 0) {
+//            return 1;
+//        }
+//
+//        double res = 1;
+//        int tempN = n;
+//        while (tempN != 0) {
+//            if (tempN % 2 != 0) {
+//                res *= x;
+//            }
+//            x *= x;
+//
+//            tempN = tempN / 2;
+//        }
+//
+//        if (n < 0) {
+//            return 1 / res;
+//        }
+//        else {
+//            return res;
+//        }
+//    }
+//
+//    void test() {
+//        /**
+//         2.10000
+//         3
+//         */
+//        double result = myPow(2.10000, 3);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1249
 class Solution {
 public:
-    int countConsistentStrings(string allowed, vector<string>& words) {
-        unordered_set<char> set;
-        for (int i = 0; i < allowed.size(); i++) {
-            set.insert(allowed[i]);
+    string minRemoveToMakeValid(string s) {
+        stack<int> stack;
+        unordered_set<int> set;
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == ')') {
+                if (stack.size() != 0 && s[stack.top()] == '(') {
+                    stack.pop();
+                }
+                else {
+                    set.insert(i);
+                }
+            }
+            else if (s[i] == '(') {
+                stack.push(i);
+
+            }
         }
 
-        int result = 0;
-        for (int i = 0; i < words.size(); i++) {
-            result++;
-            for (int j = 0; j < words[i].size(); j++) {
-                if (set.find(words[i][j]) == set.end()) {
-                    result--;
-                    break;
-                }
+        while (stack.size() > 0) {
+            set.insert(stack.top());
+            stack.pop();
+        }
+
+        string result = "";
+        for (int i = 0; i < s.size(); i++) {
+            if (set.find(i) == set.end()) {
+                result.push_back(s[i]);
             }
         }
 
         return result;
     }
 
-    int countConsistentStrings2(string allowed, vector<string>& words) {
-        int result = 0;
-
-        for (int i = 0; i < words.size(); i++) {
-            result++;
-            for (int j = 0; j < words[i].size(); j++) {
-                if (allowed.find(words[i][j]) == allowed.npos) {
-                    result--;
-                    break;
+    string minRemoveToMakeValid2(string s) {
+        stack<int> stack;
+        vector<bool> vec(s.size(), false);
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] == ')') {
+                if (stack.size() != 0 && s[stack.top()] == '(') {
+                    vec[stack.top()] = false;
+                    stack.pop();
                 }
+                else {
+                    vec[i] = true;
+                }
+            }
+            else if (s[i] == '(') {
+                stack.push(i);
+                vec[i] = true;
+            }
+        }
+
+        string result = "";
+        for (int i = 0; i < s.size(); i++) {
+            if (vec[i] == false) {
+                result.push_back(s[i]);
             }
         }
 
@@ -1095,9 +1327,7 @@ public:
     }
 
     void test() {
-        vector<string> words = {"cc","acd","b","ba","bac","bad","ac","d"};
-        string allowed = "cad";
-        int result = countConsistentStrings2(allowed, words);
+        string result = minRemoveToMakeValid("(a(b(c)d)");
 
         cout<<result<<endl;
     }
