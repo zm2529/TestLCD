@@ -1262,72 +1262,163 @@ Tool tool;
 //};
 
 #pragma mark - 1249
+//class Solution {
+//public:
+//    string minRemoveToMakeValid(string s) {
+//        stack<int> stack;
+//        unordered_set<int> set;
+//        for (int i = 0; i < s.size(); i++) {
+//            if (s[i] == ')') {
+//                if (stack.size() != 0 && s[stack.top()] == '(') {
+//                    stack.pop();
+//                }
+//                else {
+//                    set.insert(i);
+//                }
+//            }
+//            else if (s[i] == '(') {
+//                stack.push(i);
+//
+//            }
+//        }
+//
+//        while (stack.size() > 0) {
+//            set.insert(stack.top());
+//            stack.pop();
+//        }
+//
+//        string result = "";
+//        for (int i = 0; i < s.size(); i++) {
+//            if (set.find(i) == set.end()) {
+//                result.push_back(s[i]);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    string minRemoveToMakeValid2(string s) {
+//        stack<int> stack;
+//        vector<bool> vec(s.size(), false);
+//        for (int i = 0; i < s.size(); i++) {
+//            if (s[i] == ')') {
+//                if (stack.size() != 0 && s[stack.top()] == '(') {
+//                    vec[stack.top()] = false;
+//                    stack.pop();
+//                }
+//                else {
+//                    vec[i] = true;
+//                }
+//            }
+//            else if (s[i] == '(') {
+//                stack.push(i);
+//                vec[i] = true;
+//            }
+//        }
+//
+//        string result = "";
+//        for (int i = 0; i < s.size(); i++) {
+//            if (vec[i] == false) {
+//                result.push_back(s[i]);
+//            }
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        string result = minRemoveToMakeValid("(a(b(c)d)");
+//
+//        cout<<result<<endl;
+//    }
+//};
+
 class Solution {
 public:
-    string minRemoveToMakeValid(string s) {
-        stack<int> stack;
-        unordered_set<int> set;
-        for (int i = 0; i < s.size(); i++) {
-            if (s[i] == ')') {
-                if (stack.size() != 0 && s[stack.top()] == '(') {
-                    stack.pop();
+    bool validTicTacToe(vector<string>& board) {
+        int XCount = 0, OCount = 0;
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board[i].size(); j++) {
+                if (board[i][j] == 'O') {
+                    OCount++;
                 }
-                else {
-                    set.insert(i);
+
+                if (board[i][j] == 'X') {
+                    XCount++;
                 }
             }
-            else if (s[i] == '(') {
-                stack.push(i);
+        }
 
+        if (OCount > XCount) {
+            return false;
+        }
+
+        if (XCount > OCount + 1) {
+            return false;
+        }
+
+        for (int i = 0; i < board.size(); i++) {
+
+            string tempS = board[i];
+            if (checkIsVaild(tempS, XCount, OCount) == false) {
+                return false;
+            }
+
+            tempS = "";
+            for (int j = 0; j < board[i].size(); j++) {
+                tempS.push_back(board[j][i]);
+            }
+
+            if (checkIsVaild(tempS, XCount, OCount) == false) {
+                return false;
+            }
+
+            tempS = "";
+            if (i == 0) {
+                tempS.push_back(board[0][0]);
+                tempS.push_back(board[1][1]);
+                tempS.push_back(board[2][2]);
+                if (checkIsVaild(tempS, XCount, OCount) == false) {
+                    return false;
+                }
+            }
+
+            tempS = "";
+            if (i == 2) {
+                tempS.push_back(board[2][0]);
+                tempS.push_back(board[1][1]);
+                tempS.push_back(board[0][2]);
+
+                if (checkIsVaild(tempS, XCount, OCount) == false) {
+                    return false;
+                }
             }
         }
 
-        while (stack.size() > 0) {
-            set.insert(stack.top());
-            stack.pop();
-        }
-
-        string result = "";
-        for (int i = 0; i < s.size(); i++) {
-            if (set.find(i) == set.end()) {
-                result.push_back(s[i]);
-            }
-        }
-
-        return result;
+        return true;
     }
 
-    string minRemoveToMakeValid2(string s) {
-        stack<int> stack;
-        vector<bool> vec(s.size(), false);
-        for (int i = 0; i < s.size(); i++) {
-            if (s[i] == ')') {
-                if (stack.size() != 0 && s[stack.top()] == '(') {
-                    vec[stack.top()] = false;
-                    stack.pop();
-                }
-                else {
-                    vec[i] = true;
-                }
-            }
-            else if (s[i] == '(') {
-                stack.push(i);
-                vec[i] = true;
+    bool checkIsVaild(string & s, int & XCount, int & OCount) {
+        if (s == "XXX") {
+            if (XCount != OCount + 1) {
+                return false;
             }
         }
 
-        string result = "";
-        for (int i = 0; i < s.size(); i++) {
-            if (vec[i] == false) {
-                result.push_back(s[i]);
+        if (s == "OOO") {
+            if (XCount != OCount) {
+                return false;
             }
         }
 
-        return result;
+        return true;
     }
 
     void test() {
-        string result = minRemoveToMakeValid("(a(b(c)d)");
+        //["XXX","OOX","OOX"]
+        vector<string> board = {"XXX","OOX","OOX"};
+
+        bool result = validTicTacToe(board);
 
         cout<<result<<endl;
     }
