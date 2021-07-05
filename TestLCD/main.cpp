@@ -1332,97 +1332,333 @@ Tool tool;
 //        cout<<result<<endl;
 //    }
 //};
+//
+//class Solution {
+//public:
+//    bool validTicTacToe(vector<string>& board) {
+//        int XCount = 0, OCount = 0;
+//        for (int i = 0; i < board.size(); i++) {
+//            for (int j = 0; j < board[i].size(); j++) {
+//                if (board[i][j] == 'O') {
+//                    OCount++;
+//                }
+//
+//                if (board[i][j] == 'X') {
+//                    XCount++;
+//                }
+//            }
+//        }
+//
+//        if (OCount > XCount) {
+//            return false;
+//        }
+//
+//        if (XCount > OCount + 1) {
+//            return false;
+//        }
+//
+//        for (int i = 0; i < board.size(); i++) {
+//
+//            string tempS = board[i];
+//            if (checkIsVaild(tempS, XCount, OCount) == false) {
+//                return false;
+//            }
+//
+//            tempS = "";
+//            for (int j = 0; j < board[i].size(); j++) {
+//                tempS.push_back(board[j][i]);
+//            }
+//
+//            if (checkIsVaild(tempS, XCount, OCount) == false) {
+//                return false;
+//            }
+//
+//            tempS = "";
+//            if (i == 0) {
+//                tempS.push_back(board[0][0]);
+//                tempS.push_back(board[1][1]);
+//                tempS.push_back(board[2][2]);
+//                if (checkIsVaild(tempS, XCount, OCount) == false) {
+//                    return false;
+//                }
+//            }
+//
+//            tempS = "";
+//            if (i == 2) {
+//                tempS.push_back(board[2][0]);
+//                tempS.push_back(board[1][1]);
+//                tempS.push_back(board[0][2]);
+//
+//                if (checkIsVaild(tempS, XCount, OCount) == false) {
+//                    return false;
+//                }
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    bool checkIsVaild(string & s, int & XCount, int & OCount) {
+//        if (s == "XXX") {
+//            if (XCount != OCount + 1) {
+//                return false;
+//            }
+//        }
+//
+//        if (s == "OOO") {
+//            if (XCount != OCount) {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//
+//    void test() {
+//        //["XXX","OOX","OOX"]
+//        vector<string> board = {"XXX","OOX","OOX"};
+//
+//        bool result = validTicTacToe(board);
+//
+//        cout<<result<<endl;
+//    }
+//};
 
-class Solution {
-public:
-    bool validTicTacToe(vector<string>& board) {
-        int XCount = 0, OCount = 0;
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board[i].size(); j++) {
-                if (board[i][j] == 'O') {
-                    OCount++;
-                }
+#pragma mark - 650
+//class Solution {
+//public:
+//    int minSteps(int n) {
+//        if (n == 1) {
+//            return 0;
+//        }
+//        if (n == 2) {
+//            return 2;
+//        }
+//
+//        for (int i = 2; i < n; i++) {
+//            if (n % i == 0) {
+//                return minSteps(n / i) + minSteps(i);
+//            }
+//        }
+//
+//        return n;
+//    }
+//
+//    void test() {
+//        int result = minSteps(27);
+//
+//        cout<<result<<endl;
+//    }
+//};
 
-                if (board[i][j] == 'X') {
-                    XCount++;
-                }
-            }
-        }
+#pragma mark - mianshi0204
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+//class Solution {
+//public:
+//    ListNode* partition(ListNode* head, int x) {
+//        ListNode *minHead = new ListNode(0);
+//        ListNode *maxHead = new ListNode(0);
+//
+//        ListNode *p = head, *pMin = minHead, *pMax = maxHead;
+//        while (p != nullptr) {
+//            if (p->val >= x) {
+//                pMax->next = p;
+//                p = p->next;
+//                pMax = pMax->next;
+//                pMax->next = nullptr;
+//            }
+//            else {
+//                pMin->next = p;
+//                p = p->next;
+//                pMin = pMin->next;
+//                pMin->next = nullptr;
+//            }
+//        }
+//
+//        pMin->next = maxHead->next;
+//
+//        return minHead->next;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {3,5,8,5,10,2,1};
+//        ListNode *head = tool.createList(arr, -1);
+//        tool.printList(head);
+//
+//        ListNode *result = partition(head, 5);
+//        tool.printList(result);
+//    }
+//};
 
-        if (OCount > XCount) {
-            return false;
-        }
+#pragma mark - 457
+//class Solution {
+//public:
+//    bool circularArrayLoop(vector<int>& nums) {
+//
+//        bool isZhengShu = false;
+//        int start = 0;
+//        int end = 0;
+//        int markVal = 1001;
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (nums[i] <= 1000) {
+//                isZhengShu = nums[i] > 0 ? true : false;
+//                start = i;
+//                markVal += i;
+//
+//                bool isFaild = false;
+//                while (nums[start] <= 1000) {
+//                    end = start;
+//                    int jump = nums[start];
+//                    nums[start] = markVal;
+//                    int fromIndex = start;
+//
+//                    start = getJumpToIndex(fromIndex, jump, (int)nums.size());
+//
+//                    if (start == end) {//1个点循环
+//                        isFaild = true;
+//                        break;
+//                    }
+//
+//                    if (nums[start] == markVal) {//循环并且是和本次遍历循环
+//                        isFaild = false;
+//                        break;
+//                    }
+//
+//                    if (nums[start] > 1000 && nums[start] != markVal) {//进入之前的错误循环
+//                        isFaild = true;
+//                        break;;
+//                    }
+//
+//                    if (isZhengShu != (nums[start] > 0)) {//存在正反数，前面的部分一定不是
+//                        isFaild = true;
+//                        break;
+//                    }
+//                }
+//
+//                if (isFaild == false) {
+//                    return true;
+//                }
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    int getJumpToIndex(int fromIndex, int jump, int size) {
+//        int targetIndex = fromIndex + jump;
+//
+//        while (targetIndex >= size) {
+//            targetIndex -= size;
+//        }
+//
+//        while (targetIndex < 0) {
+//            targetIndex += size;
+//        }
+//
+//        return targetIndex;
+//    }
+//
+//    void test() {
+//        vector<int> arr = {-1,-1,-1};
+//
+//        bool result = circularArrayLoop(arr);
+//
+//        cout<<endl;
+//        cout<<result<<endl;
+//    }
+//};
 
-        if (XCount > OCount + 1) {
-            return false;
-        }
+#pragma mark - jianzhi_15
+//class Solution {
+//public:
+////    int hammingWeight(uint32_t n) {
+////        int result = 0;
+////        while (n > 0) {
+////            if (n % 2 == 1) {
+////                result++;
+////            }
+////            n /= 2;
+////        }
+////
+////        return result;
+////    }
+//
+//    int hammingWeight(uint32_t n) {
+//        int result = 0;
+//        while (n > 0) {
+//            n &= (n - 1);
+//            result++;
+//        }
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        int result = hammingWeight(4294967293);
+//
+//        cout<<result<<endl;
+//    }
+//};
 
-        for (int i = 0; i < board.size(); i++) {
-
-            string tempS = board[i];
-            if (checkIsVaild(tempS, XCount, OCount) == false) {
-                return false;
-            }
-
-            tempS = "";
-            for (int j = 0; j < board[i].size(); j++) {
-                tempS.push_back(board[j][i]);
-            }
-
-            if (checkIsVaild(tempS, XCount, OCount) == false) {
-                return false;
-            }
-
-            tempS = "";
-            if (i == 0) {
-                tempS.push_back(board[0][0]);
-                tempS.push_back(board[1][1]);
-                tempS.push_back(board[2][2]);
-                if (checkIsVaild(tempS, XCount, OCount) == false) {
-                    return false;
-                }
-            }
-
-            tempS = "";
-            if (i == 2) {
-                tempS.push_back(board[2][0]);
-                tempS.push_back(board[1][1]);
-                tempS.push_back(board[0][2]);
-
-                if (checkIsVaild(tempS, XCount, OCount) == false) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    bool checkIsVaild(string & s, int & XCount, int & OCount) {
-        if (s == "XXX") {
-            if (XCount != OCount + 1) {
-                return false;
-            }
-        }
-
-        if (s == "OOO") {
-            if (XCount != OCount) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    void test() {
-        //["XXX","OOX","OOX"]
-        vector<string> board = {"XXX","OOX","OOX"};
-
-        bool result = validTicTacToe(board);
-
-        cout<<result<<endl;
-    }
-};
+#pragma mark - 1262
+//class Solution {
+//public:
+//    int maxSumDivThree(vector<int>& nums) {
+//        //f[i][n] 从0到i余数为n的最大值，n为0，1，2，
+//        vector<vector<int>> result(nums.size(), vector<int>(3, 0));
+//
+//        result[0][nums[0] % 3] = nums[0];
+//
+//        for (int i = 1; i < nums.size(); i++) {
+//            switch (nums[i] % 3) {
+//                case 0: {
+//                    result[i][0] = result[i - 1][0] + nums[i];
+//                    if (result[i - 1][1] != 0) {
+//                        result[i][1] = result[i - 1][1] + nums[i];
+//                    }
+//
+//                    if (result[i - 1][2] != 0) {
+//                        result[i][2] = result[i - 1][2] + nums[i];
+//                    }
+//                    break;
+//                }
+//                case 1:{
+//                    result[i][0] = max(result[i - 1][0], result[i - 1][2] == 0 ? 0 : result[i - 1][2] + nums[i]);
+//
+//                    result[i][1] = max(result[i - 1][1], result[i - 1][0] + nums[i]);
+//
+//                    result[i][2] = max(result[i - 1][2], result[i - 1][1] == 0 ? 0 : result[i - 1][1] + nums[i]);
+//
+//                    break;
+//                }
+//                case 2:{
+//                    result[i][0] = max(result[i - 1][0], result[i - 1][1] == 0 ? 0 : result[i - 1][1] + nums[i]);
+//
+//                    result[i][1] = max(result[i - 1][1], result[i - 1][2] == 0 ? 0 : result[i - 1][2] + nums[i]);
+//
+//                    result[i][2] = max(result[i - 1][2], result[i - 1][0] + nums[i]);
+//                    break;
+//                }
+//            }
+//        }
+//
+//        return result[nums.size() - 1][0];
+//    }
+//
+//    void test() {
+//        vector<int> nums = {3,6,5,1,8};
+//        int result = maxSumDivThree(nums);
+//
+//        cout<<result<<endl;
+//    }
+//};
 
 #pragma mark - 464
 
@@ -1430,10 +1666,8 @@ public:
 #pragma mark - 1206
 
 #pragma mark - 698
-//未完成
-//
-//class Solution {
-//public:
+class Solution {
+public:
 //    bool canPartitionKSubsets(vector<int>& nums, int k) {
 //        int sum = 0;
 //        for (int i = 0; i < nums.size(); i++) {
@@ -1493,16 +1727,159 @@ public:
 //
 //        return false;
 //    }
+
+//    bool canPartitionKSubsets(vector<int>& nums, int k) {
+//        int sum = accumulate(nums.begin(), nums.end(), 0);
 //
+//        if (sum % k != 0) {
+//            return false;
+//        }
 //
+//        int target = sum / k;
 //
-//    void test() {
-//        vector<int> nums = {10,10,10,7,7,7,7,7,7,6,6,6};
-//        bool result = canPartitionKSubsets(nums, 3);
+//        unordered_map<int, int> map;
+//        for (int i = 0; i < nums.size(); i++) {
+//            map[nums[i]]++;
+//        }
 //
-//        cout<<result<<endl;
+//        while (map.size() > 0) {
+//
+//            int a = map.begin()->first;
+//            int b = target - a;
+//
+//            if (a == target) {
+//                if (--map[a] == 0) {
+//                    map.erase(a);
+//                }
+//            }
+//            else {
+//                if (map.count(b) == 0 || map.count(a) == 0) {
+//                    return false;
+//                }
+//                else {
+//                    if (--map[b] == 0) {
+//                        map.erase(b);
+//                    }
+//                    if (--map[a] == 0) {
+//                        map.erase(a);
+//                    }
+//                }
+//            }
+//        }
+//
+//        return true;
 //    }
-//};
+
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+
+        if (sum % k != 0) {
+            return false;
+        }
+
+        sort(nums.begin(), nums.end(), [&](int a, int b){
+            return a > b;
+        });
+
+        int target = sum / k;
+
+        if (nums[0] > target) {
+            return false;
+        }
+
+
+        vector<bool> used(nums.size(), false);
+        int result = 0;
+        for (int j = 0; j < nums.size(); j++) {
+            if (j > 0 && nums[j] == nums[j - 1]) {
+                continue;
+            }
+
+            result = 0;
+            for (int i = j; i < nums.size(); i++) {
+                if (used[i] == true) {
+                    continue;
+                }
+                used[i] = true;
+                if (backtracking(nums, used, target - nums[i])) {
+                    result++;
+                }
+                else {
+                    used[i] = false;
+                }
+            }
+
+            bool isAllUsed = true;
+            for (auto u : used) {
+                if (u == false) {
+                    isAllUsed = false;
+                }
+                u = false;
+            }
+
+            if (result == k && isAllUsed) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool backtracking(vector<int>& nums, vector<bool>& used, int target) {
+        if (target == 0) {
+            return true;
+        }
+
+        if (target < 0) {
+            return false;
+        }
+
+        for (int i = 0; i < nums.size(); i++) {
+            if (used[i] == true) {
+                continue;
+            }
+
+            if (target >= nums[i]) {
+                used[i] = true;
+                if (backtracking(nums, used, target - nums[i])) {
+                    return true;
+                }
+                used[i] = false;
+                while (i > 0 && i < nums.size() && nums[i] == nums[i - 1]) {
+                    i++;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+
+    void test() {
+        /**
+
+         [4,4,6,2,3,8,10,2,10,7]
+         4
+
+         4, 3, 2, 3, 5, 2, 1
+         4
+
+         10,10,10,7,7,7,7,7,7,6,6,6
+         3
+
+         [1,1,1,1,2,2,2,2]
+         3
+
+         [85,35,40,64,86,45,63,16,5364,110,5653,97,95]
+         7
+         */
+        vector<int> nums = {10,10,10,7,7,7,7,7,7,6,6,6};
+        bool result = canPartitionKSubsets(nums, 3);
+
+        cout<<result<<endl;
+    }
+};
 #pragma mark - 473
 
 int main(int argc, const char * argv[]) {
