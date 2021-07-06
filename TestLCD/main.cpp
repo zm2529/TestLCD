@@ -1660,14 +1660,9 @@ Tool tool;
 //    }
 //};
 
-#pragma mark - 464
-
-
-#pragma mark - 1206
-
 #pragma mark - 698
-class Solution {
-public:
+//class Solution {
+//public:
 //    bool canPartitionKSubsets(vector<int>& nums, int k) {
 //        int sum = 0;
 //        for (int i = 0; i < nums.size(); i++) {
@@ -1769,117 +1764,427 @@ public:
 //
 //        return true;
 //    }
+//
+//    bool canPartitionKSubsets(vector<int>& nums, int k) {
+//        int sum = accumulate(nums.begin(), nums.end(), 0);
+//
+//        if (sum % k != 0) {
+//            return false;
+//        }
+//
+//        sort(nums.begin(), nums.end(), [&](int a, int b){
+//            return a > b;
+//        });
+//
+//        int target = sum / k;
+//
+//        if (nums[0] > target) {
+//            return false;
+//        }
+//
+//
+//        vector<bool> used(nums.size(), false);
+//        int result = 0;
+//        for (int j = 0; j < nums.size(); j++) {
+//            if (j > 0 && nums[j] == nums[j - 1]) {
+//                continue;
+//            }
+//
+//            result = 0;
+//            for (int i = j; i < nums.size(); i++) {
+//                if (used[i] == true) {
+//                    continue;
+//                }
+//                used[i] = true;
+//                if (backtracking(nums, used, target - nums[i])) {
+//                    result++;
+//                }
+//                else {
+//                    used[i] = false;
+//                }
+//            }
+//
+//            bool isAllUsed = true;
+//            for (auto u : used) {
+//                if (u == false) {
+//                    isAllUsed = false;
+//                }
+//                u = false;
+//            }
+//
+//            if (result == k && isAllUsed) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//    bool backtracking(vector<int>& nums, vector<bool>& used, int target) {
+//        if (target == 0) {
+//            return true;
+//        }
+//
+//        if (target < 0) {
+//            return false;
+//        }
+//
+//        for (int i = 0; i < nums.size(); i++) {
+//            if (used[i] == true) {
+//                continue;
+//            }
+//
+//            if (target >= nums[i]) {
+//                used[i] = true;
+//                if (backtracking(nums, used, target - nums[i])) {
+//                    return true;
+//                }
+//                used[i] = false;
+//                while (i > 0 && i < nums.size() && nums[i] == nums[i - 1]) {
+//                    i++;
+//                }
+//            }
+//        }
+//
+//        return false;
+//    }
+//
+//
+//
+//    void test() {
+//        /**
+//
+//         [4,4,6,2,3,8,10,2,10,7]
+//         4
+//
+//         4, 3, 2, 3, 5, 2, 1
+//         4
+//
+//         10,10,10,7,7,7,7,7,7,6,6,6
+//         3
+//
+//         [1,1,1,1,2,2,2,2]
+//         3
+//
+//         [85,35,40,64,86,45,63,16,5364,110,5653,97,95]
+//         7
+//         */
+//        vector<int> nums = {10,10,10,7,7,7,7,7,7,6,6,6};
+//        bool result = canPartitionKSubsets(nums, 3);
+//
+//        cout<<result<<endl;
+//    }
+//};
 
-    bool canPartitionKSubsets(vector<int>& nums, int k) {
-        int sum = accumulate(nums.begin(), nums.end(), 0);
+#pragma mark - mianshi_16.20
+//class Solution {
+//public:
+////    vector<string> getValidT9Words(string num, vector<string>& words) {
+////
+////        vector<int> indexVec = {3,3,3,3,3,4,3,4};
+////        unordered_map<char, char> map;
+////        int index = 0;
+////        for (char c = 'a'; c <= 'z'; c++) {
+////            if (indexVec[index] > 0) {
+////                map[c] = index + '2';
+////                indexVec[index]--;
+////            }
+////            else {
+////                index++;
+////                c--;
+////            }
+////        }
+////
+////        vector<string> result;
+////        for (int i = 0; i < words.size(); i++) {
+////            string tempNums = "";
+////            for (int j = 0; j < words[i].size(); j++) {
+////                tempNums.push_back(map[words[i][j]]);
+////            }
+////
+////            if (tempNums == num) {
+////                result.push_back(words[i]);
+////            }
+////        }
+////
+////
+////        return result;
+////    }
+//
+////    vector<string> getValidT9Words(string num, vector<string>& words) {
+////
+//////        vector<int> indexVec = {3,3,3,3,3,4,3,4};
+////        unordered_map<char, char> map;
+//////        int index = 0;
+//////        for (char c = 'a'; c <= 'z'; c++) {
+//////            if (indexVec[index] > 0) {
+//////                map[c] = index + '2';
+//////                indexVec[index]--;
+//////            }
+//////            else {
+//////                index++;
+//////                c--;
+//////            }
+//////        }
+////        map['a'] = '2';
+////        map['b'] = '2';
+////        map['c'] = '2';
+////
+////        map['d'] = '3';
+////        map['e'] = '3';
+////        map['f'] = '3';
+////
+////        map['g'] = '4';
+////        map['h'] = '4';
+////        map['i'] = '4';
+////
+////        map['j'] = '5';
+////        map['k'] = '5';
+////        map['l'] = '5';
+////
+////        map['m'] = '6';
+////        map['n'] = '6';
+////        map['o'] = '6';
+////
+////        map['p'] = '7';
+////        map['q'] = '7';
+////        map['r'] = '7';
+////        map['s'] = '7';
+////
+////        map['t'] = '8';
+////        map['u'] = '8';
+////        map['v'] = '8';
+////
+////        map['w'] = '9';
+////        map['x'] = '9';
+////        map['y'] = '9';
+////        map['z'] = '9';
+////
+////
+////
+////        vector<string> result;
+////        for (int i = 0; i < words.size(); i++) {
+////            string tempNums = "";
+////            for (int j = 0; j < words[i].size(); j++) {
+////                tempNums.push_back(map[words[i][j]]);
+////            }
+////
+////            if (tempNums == num) {
+////                result.push_back(words[i]);
+////            }
+////        }
+////
+////
+////        return result;
+////    }
+//
+//    vector<string> getValidT9Words(string num, vector<string>& words) {
+//
+//        vector<int> indexVec = {3,3,3,3,3,4,3,4};
+//        unordered_map<char, char> map;
+////        int index = 0;
+////        for (char c = 'a'; c <= 'z'; c++) {
+////            if (indexVec[index] > 0) {
+////                map[c] = index + '2';
+////                indexVec[index]--;
+////            }
+////            else {
+////                index++;
+////                c--;
+////            }
+////        }
+//
+//
+//        vector<string> result;
+//        for (int i = 0; i < words.size(); i++) {
+//            string tempNums = "";
+//            for (int j = 0; j < words[i].size(); j++) {
+//                tempNums.push_back(map[words[i][j]]);
+//            }
+//
+//            if (tempNums == num) {
+//                result.push_back(words[i]);
+//            }
+//        }
+//
+//
+//        return result;
+//    }
+//
+//    void test() {
+//        vector<string> words = {"a", "b", "c", "d"};
+//        vector<string> result = getValidT9Words("2", words);
+//
+//        vector<string> :: iterator it = result.begin();
+//        while (it != result.end()) {
+//            cout<<*it<<",";
+//            it++;
+//        }
+//        cout<<endl;
+//    }
+//};
 
-        if (sum % k != 0) {
-            return false;
+#pragma mark - 621
+//class Solution {
+//public:
+////    int leastInterval(vector<char>& tasks, int n) {
+////        vector<vector<int>> arr(26, vector<int>(3, 0));
+////        for (int i = 0; i < arr.size(); i++) {
+////            arr[i][0] = i;
+////        }
+////
+////        for (int i = 0; i < tasks.size(); i++) {
+////            arr[tasks[i] - 'A'][1]++;
+////        }
+////
+////        int time = 0;
+////
+////        while (1) {
+////            bool isFind = false;
+////            int emptyCount = 0;
+////
+////            sort(arr.begin(), arr.end(), [&](vector<int>& a, vector<int>& b){
+////                return a[1] > b[1];
+////            });
+////
+////            for (int i = 0; i < arr.size(); i++) {
+////                if (arr[i][1] <= 0) {
+////                    emptyCount++;
+////                    continue;
+////                }
+////
+////                if (arr[i][2] > 0) {
+////                    arr[i][2]--;
+////                    continue;
+////                }
+////
+////                if (isFind == false) {
+////                    arr[i][1]--;
+////                    arr[i][2] = n;
+////                    isFind = true;
+//////                    cout<<char('A' + arr[i][0])<<"->";
+////                }
+////            }
+////
+////            if (emptyCount == arr.size()) {
+////                break;
+////            }
+////
+////            time++;
+////
+//////            if (isFind == false) {
+//////                cout<<"WAIT"<<"->";
+//////            }
+////        }
+////
+////        return time;
+////    }
+//
+//    int leastInterval(vector<char>& tasks, int n) {
+//
+//
+////        typedef pair<char, int> TaskInfo;
+////        auto cmp = [&](TaskInfo a, TaskInfo b) {
+////            return a.second < b.second;
+////        };
+////
+////        priority_queue<TaskInfo, vector<TaskInfo>, decltype(cmp)> queue(cmp);
+////
+//
+//        priority_queue<int, vector<int>, less<int>> queue;
+//        unordered_map<char, int> map;
+//        for (int i = 0; i < tasks.size(); i++) {
+//            map[tasks[i]]++;
+//        }
+////
+//        for (auto pair : map) {
+//            queue.push(pair.second);
+//        }
+//
+//        vector<vector<int>> wait(26, vector<int>(2,0));
+////
+////
+////        for (int i = 0; i < tasks.size(); i++) {
+////            cout<<i<<endl;
+////        }
+////
+////        vector<TaskInfo> arrWait(26, 0);
+////
+////        int time = 0;
+////        while (queue.size() > 0) {
+////            <#statements#>
+////        }
+////
+////        return 0;
+//    }
+//
+//    void test() {
+//        /**
+//         ["A","A","A","B","B","B"]
+//         0
+//
+//         'A','A','A','A','A','A','B','C','D','E','F','G'
+//         2
+//
+//         'A','A','A','B','B','B', 'C','C','C', 'D', 'D', 'E'
+//         2
+//         */
+//        vector<char> tasks = {'A','A','A','B','B','B', 'C','C','C', 'D', 'D', 'E'};
+//
+//        int result = leastInterval(tasks, 2);
+//
+//        cout<<result<<endl;
+//    }
+//};
+
+#pragma mark - 1599
+class Solution {
+public:
+    int minOperationsMaxProfit(vector<int>& customers, int boardingCost, int runningCost) {
+        if (boardingCost * 4 <= runningCost) {
+            return -1;
+        }
+        int waitCount = customers[0];
+        int time = 0;
+        int resultTime = -1;
+        int maxProfit = 0;
+        int profit = 0;
+
+        while (waitCount > 0 || time < customers.size()) {
+            int playCount = min(4, waitCount);
+            time++;
+            profit += (playCount * boardingCost - runningCost);
+            if (profit > maxProfit) {
+                maxProfit = profit;
+                resultTime = time;
+            }
+            waitCount -= playCount;
+            if (time < customers.size()) {
+                waitCount += customers[time];
+            }
         }
 
-        sort(nums.begin(), nums.end(), [&](int a, int b){
-            return a > b;
-        });
-
-        int target = sum / k;
-
-        if (nums[0] > target) {
-            return false;
-        }
-
-
-        vector<bool> used(nums.size(), false);
-        int result = 0;
-        for (int j = 0; j < nums.size(); j++) {
-            if (j > 0 && nums[j] == nums[j - 1]) {
-                continue;
-            }
-
-            result = 0;
-            for (int i = j; i < nums.size(); i++) {
-                if (used[i] == true) {
-                    continue;
-                }
-                used[i] = true;
-                if (backtracking(nums, used, target - nums[i])) {
-                    result++;
-                }
-                else {
-                    used[i] = false;
-                }
-            }
-
-            bool isAllUsed = true;
-            for (auto u : used) {
-                if (u == false) {
-                    isAllUsed = false;
-                }
-                u = false;
-            }
-
-            if (result == k && isAllUsed) {
-                return true;
-            }
-        }
-
-        return false;
+        return resultTime;
     }
-
-    bool backtracking(vector<int>& nums, vector<bool>& used, int target) {
-        if (target == 0) {
-            return true;
-        }
-
-        if (target < 0) {
-            return false;
-        }
-
-        for (int i = 0; i < nums.size(); i++) {
-            if (used[i] == true) {
-                continue;
-            }
-
-            if (target >= nums[i]) {
-                used[i] = true;
-                if (backtracking(nums, used, target - nums[i])) {
-                    return true;
-                }
-                used[i] = false;
-                while (i > 0 && i < nums.size() && nums[i] == nums[i - 1]) {
-                    i++;
-                }
-            }
-        }
-
-        return false;
-    }
-
-
 
     void test() {
         /**
-
-         [4,4,6,2,3,8,10,2,10,7]
-         4
-
-         4, 3, 2, 3, 5, 2, 1
-         4
-
-         10,10,10,7,7,7,7,7,7,6,6,6
-         3
-
-         [1,1,1,1,2,2,2,2]
-         3
-
-         [85,35,40,64,86,45,63,16,5364,110,5653,97,95]
-         7
+         [0,43,37,9,23,35,18,7,45,3,8,24,1,6,37,2,38,15,1,14,39,27,4,25,27,33,43,8,44,30,38,40,20,5,17,27,43,11,6,2,30,49,30,25,32,3,18,23,45,43,30,14,41,17,42,42,44,38,18,26,32,48,37,5,37,21,2,9,48,48,40,45,25,30,49,41,4,48,40,29,23,17,7,5,44,23,43,9,35,26,44,3,26,16,31,11,9,4,28,49,43,39,9,39,37,7,6,7,16,1,30,2,4,43,23,16,39,5,30,23,39,29,31,26,35,15,5,11,45,44,45,43,4,24,40,7,36,10,10,18,6,20,13,11,20,3,32,49,34,41,13,11,3,13,0,13,44,48,43,23,12,23,2]
+         43
+         54
          */
-        vector<int> nums = {10,10,10,7,7,7,7,7,7,6,6,6};
-        bool result = canPartitionKSubsets(nums, 3);
+        vector<int> customers = {0,43,37,9,23,35,18,7,45,3,8,24,1,6,37,2,38,15,1,14,39,27,4,25,27,33,43,8,44,30,38,40,20,5,17,27,43,11,6,2,30,49,30,25,32,3,18,23,45,43,30,14,41,17,42,42,44,38,18,26,32,48,37,5,37,21,2,9,48,48,40,45,25,30,49,41,4,48,40,29,23,17,7,5,44,23,43,9,35,26,44,3,26,16,31,11,9,4,28,49,43,39,9,39,37,7,6,7,16,1,30,2,4,43,23,16,39,5,30,23,39,29,31,26,35,15,5,11,45,44,45,43,4,24,40,7,36,10,10,18,6,20,13,11,20,3,32,49,34,41,13,11,3,13,0,13,44,48,43,23,12,23,2};
+        int result = minOperationsMaxProfit(customers, 43, 54);
 
         cout<<result<<endl;
     }
 };
+
+#pragma mark - 464
+
+
+#pragma mark - 1206
+
 #pragma mark - 473
 
 int main(int argc, const char * argv[]) {
