@@ -2138,47 +2138,132 @@ Tool tool;
 //};
 
 #pragma mark - 1599
-class Solution {
-public:
-    int minOperationsMaxProfit(vector<int>& customers, int boardingCost, int runningCost) {
-        if (boardingCost * 4 <= runningCost) {
-            return -1;
-        }
-        int waitCount = customers[0];
-        int time = 0;
-        int resultTime = -1;
-        int maxProfit = 0;
-        int profit = 0;
+//class Solution {
+//public:
+//    int minOperationsMaxProfit(vector<int>& customers, int boardingCost, int runningCost) {
+//        if (boardingCost * 4 <= runningCost) {
+//            return -1;
+//        }
+//        int waitCount = customers[0];
+//        int time = 0;
+//        int resultTime = -1;
+//        int maxProfit = 0;
+//        int profit = 0;
+//
+//        while (waitCount > 0 || time < customers.size()) {
+//            int playCount = min(4, waitCount);
+//            time++;
+//            profit += (playCount * boardingCost - runningCost);
+//            if (profit > maxProfit) {
+//                maxProfit = profit;
+//                resultTime = time;
+//            }
+//            waitCount -= playCount;
+//            if (time < customers.size()) {
+//                waitCount += customers[time];
+//            }
+//        }
+//
+//        return resultTime;
+//    }
+//
+//    void test() {
+//        /**
+//         [0,43,37,9,23,35,18,7,45,3,8,24,1,6,37,2,38,15,1,14,39,27,4,25,27,33,43,8,44,30,38,40,20,5,17,27,43,11,6,2,30,49,30,25,32,3,18,23,45,43,30,14,41,17,42,42,44,38,18,26,32,48,37,5,37,21,2,9,48,48,40,45,25,30,49,41,4,48,40,29,23,17,7,5,44,23,43,9,35,26,44,3,26,16,31,11,9,4,28,49,43,39,9,39,37,7,6,7,16,1,30,2,4,43,23,16,39,5,30,23,39,29,31,26,35,15,5,11,45,44,45,43,4,24,40,7,36,10,10,18,6,20,13,11,20,3,32,49,34,41,13,11,3,13,0,13,44,48,43,23,12,23,2]
+//         43
+//         54
+//         */
+//        vector<int> customers = {0,43,37,9,23,35,18,7,45,3,8,24,1,6,37,2,38,15,1,14,39,27,4,25,27,33,43,8,44,30,38,40,20,5,17,27,43,11,6,2,30,49,30,25,32,3,18,23,45,43,30,14,41,17,42,42,44,38,18,26,32,48,37,5,37,21,2,9,48,48,40,45,25,30,49,41,4,48,40,29,23,17,7,5,44,23,43,9,35,26,44,3,26,16,31,11,9,4,28,49,43,39,9,39,37,7,6,7,16,1,30,2,4,43,23,16,39,5,30,23,39,29,31,26,35,15,5,11,45,44,45,43,4,24,40,7,36,10,10,18,6,20,13,11,20,3,32,49,34,41,13,11,3,13,0,13,44,48,43,23,12,23,2};
+//        int result = minOperationsMaxProfit(customers, 43, 54);
+//
+//        cout<<result<<endl;
+//    }
+//};
 
-        while (waitCount > 0 || time < customers.size()) {
-            int playCount = min(4, waitCount);
-            time++;
-            profit += (playCount * boardingCost - runningCost);
-            if (profit > maxProfit) {
-                maxProfit = profit;
-                resultTime = time;
-            }
-            waitCount -= playCount;
-            if (time < customers.size()) {
-                waitCount += customers[time];
-            }
-        }
+#pragma mark - 877
+//class Solution {
+//public:
+////    bool stoneGame(vector<int>& piles) {
+////        /**
+////         f[i][j] 从i到j最大差 f[i][j] = max(piles[i] - f[i + 1][j]//选择第i堆 , piles[j] - f[i][j - 1]//选择第j堆)
+////         */
+////
+////        vector<vector<int>> result(piles.size(), vector<int>(piles.size(), 0));
+////
+////        for (int i = 0; i < piles.size(); i++) {
+////            result[i][i] = piles[i];
+////        }
+////
+////        for (int i = (int)piles.size() - 1; i >= 0; i--) {
+////            for (int j = i + 1; j < piles.size(); j++) {
+////                result[i][j] = max(piles[i] - result[i + 1][j], piles[j] - result[i][j - 1]);
+////            }
+////        }
+////
+////        return result[0][piles.size() - 1] > 0;
+////    }
+//
+//    bool stoneGame(vector<int>& piles) {
+//        /**
+//         f[i][j] 从i到j最大差 f[i][j] = max(piles[i] - f[i + 1][j]//选择第i堆 , piles[j] - f[i][j - 1]//选择第j堆)
+//         */
+//
+//        vector<int> result(piles);
+//
+//        for (int i = (int)piles.size() - 1; i >= 0; i--) {
+//            for (int j = i + 1; j < piles.size(); j++) {
+//                result[j] = max(piles[i] - result[j], piles[j] - result[j - 1]);
+//            }
+//        }
+//
+//        return result[piles.size() - 1] > 0;
+//    }
+//
+//    void test() {
+//        vector<int> piles = {5,3,4,5};
+//
+//        bool result = stoneGame(piles);
+//
+//        cout<<result<<endl;
+//    }
+//};
 
-        return resultTime;
-    }
+#pragma mark - 1690
+//class Solution {
+//public:
+//    int stoneGameVII(vector<int>& stones) {
+//        /**
+//         f[i][j] i到j最大积分差 f[i][j] = max((sum[i + 1 到 j] - f[i + 1][j]) //取i , (sum[i 到 j - 1] - f[i][j - 1]))
+//         */
+//
+//        vector<vector<int>> result(stones.size(), vector<int>(stones.size(), 0));
+//
+//        vector<int> sumArr(stones.size() + 1, 0);
+//        for (int i = 0; i < stones.size(); i++) {
+////            result[i][i] = stones[i];
+//
+//            sumArr[i + 1] = stones[i] + sumArr[i];
+//        }
+//
+//        for (int i = (int)stones.size() - 2; i >= 0; i--) {
+//            for (int j = i + 1; j < stones.size(); j++) {
+//                result[i][j] = max(sumArr[j + 1] - sumArr[i + 1] - result[i + 1][j], sumArr[j] - sumArr[i] - result[i][j - 1]);
+//            }
+//        }
+//
+//        return result[0][stones.size() - 1];
+//    }
+//
+//    void test() {
+//        vector<int> stones = {5,3,1,4,2};
+//
+//        int result = stoneGameVII(stones);
+//
+//        cout<<result<<endl;
+//    }
+//};
 
-    void test() {
-        /**
-         [0,43,37,9,23,35,18,7,45,3,8,24,1,6,37,2,38,15,1,14,39,27,4,25,27,33,43,8,44,30,38,40,20,5,17,27,43,11,6,2,30,49,30,25,32,3,18,23,45,43,30,14,41,17,42,42,44,38,18,26,32,48,37,5,37,21,2,9,48,48,40,45,25,30,49,41,4,48,40,29,23,17,7,5,44,23,43,9,35,26,44,3,26,16,31,11,9,4,28,49,43,39,9,39,37,7,6,7,16,1,30,2,4,43,23,16,39,5,30,23,39,29,31,26,35,15,5,11,45,44,45,43,4,24,40,7,36,10,10,18,6,20,13,11,20,3,32,49,34,41,13,11,3,13,0,13,44,48,43,23,12,23,2]
-         43
-         54
-         */
-        vector<int> customers = {0,43,37,9,23,35,18,7,45,3,8,24,1,6,37,2,38,15,1,14,39,27,4,25,27,33,43,8,44,30,38,40,20,5,17,27,43,11,6,2,30,49,30,25,32,3,18,23,45,43,30,14,41,17,42,42,44,38,18,26,32,48,37,5,37,21,2,9,48,48,40,45,25,30,49,41,4,48,40,29,23,17,7,5,44,23,43,9,35,26,44,3,26,16,31,11,9,4,28,49,43,39,9,39,37,7,6,7,16,1,30,2,4,43,23,16,39,5,30,23,39,29,31,26,35,15,5,11,45,44,45,43,4,24,40,7,36,10,10,18,6,20,13,11,20,3,32,49,34,41,13,11,3,13,0,13,44,48,43,23,12,23,2};
-        int result = minOperationsMaxProfit(customers, 43, 54);
-
-        cout<<result<<endl;
-    }
-};
+#pragma mark - 1140
 
 #pragma mark - 464
 
